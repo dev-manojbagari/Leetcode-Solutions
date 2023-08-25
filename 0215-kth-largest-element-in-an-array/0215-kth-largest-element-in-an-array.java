@@ -1,6 +1,6 @@
 class Solution {
     public int findKthLargest(int[] nums, int k) {
-        
+        shuffle(nums);
         int left = 0,right=nums.length-1;
         int ans =0;
         while(left<=right){
@@ -21,6 +21,15 @@ class Solution {
         
     }
     
+    void shuffle(int nums[]){
+        Random random = new Random();
+        for(int i=nums.length-1;i>=0;i--){
+            int index = random.nextInt(i+1);
+            swap(nums,index,i);
+        }
+        
+        
+    }
     
     int quickSelect(int[] nums,int start,int end){
         int pivot = nums[end];
