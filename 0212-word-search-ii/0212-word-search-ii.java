@@ -23,23 +23,23 @@ class Solution {
             
         if(i<0||i>=board.length||j<0||j>=board[0].length||vis[i][j])
             return;
-        
-        if(node.next[board[i][j]-'a']==null)
+        char c = board[i][j];
+        if(c=='#'||node.next[c-'a']==null)
             return;
-        node = node.next[board[i][j]-'a'];
+        node = node.next[c-'a'];
         
         if(node.isWord){
             list.add(node.word);
             node.isWord=false;
         }
         
-        vis[i][j]=true;
+        board[i][j]='#';
         dfs(i+1,j,board,vis,list,node);
         dfs(i,j+1,board,vis,list,node);
         dfs(i-1,j,board,vis,list,node); 
         dfs(i,j-1,board,vis,list,node);
         
-        vis[i][j]=false;
+        board[i][j]=c;
         
     }
     
