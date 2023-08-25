@@ -2,7 +2,7 @@ class Solution {
     public List<String> findWords(char[][] board, String[] words) {
         int rows = board.length;
         int cols = board[0].length;
-        boolean vis[][] = new boolean[rows][cols];
+     //   boolean vis[][] = new boolean[rows][cols];
         List<String> list = new ArrayList<>();
         
         Trie trie = new Trie();
@@ -11,7 +11,7 @@ class Solution {
 
         for(int i=0;i<rows;i++){
             for(int j=0;j<cols;j++){
-                dfs(i,j,board,vis,list,trie.getRoot());
+                dfs(i,j,board,list,trie.getRoot());
             }
         }
         
@@ -19,9 +19,9 @@ class Solution {
     }
     
     
-    void dfs(int i,int j,char[][] board,boolean[][] vis,List<String> list,Trie.TrieNode node){
+    void dfs(int i,int j,char[][] board,List<String> list,Trie.TrieNode node){
             
-        if(i<0||i>=board.length||j<0||j>=board[0].length||vis[i][j])
+        if(i<0||i>=board.length||j<0||j>=board[0].length)
             return;
         char c = board[i][j];
         if(c=='#'||node.next[c-'a']==null)
@@ -34,10 +34,10 @@ class Solution {
         }
         
         board[i][j]='#';
-        dfs(i+1,j,board,vis,list,node);
-        dfs(i,j+1,board,vis,list,node);
-        dfs(i-1,j,board,vis,list,node); 
-        dfs(i,j-1,board,vis,list,node);
+        dfs(i+1,j,board,list,node);
+        dfs(i,j+1,board,list,node);
+        dfs(i-1,j,board,list,node); 
+        dfs(i,j-1,board,list,node);
         
         board[i][j]=c;
         
