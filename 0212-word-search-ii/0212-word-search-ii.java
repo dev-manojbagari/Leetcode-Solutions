@@ -19,7 +19,7 @@ class Solution {
     }
     
     
-    void dfs(int i,int j,char[][] board,List<String> list,Trie.TrieNode node){
+    void dfs(int i,int j,char[][] board,List<String> list,TrieNode node){
             
         if(i<0||i>=board.length||j<0||j>=board[0].length)
             return;
@@ -42,11 +42,7 @@ class Solution {
         board[i][j]=c;
         
     }
-    
-    public class Trie{
-        public TrieNode root=new TrieNode('\0');
-        
-        public class TrieNode{
+     public class TrieNode{
             char val;
             TrieNode next[] = new TrieNode[26];
             String word;    
@@ -56,6 +52,10 @@ class Solution {
             }
         }
 
+    public class Trie{
+        public TrieNode root=new TrieNode('\0');
+        
+       
         void insert(String word){
             TrieNode curr= root;
             for(char c:word.toCharArray()){
