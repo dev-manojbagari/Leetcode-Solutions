@@ -8,18 +8,29 @@ class MedianFinder {
     }
     
     public void addNum(int num) {
-           if (!minHeap.isEmpty() && num < minHeap.peek()) {
-            maxHeap.offer(num);
-            if (maxHeap.size() > minHeap.size() + 1) {
-                minHeap.offer(maxHeap.poll());
-            }
-        } else {
+        if(!minHeap.isEmpty()&&minHeap.peek()<=num){
             minHeap.offer(num);
-            if (minHeap.size() > maxHeap.size() + 1) {
+            if(minHeap.size()>1+maxHeap.size()){
                 maxHeap.offer(minHeap.poll());
+            }
+        }else{
+            maxHeap.offer(num);
+            if(maxHeap.size()>1+minHeap.size()){
+                minHeap.offer(maxHeap.poll());
             }
         }
         
+        //         if (!minHeap.isEmpty() && num < minHeap.peek()) {
+        //     maxHeap.offer(num);
+        //     if (maxHeap.size() > minHeap.size() + 1) {
+        //         minHeap.offer(maxHeap.poll());
+        //     }
+        // } else {
+        //     minHeap.offer(num);
+        //     if (minHeap.size() > maxHeap.size() + 1) {
+        //         maxHeap.offer(minHeap.poll());
+        //     }
+        // }
     }
     
     public double findMedian() {
