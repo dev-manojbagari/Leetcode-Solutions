@@ -9,7 +9,7 @@ class MedianFinder {
     
     public void addNum(int num) {
         
-          if (!minHeap.isEmpty() && num < minHeap.peek()) {
+              if (!minHeap.isEmpty() && num < minHeap.peek()) {
             maxHeap.offer(num);
             if (maxHeap.size() > minHeap.size() + 1) {
                 minHeap.offer(maxHeap.poll());
@@ -24,17 +24,15 @@ class MedianFinder {
     }
     
     public double findMedian() {
-             double median;
-        if (minHeap.size() < maxHeap.size()) {
-            median = maxHeap.peek();
-        } else if (minHeap.size() > maxHeap.size()) {
-            median = minHeap.peek();
-        } else {
-            median = (minHeap.peek() + maxHeap.peek()) / 2.0;
+        if(minHeap.size()==maxHeap.size()){
+            return (minHeap.peek()+maxHeap.peek())/2.0;}
+        else{
+            if(minHeap.size()>maxHeap.size())
+                return minHeap.peek();
+            else
+                return maxHeap.peek();
         }
-        return median;
-        }
-    
+    }
 }
 
 /**
