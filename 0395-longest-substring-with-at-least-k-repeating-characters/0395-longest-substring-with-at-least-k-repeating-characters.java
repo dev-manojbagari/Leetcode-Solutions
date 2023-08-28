@@ -11,7 +11,7 @@ class Solution {
     int longestSubstring(String s, int k ,int targetDistinct){
         char[] cmap = new char[26];
         int start =0;
-        int totalDistinct=0;
+        int curDistinct=0;
         int kOrMore=0;
         int maxL = 0;
         
@@ -19,21 +19,21 @@ class Solution {
             char c = s.charAt(end);
             cmap[c-'a']++;
             if(cmap[c-'a']==1)
-                totalDistinct++;
+                curDistinct++;
             if(cmap[c-'a']==k)
                 kOrMore++;
             
-            while(totalDistinct>targetDistinct){
+            while(curDistinct>targetDistinct){
                 c = s.charAt(start);
                 cmap[c-'a']--;
                 if(cmap[c-'a']==0)
-                    totalDistinct--;
+                    curDistinct--;
                 if(cmap[c-'a']==k-1)
                     kOrMore--;
                 start++;
             }
             
-            if(targetDistinct==totalDistinct&&totalDistinct==kOrMore)
+            if(targetDistinct==curDistinct&&curDistinct==kOrMore)
                 maxL = Math.max(maxL,end-start+1);
         }
         
