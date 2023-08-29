@@ -6,8 +6,9 @@ public void wiggleSort(int[] nums) {
         int median = findKthLargest(nums, n/2);
         int i = 0, left = 0, right = n-1;
         while (i <= right) {
-            if (i > left && nums[newIndex(i, n)] > median) {
+            if ( nums[newIndex(i, n)] > median) {
                 swap(nums, newIndex(i, n), newIndex(left++, n));
+                i++;
             }
             else if (i < right && nums[newIndex(i, n)] < median) {
                 swap(nums, newIndex(i, n), newIndex(right--, n));
