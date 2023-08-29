@@ -1,24 +1,24 @@
 class Solution {
 
-    public void wiggleSort(int[] nums) {
+public void wiggleSort(int[] nums) {
         int n = nums.length;
-        int median = findKthLargest(nums, (n + 1) / 2);
-
-        int left = 0, i = 0, right = n - 1;
+        if (n < 2) return;
+        int median = findKthLargest(nums, n/2);
+        int i = 0, left = 0, right = n-1;
         while (i <= right) {
-            int virtualIdx = virtualIndex(i, n);
-            if (nums[virtualIdx] > median) {
-                swap(nums, virtualIndex(left++, n), virtualIdx);
-                i++;
-            } else if (nums[virtualIdx] < median) {
-                swap(nums, virtualIndex(right--, n), virtualIdx);
-            } else {
+            if (i > left && nums[newIndex(i, n)] > median) {
+                swap(nums, newIndex(i, n), newIndex(left++, n));
+            }
+            else if (i < right && nums[newIndex(i, n)] < median) {
+                swap(nums, newIndex(i, n), newIndex(right--, n));
+            }
+            else {
                 i++;
             }
         }
     }
 
-    private int virtualIndex(int i, int n) {
+    private int newIndex(int i, int n) {
         // Check if n is even
         boolean isEven = n % 2 == 0;
 
