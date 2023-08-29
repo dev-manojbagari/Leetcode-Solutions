@@ -10,7 +10,7 @@ public void wiggleSort(int[] nums) {
                 swap(nums, newIndex(i, n), newIndex(left++, n));
                 i++;
             }
-            else if (i < right && nums[newIndex(i, n)] < median) {
+            else if ( nums[newIndex(i, n)] < median) {
                 swap(nums, newIndex(i, n), newIndex(right--, n));
             }
             else {
