@@ -2,25 +2,23 @@ class Solution {
     public List<String> fizzBuzz(int n) {
         // modulo operation allowed
         List<String> list = new ArrayList<>();
-        int count3=0,count5=0;
+        
+        Map<Integer,String> map = new HashMap<>();
+        map.put(3,"Fizz");
+        map.put(5,"Buzz");
         
         for(int i=1;i<=n;i++){
-            count3++;count5++;
-            if(count3==3&&count5==5){
-                list.add("FizzBuzz");
-                count3=0;
-                count5=0;
-            }else if(count3==3){
-                list.add("Fizz");
-                count3=0;
-            }else if(count5==5){
-                list.add("Buzz");
-                count5=0;
-            }else{
-                list.add(String.valueOf(i));
+        String str = "";
+            for(Integer num:map.keySet()){
+                if(i%num==0)
+                    str += map.get(num);
             }
+            
+            if(str=="")
+                list.add(String.valueOf(i));
+            else
+                list.add(str);
         }
-
         return list;
     }
 }
