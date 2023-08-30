@@ -8,16 +8,16 @@ class Solution {
         map.put(5,"Buzz");
         
         for(int i=1;i<=n;i++){
-        String str = "";
+            StringBuilder sb = new StringBuilder();
             for(Integer num:map.keySet()){
                 if(i%num==0)
-                    str += map.get(num);
+                    sb.append(map.get(num));
             }
             
-            if(str=="")
+            if(sb.length()==0)
                 list.add(String.valueOf(i));
             else
-                list.add(str);
+                list.add(sb.toString());
         }
         return list;
     }
