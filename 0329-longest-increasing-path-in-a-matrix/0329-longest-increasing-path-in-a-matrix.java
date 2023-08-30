@@ -19,10 +19,9 @@ class Solution {
         if(i<0||i>=matrix.length||j<0||j>=matrix[0].length||vis[i][j]||prev>=matrix[i][j])
             return 0;
         
-        if(cache[i][j]!=0)
-            return cache[i][j];
+         if(cache[i][j]!=0)
+             return cache[i][j];
         
-        curLen++;
         
         vis[i][j]=true;
         
