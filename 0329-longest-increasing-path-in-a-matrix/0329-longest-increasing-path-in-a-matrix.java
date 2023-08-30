@@ -7,14 +7,14 @@ class Solution {
         int[][] cache = new int[rows][cols];
         for(int i=0;i<matrix.length;i++){
             for(int j=0;j<matrix[0].length;j++){
-                maxLen = Math.max(maxLen,dfs(i,j,matrix,vis,-1,0,cache));
+                maxLen = Math.max(maxLen,dfs(i,j,matrix,vis,-1,cache));
             }
         }
         
         return maxLen;
     }
     
-    int dfs(int i,int j,int[][] matrix,boolean[][] vis,int prev,int curLen,int[][] cache){
+    int dfs(int i,int j,int[][] matrix,boolean[][] vis,int prev,int[][] cache){
         
         if(i<0||i>=matrix.length||j<0||j>=matrix[0].length||vis[i][j]||prev>=matrix[i][j])
             return 0;
@@ -25,10 +25,10 @@ class Solution {
         
         vis[i][j]=true;
         
-        int a= dfs(i+1,j,matrix,vis,matrix[i][j],curLen,cache)+1;
-        int b= dfs(i,j+1,matrix,vis,matrix[i][j],curLen,cache)+1;
-        int c= dfs(i-1,j,matrix,vis,matrix[i][j],curLen,cache)+1;
-        int d= dfs(i,j-1,matrix,vis,matrix[i][j],curLen,cache)+1;
+        int a= dfs(i+1,j,matrix,vis,matrix[i][j],cache)+1;
+        int b= dfs(i,j+1,matrix,vis,matrix[i][j],cache)+1;
+        int c= dfs(i-1,j,matrix,vis,matrix[i][j],cache)+1;
+        int d= dfs(i,j-1,matrix,vis,matrix[i][j],cache)+1;
         
         vis[i][j]=false;
 
