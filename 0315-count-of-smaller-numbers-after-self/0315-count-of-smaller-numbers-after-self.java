@@ -15,7 +15,7 @@ class Solution {
 
         mergeSort(pair,0,pair.length-1,countSmaller);
 
-        return Arrays.stream(countSmaller).boxed().collect(Collectors.toList());
+        return Arrays.stream(countSmaller).boxed().toList();
     }
     
     void mergeSort(Pair[] pair,int start,int end,int[] cs){
@@ -34,22 +34,20 @@ class Solution {
         Pair L[] = new Pair[mid-start+1];
         Pair R[] = new Pair[end-mid];
         
-        for(int i=0;i<L.length;i++){
+        for(int i=0;i<L.length;i++)
             L[i]= pair[start+i];
-        }
         
-        for(int i=0;i<R.length;i++){
+        
+        for(int i=0;i<R.length;i++)
             R[i]= pair[mid+1+i];
-        }
+        
         
         int i=0,j=0,k=start;
         
         while(i<L.length&&j<R.length){
             if(L[i].value<=R[j].value){
-                pair[k]=L[i];
                 cs[L[i].index]+=j;
-                i++;
-                k++;
+                pair[k++]=L[i++];
             }else{
                 pair[k]=R[j];
                 j++;
@@ -58,16 +56,12 @@ class Solution {
         }
         
         while(i<L.length){
-            pair[k] = L[i];
             cs[L[i].index]+=j;
-            i++;
-            k++;
+            pair[k++] = L[i++];
         }
        
-       while(j<R.length){
-            pair[k] = R[j];
-            j++;
-            k++;
-        }
+       while(j<R.length)
+            pair[k++] = R[j++];
+        
     }
 }
