@@ -16,6 +16,8 @@ class Solution {
     }
     
     ListNode reverse(ListNode head,int k,int freq){
+        if(freq==0)
+            return head;
         ListNode prev = null,curr=head,next=null;
         int count =0;
         
@@ -27,10 +29,10 @@ class Solution {
             count++;
         }
         freq--;
-        if(curr!=null&&freq>0)
+        if(curr!=null)
             head.next = reverse(curr,k,freq);
-        else
-            head.next=curr;
+        
+        
         
         return prev;
         
