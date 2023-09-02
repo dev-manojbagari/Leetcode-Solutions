@@ -21,16 +21,26 @@ class Solution {
     
     }
     
-    void preOrder(TreeNode root){
+    TreeNode preOrder(TreeNode root){
         if(root==null)
-            return;
+            return root;
   
-      preOrder(root.right);
-      preOrder(root.left);
-      
-        root.right=prev;
-        root.left=null;
-        prev=root;
+     TreeNode leftTail =  preOrder(root.left);
+     TreeNode rightTail = preOrder(root.right);
+        
+     if(root.left!=null){
+         TreeNode temp = root.right;
+         root.right=root.left;
+         root.left=null;
+         leftTail.right=temp;
+     }
+        
+    if(rightTail!=null)
+        return rightTail;
+    else if(leftTail!=null)
+        return leftTail;
+    else
+        return root;
         
     }
 }
