@@ -18,24 +18,31 @@ class Solution {
     ListNode reverse(ListNode head,int k,int freq){
         if(freq==0)
             return head;
-        ListNode prev = null,curr=head,next=null;
-        int count =0;
         
-        while(curr!=null&&count<k){
-            next=curr.next;
-            curr.next=prev;
-            prev=curr;
-            curr=next;
-            count++;
+        ListNode preHead = new ListNode(-1);
+        ListNode pre = preHead;
+        ListNode curr= head;
+        
+        while(freq>0){
+            ListNode firstNode = curr;;
+            for(int i=0;i<k;i++){
+                ListNode temp = curr;
+                curr=curr.next;
+                temp.next=null;
+                temp.next=pre.next;
+                pre.next=temp;
+            }
+            freq--;
+            if(freq>0){
+                pre = firstNode;
+            }else{
+                firstNode.next=curr;
+            }
+            
+        
         }
-        freq--;
-        if(curr!=null)
-            head.next = reverse(curr,k,freq);
         
-        
-        
-        return prev;
-        
+        return preHead.next;       
     }
     
     int getLength(ListNode node){
