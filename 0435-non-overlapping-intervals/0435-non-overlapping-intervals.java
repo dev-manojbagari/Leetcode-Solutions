@@ -8,14 +8,14 @@ class Solution {
         
         list.sort((a,b)->a[1]-b[1]);
         
-        int count=1;
+        int count=0;
         int end = list.get(0)[1];
         for(int i=1;i<list.size();i++){
            
-            if(list.get(i)[0]>= end){
+            if(list.get(i)[0]<end){
                 count++;
+            }else
                 end = list.get(i)[1];
-            }
             
         }
      
@@ -34,6 +34,6 @@ class Solution {
 //         }
      
         
-        return intervals.length-count;
+        return count;
     }
 }
