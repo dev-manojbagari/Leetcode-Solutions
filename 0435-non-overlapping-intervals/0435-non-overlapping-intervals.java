@@ -1,27 +1,27 @@
-public class Solution {
+class Solution {
     public int eraseOverlapIntervals(int[][] intervals) {
-        if (intervals.length == 0) {
-            return 0;
+        List<int[]> list = new ArrayList<>();
+        
+        for(int[] interval:intervals){
+            list.add(interval);
         }
         
-        // Sort by end time
-        Arrays.sort(intervals, new Comparator<int[]>() {
-            @Override
-            public int compare(int[] o1, int[] o2) {
-                return o1[1] - o2[1];
-            }
-        });
+        list.sort((a,b)->a[1]-b[1]);
         
-        int count = 1; // At least one interval will be there
-        int end = intervals[0][1]; // End time of first interval
+        int count=1;
+        int end = list.get(0)[1];
         
-        for (int i = 1; i < intervals.length; i++) {
-            if (intervals[i][0] >= end) { // If this interval starts after or at the same time as previous ends
-                count++; // We can keep this interval
-                end = intervals[i][1]; // Update end time to this interval's end time.
+        for(int i=1;i<list.size();i++){
+            if(list.get(i)[0] >= end){
+                // Non-overlapping interval found, increment count
+                count++;
+                // Update end time to this non-overlapping interval's end time.
+                end = list.get(i)[1];
             }
+            
         }
+     
         
-        return intervals.length - count; // The rest need to be removed.
+        return intervals.length-count; // Return number of overlapping intervals that need to be removed.
     }
 }
