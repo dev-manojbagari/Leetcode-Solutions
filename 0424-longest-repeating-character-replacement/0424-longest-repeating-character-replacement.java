@@ -17,8 +17,8 @@ class Solution {
             if(end-start+1-maxFreq>k){
                 c = s.charAt(start);
                 cmap[c-'A']--;
-                if(c==maxChar)
-                    maxFreq--;
+                // if(c==maxChar)
+                    // maxFreq--;
                 start++;
             
             }
