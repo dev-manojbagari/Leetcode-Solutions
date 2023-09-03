@@ -10,18 +10,30 @@ class Solution {
         
         int count=1;
         int end = list.get(0)[1];
-        
         for(int i=1;i<list.size();i++){
-            if(list.get(i)[0] >= end){
-                // Non-overlapping interval found, increment count
+           
+            if(list.get(i)[0]>= end){
                 count++;
-                // Update end time to this non-overlapping interval's end time.
                 end = list.get(i)[1];
             }
             
         }
      
         
-        return intervals.length-count; // Return number of overlapping intervals that need to be removed.
+//         int count=1;
+//         int end = list.get(0)[1];
+        
+//         for(int i=1;i<list.size();i++){
+//             if(list.get(i)[0] >= end){
+//                 // Non-overlapping interval found, increment count
+//                 count++;
+//                 // Update end time to this non-overlapping interval's end time.
+//                 end = list.get(i)[1];
+//             }
+            
+//         }
+     
+        
+        return intervals.length-count;
     }
 }
