@@ -1,16 +1,19 @@
 class Solution {
     public int countSubstrings(String s) {
-        int n = s.length(), ans = 0;
-        
-        for (int i = 0; i < 2*n-1; ++i) {
-            int l = i / 2, r = l + i % 2;
-            while (l >= 0 && r < n && s.charAt(l) == s.charAt(r)) {
-                --l;
-                ++r;
-                ++ans;
-            }
+        int count=0;
+        for(int i=0;i<s.length();i++){
+            count+=extractPalindrome(s,i,i);//odd length
+            count+=extractPalindrome(s,i,i+1);//even length
         }
-        
-        return ans;
+        return count;
+    }
+    public int extractPalindrome(String s, int left, int right){
+        int count=0;
+        while(left>=0 && right<s.length()&& (s.charAt(left)==s.charAt(right))){
+            left--;
+            right++;
+            count++;
+        }
+        return count;
     }
 }
