@@ -7,14 +7,14 @@ class Solution {
         }
         
         list.sort((a,b)->a[1]-b[1]);
-        
+        Arrays.sort(intervals,(a,b)->a[1]-b[1]);
         int count=1;
-        int end = list.get(0)[1];
-        for(int i=1;i<list.size();i++){
+        int end = intervals[0][1];
+        for(int i=1;i<intervals.length;i++){
            
-            if(list.get(i)[0]>=end){
+            if(intervals[i][0]>=end){
                 count++;
-                end = list.get(i)[1];
+                end = intervals[i][1];
             }
             
         }
