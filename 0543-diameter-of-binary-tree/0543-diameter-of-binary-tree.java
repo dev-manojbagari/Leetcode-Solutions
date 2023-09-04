@@ -22,12 +22,12 @@ class Solution {
     
     int height(TreeNode root,int[] diameter){
         if(root==null)
-            return 0;
+            return -1;
         
         int lh = height(root.left,diameter);
         int rh = height(root.right,diameter);
         
-        diameter[0] = Math.max(diameter[0],lh+rh);
+        diameter[0] = Math.max(diameter[0],2+lh+rh);
         
         return 1 + Math.max(lh,rh);
         
