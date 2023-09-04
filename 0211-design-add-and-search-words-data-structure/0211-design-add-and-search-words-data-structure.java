@@ -17,23 +17,26 @@ class WordDictionary {
 
     
     
-        public boolean search(String word) {
-        return match(word.toCharArray(), 0, head);
+    public boolean search(String word) {
+        return isMatch(word.toCharArray(),0,head);    
     }
 
-    private boolean match(char[] chs, int k, Node node) {
-        if (k == chs.length) return node.isWord; 
-        if (chs[k] != '.') { 
-            return node.child[chs[k] - 'a'] != null && match(chs, k + 1, node.child[chs[k] - 'a']);
-        } else { 
-            for (int i = 0; i < node.child.length; i++) { 
-                if (node.child[i] != null && match(chs, k + 1, node.child[i])) { 
+    
+    boolean isMatch(char[] ca , int index,Node node){
+        if(index==ca.length) return node.isWord;
+        if(ca[index]!='.')
+            return node.child[ca[index]-'a']!=null&&isMatch(ca,index+1,node.child[ca[index]-'a']);
+        else
+        {
+            for(int i=0;i<26;i++){
+                if(node.child[i]!=null&&isMatch(ca,index+1,node.child[i]))
                     return true;
-                }
             }
         }
+        
         return false;
     }
+    
     
     
     private class Node{
