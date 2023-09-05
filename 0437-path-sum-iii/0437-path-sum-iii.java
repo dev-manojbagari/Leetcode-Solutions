@@ -16,7 +16,7 @@ public class Solution {
             return;
         }
 
-        currPathSum = Math.addExact(currPathSum, node.val);  // Use Math.addExact() to handle integer overflow
+        currPathSum = currPathSum+node.val;  // Use Math.addExact() to handle integer overflow
         long oldPathSum = currPathSum - target;
 
         result += cache.getOrDefault(oldPathSum, 0);
