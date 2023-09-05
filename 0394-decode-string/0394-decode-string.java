@@ -1,7 +1,67 @@
 import java.util.*;
 
 class Solution {
-    public String decodeString(String s) {
+//     public String decodeString(String s) {
+//         Stack<Integer> countStack = new Stack<>();
+//         Stack<StringBuilder> stringStack = new Stack<>();
+        
+//         int k=0;
+//         StringBuilder curr= new StringBuilder();
+//         for(char c:s.toCharArray()){
+            
+//             if(Character.isDigit(c)){
+//                 k = k*10+c;
+//             }else if(c=='['){
+//                 countStack.push(k);
+//                 stringStack.push(curr);
+//                 k=0;
+//                 curr=new StringBuilder();
+//             }else if(c==']'){
+//                 String temp = curr.toString();
+//                 curr=stringStack.pop();
+                
+//                 for(int i=countStack.pop();i>=0;i--)
+//                     curr.append(temp);
+//             }else{
+//                 curr.append(c);
+//             }
+            
+//         }
+        
+//         return curr.toString();
+        
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   public String decodeString(String s) {
         Deque<Integer> countStack = new ArrayDeque<>();
         Deque<StringBuilder> stringStack = new ArrayDeque<>();
         StringBuilder cur = new StringBuilder();
@@ -22,4 +82,6 @@ class Solution {
         }
         return cur.toString();
     }
+
+
 }
