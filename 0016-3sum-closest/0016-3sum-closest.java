@@ -17,8 +17,13 @@ class Solution {
                }
                if(sum<target){
                    j++;
+                   while(j<k&&nums[j-1]==nums[j])
+                       j++;
+                   
                }else{
                    k--;
+                   while(j<k&&nums[k+1]==nums[k])
+                       k--;
                } 
             }
         }
