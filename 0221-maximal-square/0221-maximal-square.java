@@ -10,9 +10,6 @@ class Solution {
                 else if(matrix[i][j]=='0')
                     dp[i][j]=0;
                 else{
-		            // if (dp[i - 1][j - 1] == 0 || dp[i][j - 1] == 0 || dp[i - 1][j] == 0)
-		            // dp[i][j] = 1;
-		            // else
 		            dp[i][j] = 1 + Math.min(dp[i - 1][j - 1], Math.min(dp[i][j - 1], dp[i - 1][j]));
                 }
                 max = Math.max(max,dp[i][j]);                
