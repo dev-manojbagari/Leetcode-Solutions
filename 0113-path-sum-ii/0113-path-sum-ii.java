@@ -25,20 +25,19 @@ class Solution {
      private void preOrder(TreeNode root, int targetSum,int curSum,List<List<Integer>> list,List<Integer> tempList) {
             if(root==null)
                 return;
+         curSum += root.val;
             tempList.add(root.val);
          
            if(root.left==null&&root.right==null){
-                if(targetSum-curSum-root.val==0){
+                if(targetSum-curSum==0){
                         list.add(new ArrayList(tempList));
              
                 }
-               tempList.remove(tempList.size()-1);
-         return;
+           }else{
+
+            preOrder(root.left,targetSum,curSum,list,tempList);
+            preOrder(root.right,targetSum,curSum,list,tempList);
            }
-
-            preOrder(root.left,targetSum,curSum+root.val,list,tempList);
-            preOrder(root.right,targetSum,curSum+root.val,list,tempList);
-
             tempList.remove(tempList.size()-1);
          
          
