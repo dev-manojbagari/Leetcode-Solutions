@@ -17,9 +17,11 @@ class Solution {
             if (targetSum == curSum) {
                 list.add(new ArrayList<>(tempList));
             }
+            
         } else {
-            preOrder(root.left, targetSum, curSum, list, new ArrayList<>(tempList));
-            preOrder(root.right, targetSum, curSum, list, new ArrayList<>(tempList));
+            preOrder(root.left, targetSum, curSum, list, tempList);
+            preOrder(root.right, targetSum, curSum, list, tempList);
         }
+            tempList.remove(tempList.size()-1);
     }
 }
