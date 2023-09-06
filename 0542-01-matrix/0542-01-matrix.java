@@ -30,12 +30,11 @@ class Solution {
                 int x = curNode.i+dir[0];
                 int y = curNode.j+dir[1];
                 
-                if(x<0||x>=mat.length||y<0||y>=mat[0].length||dist[x][y]>0)
+                if(x<0||x>=mat.length||y<0||y>=mat[0].length)
                         continue;
                 
-                    if(mat[x][y]==1){
+                    if(mat[x][y]==1&&dist[x][y]==0){
                         dist[x][y]=curNode.dist+1;
-                        // vis[x][y]=true;
                         q.add(new Pair(x,y,curNode.dist+1));
                     }
             }
