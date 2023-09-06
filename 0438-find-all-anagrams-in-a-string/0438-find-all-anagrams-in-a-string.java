@@ -1,44 +1,44 @@
 class Solution {
     public List<Integer> findAnagrams(String s, String p) {
         List<Integer> list = new ArrayList<>();
-        
-        if(p.length()>s.length())
+        if(s.length()<p.length())
             return list;
-        
-        int[] cmap= new int[26];
-        
-        for(char c:p.toCharArray()){
-            cmap[c-'a']++;
-        }
-        int diff = p.length();
+        int[] charCount = new int[26];
         for(int i=0;i<p.length();i++){
-            char c = s.charAt(i);
-            cmap[c-'a']--;
-            if(cmap[c-'a']>=0)
+            char c = p.charAt(i);
+            charCount[c-'a']++;
+        }
+        
+        int start=0,end=0;
+        int diff=p.length();
+        for(;end<p.length();end++){
+            char c = s.charAt(end);
+            charCount[c-'a']--;
+            if(charCount[c-'a']>=0)
                 diff--;
         }
         
-        if(diff==0){
+        if(diff==0)
             list.add(0);
+        
+        while(end<s.length()){
+          char c  = s.charAt(start);
+            if(charCount[c-'a'] >= 0){ // Change this line
+                diff++; 
+            }
+            charCount[c-'a']++;
+            c= s.charAt(end);
+            charCount[c-'a']--;
+            if(charCount[c-'a']>=0){
+                diff--;
+            }
+            
+            if(diff==0)
+                list.add(start+1); // Change this line
+            start++;
+            end++;
         }
         
-        int start=0, end=p.length();
-        for(;end<s.length();end++, start++)
-        {
-            char c = s.charAt(start);
-            if(cmap[c-'a'] >= 0)
-                diff++;
-            cmap[c-'a']++;
-            
-            c = s.charAt(end);
-            cmap[c-'a']--;
-            if(cmap[c-'a'] >= 0)
-                diff--;
-
-            // Check if diff is zero after adjusting the character counts
-            if(diff==0)
-                list.add(start+1);
-        }
         
         return list;
     }
