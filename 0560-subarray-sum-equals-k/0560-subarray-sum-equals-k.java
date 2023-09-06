@@ -1,21 +1,17 @@
-import java.util.HashMap;
-import java.util.Map;
+class Solution {
 
-public class Solution {
     public int subarraySum(int[] nums, int k) {
-        int count = 0;
-        int cumulativeSum = 0;
-        Map<Integer, Integer> map = new HashMap<>(); // Store cumulative sums and their frequencies
+        Map<Integer, Integer> map = new HashMap<>();
+        int n = nums.length;
+        int commulativeSum = 0;
         map.put(0, 1);
-
-        for (int num : nums) {
-            cumulativeSum += num;
-
-            if (map.containsKey(cumulativeSum - k)) {
-                count += map.get(cumulativeSum - k);
-            }
-
-            map.put(cumulativeSum, map.getOrDefault(cumulativeSum, 0) + 1);
+        int count = 0;
+        for (int i = 0; i < n; i++) {
+            commulativeSum += nums[i];
+            if (map.containsKey(commulativeSum - k)) 
+                count += map.get(commulativeSum - k);
+            
+            map.put(commulativeSum, map.getOrDefault(commulativeSum, 0) + 1);
         }
 
         return count;
