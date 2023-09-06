@@ -17,7 +17,7 @@ class Solution {
             for(int j=0;j<cols;j++){
                 if(mat[i][j]==0){
                     q.add(new Pair(i,j,0));
-                    vis[i][j]=true;
+                   // vis[i][j]=true;
                 }        
             }
         }
@@ -33,9 +33,9 @@ class Solution {
                 if(x<0||x>=mat.length||y<0||y>=mat[0].length||vis[x][y]==true)
                         continue;
                 
-                    if(mat[x][y]==1){
+                    if(mat[x][y]==1&&dist[x][y]==0){
                         dist[x][y]=curNode.dist+1;
-                        vis[x][y]=true;
+                        // vis[x][y]=true;
                         q.add(new Pair(x,y,curNode.dist+1));
                     }
             }
