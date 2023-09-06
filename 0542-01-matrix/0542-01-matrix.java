@@ -33,7 +33,7 @@ class Solution {
                 if(x<0||x>=mat.length||y<0||y>=mat[0].length||dist[x][y]>0)
                         continue;
                 
-                    if(mat[x][y]==1&&dist[x][y]==0){
+                    if(mat[x][y]==1){
                         dist[x][y]=curNode.dist+1;
                         // vis[x][y]=true;
                         q.add(new Pair(x,y,curNode.dist+1));
