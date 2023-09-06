@@ -9,7 +9,7 @@ class Solution {
     }
     public int[][] updateMatrix(int[][] mat) {
         int rows=mat.length,cols=mat[0].length;
-        boolean[][] vis = new boolean[rows][cols];
+     //  boolean[][] vis = new boolean[rows][cols];
         int[][] dist = new int[rows][cols];        
         Queue<Pair> q = new LinkedList<>();
         
@@ -30,7 +30,7 @@ class Solution {
                 int x = curNode.i+dir[0];
                 int y = curNode.j+dir[1];
                 
-                if(x<0||x>=mat.length||y<0||y>=mat[0].length||vis[x][y]==true)
+                if(x<0||x>=mat.length||y<0||y>=mat[0].length||dist[x][y]>0)
                         continue;
                 
                     if(mat[x][y]==1&&dist[x][y]==0){
