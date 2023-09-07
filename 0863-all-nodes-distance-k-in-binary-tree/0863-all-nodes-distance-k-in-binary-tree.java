@@ -28,7 +28,7 @@ class Solution {
                 distanceKDown(root.right,list,k-dl-2);
             }
             return dl + 1;
-        }
+        }else{
             int dr = distanceK(root.right, target, k, list);
             if (dr != -1) {
                 if (dr + 1 == k) {
@@ -39,7 +39,7 @@ class Solution {
                 }
             return dr + 1;
             }
-        
+        }
         return -1;
         
     }
