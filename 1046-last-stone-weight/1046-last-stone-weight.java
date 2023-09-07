@@ -8,7 +8,6 @@ class Solution {
         }
         
         while(pq.size()>1){
-            System.out.println(pq);
             int a = pq.poll();
             int b = pq.poll();
             if(a!=b){
