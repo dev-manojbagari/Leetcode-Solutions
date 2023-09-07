@@ -13,7 +13,7 @@ class Solution {
         
         Queue<Pair> q = new LinkedList<>();
         int[][] dirs= {{1,0},{0,1},{-1,0},{0,-1}};
-        int maxTime = 0;
+        int minTime = 0;
         int notRotten=0;
         for(int i=0;i<rows;i++){
             for(int j=0;j<cols;j++){
@@ -38,10 +38,10 @@ class Solution {
                 grid[x][y]=2;
                 notRotten--;
                 q.offer(new Pair(x,y,node.curTime+1));
-                maxTime = Math.max(maxTime,node.curTime+1);
+                minTime = Math.max(minTime,node.curTime+1);
             }
         }
         
-        return notRotten!=0?-1:maxTime;
+        return notRotten!=0?-1:minTime;
     }
 }
