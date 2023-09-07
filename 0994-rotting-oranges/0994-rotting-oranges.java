@@ -38,7 +38,7 @@ class Solution {
                 grid[x][y]=2;
                 notRotten--;
                 q.offer(new Pair(x,y,node.curTime+1));
-                minTime = Math.max(minTime,node.curTime+1);
+                minTime = node.curTime+1;
             }
         }
         
