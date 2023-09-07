@@ -1,7 +1,6 @@
 class Solution {
     public int[][] kClosest(int[][] points, int k) {
         
-        // PriorityQueue<int[]> pq = new PriorityQueue<>((int[] a,int[] b)->b[1]*b[1]+b[0]*b[0]-a[1]*a[1]+a[0]*a[0]);
         PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> (b[1]*b[1] + b[0]*b[0]) - (a[1]*a[1] + a[0]*a[0]));
 
         
@@ -24,7 +23,7 @@ class Solution {
         }
         
         
-        return list.toArray(new int[list.size()-1][2]);
+        return list.toArray(new int[list.size()][2]);
         
     }
 }
