@@ -13,16 +13,23 @@ class MyQueue {
     }
     
     public int pop() {
-        peek();
+        if(stack2.isEmpty()){
+            fillStack2FromStack1();    
+        }
        return stack2.pop();
     }
     
     public int peek() {
         if(stack2.isEmpty()){
-        while(!stack1.isEmpty())
-            stack2.push(stack1.pop());
+            fillStack2FromStack1();    
         }
         return stack2.peek();
+    }
+   
+    private void fillStack2FromStack1(){
+        while(!stack1.isEmpty())
+                stack2.push(stack1.pop());
+        
     }
     
     public boolean empty() {
