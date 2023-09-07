@@ -24,10 +24,10 @@ class TimeMap {
         else if(map.get(key).size()==1)
             return map.get(key).get(0).value;
         else
-            return binarySearch(map.get(key),timestamp);
+            return ceiling(map.get(key),timestamp);
     }
     
-    private String binarySearch(List<Data> list,int timestamp){
+    private String ceiling(List<Data> list,int timestamp){
         
         int left = 0,right=list.size()-1;
         String ans ="";
