@@ -22,11 +22,7 @@ class Solution {
 	}
 
 	List<Interval> intervals = new ArrayList<>();
-	for (char key : map.keySet()) {
-	    // if (map.get(key).end != -1) {
-		intervals.add(map.get(key));
-	    // }
-	}
+	intervals.addAll(map.values());
 	intervals.sort((a, b) -> a.start - b.start);
 	List<Interval> mergedIntervals = new ArrayList<>();
 
