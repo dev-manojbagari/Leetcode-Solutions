@@ -7,16 +7,21 @@ public class Solution {
         for (int card : deck) {
             counts.put(card, counts.getOrDefault(card, 0) + 1);
         }
-        for (int card : counts.keySet()) {
-            if (counts.get(card) > 0) {
-                for (int i = W - 1; i >= 0; i--) {
-                    if (counts.getOrDefault(card + i, 0) < counts.get(card)) {
-                        return false;
-                    }
-                    counts.put(card + i, counts.get(card + i) - counts.get(card));
-                }
+        
+      for (int card : counts.keySet()) {
+    if (counts.get(card) > 0) {
+        int count = counts.get(card);
+        counts.put(card , 0);
+        
+        for (int i = 1; i < W; i++) {
+            if (counts.getOrDefault(card + i, 0) < count) {
+                return false;
             }
+            counts.put(card + i, counts.get(card + i) - count);
         }
+    }
+}
+
         return true;
     }
 }
