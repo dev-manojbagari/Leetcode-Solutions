@@ -1,26 +1,18 @@
 class Solution {
     public int[] twoSum(int[] numbers, int target) {
-        int n = numbers.length;
-        for(int i=0;i<n;i++){
-            int index=binarySearch(numbers,i+1,n-1,target-numbers[i]);
-            if(index!=-1)
-            return new int[]{i+1,index+1};
+        int left=0,right=numbers.length-1;
+        while(left<right){
+            int sum = numbers[left]+numbers[right];
+            if(sum==target){
+                return new int[]{left+1,right+1};
+            }else if(sum<target){
+                left++;
+            }else{
+                right--;
+            }
+            
         }
         
         return new int[]{-1,-1};
-    }
-    
-    int binarySearch(int[] nums,int left,int right,int val){
-        
-        while(left<=right){
-            int mid = left+(right-left)/2;
-            if(nums[mid]==val)
-                return mid;
-            else if(nums[mid]<val)
-                left =mid+1;
-            else
-                right = mid-1;
-        }
-        return -1;
     }
 }
