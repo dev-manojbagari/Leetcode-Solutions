@@ -1,79 +1,76 @@
-public class Twitter {
-
-private static class Tweet{
-    int tweetId;
-    int timePosted;
-    public Tweet(int tId, int time){
-        tweetId = tId;
-        timePosted = time;
-    }
-}
-
-static int timeStamp;
-int feedMaxNum;
-Map<Integer, Set<Integer>> followees;
-Map<Integer, List<Tweet>> tweets;
-
-/** Initialize your data structure here. */
-public Twitter() {
-    timeStamp = 0;
-    feedMaxNum = 10;
-    followees = new HashMap<>();
-    tweets = new HashMap<>();
-}
-
-/** Compose a new tweet. */
-public void postTweet(int userId, int tweetId) {
-    if(!tweets.containsKey(userId)) {
-        tweets.put(userId, new LinkedList<Tweet>());
-        follow(userId, userId);  //follow itself
-    }
-    tweets.get(userId).add(0, new Tweet(tweetId, timeStamp++)); //add new tweet on the first place
-}
-
-/** Retrieve the 10 most recent tweet ids in the user's news feed. Each item in the news feed must be posted by users who the user followed or by the user herself. Tweets must be ordered from most recent to least recent. */
-public List<Integer> getNewsFeed(int userId) {
-    //min heap that the earliest tweet is on the top
-    PriorityQueue<Tweet> feedHeap = new PriorityQueue<>(new Comparator<Tweet>(){
-        public int compare(Tweet t1, Tweet t2){
-            return t1.timePosted - t2.timePosted;
+class Twitter {
+    class TweetInfo{
+        int count;
+        int tweetId;
+        TweetInfo(int count,int tweetId){
+            this.count=count;
+            this.tweetId=tweetId;
         }
-    });
-
-    //add tweets of the followees
-    Set<Integer> myFollowees = followees.get(userId);
-    if(myFollowees != null){
-        for(int followeeId : myFollowees){
-            List<Tweet> followeeTweets = tweets.get(followeeId);
-            if(followeeTweets == null) continue;
-            for(Tweet t : followeeTweets){
-                if(feedHeap.size() < feedMaxNum) feedHeap.add(t);
-                else{
-                    if(t.timePosted <= feedHeap.peek().timePosted) break;
+        
+        @Override
+    public String toString() {
+        return "count=" + this.count + ", tweetId=" + this.tweetId;
+    }
+    }
+    
+    Map<Integer,Set<Integer>> followMap;
+    Map<Integer,LinkedList<TweetInfo>> postMap;
+    static int count=0;
+    public Twitter() {
+        followMap = new HashMap<>();
+        postMap = new HashMap<>();
+    }
+    
+    public void postTweet(int userId, int tweetId) {
+        if(!postMap.containsKey(userId)){
+            postMap.put(userId,new LinkedList<>());
+            follow(userId,userId);
+        }
+        postMap.get(userId).add(0,new TweetInfo(count++,tweetId));
+    }
+    
+    public List<Integer> getNewsFeed(int userId) {
+        PriorityQueue<TweetInfo> pq = new PriorityQueue<TweetInfo>((a,b)->a.count-b.count);
+        LinkedList<Integer> newsfeed = new LinkedList<>();
+        Set<Integer> followees = followMap.get(userId);
+        if(followees==null)
+            return newsfeed;
+        for(int followee:followees){
+            List<TweetInfo> tweets = postMap.get(followee);
+            if(tweets==null)
+                continue;
+            for(TweetInfo tweet:tweets){
+                
+                if(pq.size()<10){
+                    pq.offer(tweet);
+                }else{
+                    if(tweet.count<=pq.peek().count)
+                        break;
                     else{
-                        feedHeap.add(t);
-                        feedHeap.poll(); //remove the oldest tweet
+                        pq.poll();
+                        pq.offer(tweet);
                     }
                 }
             }
         }
+        
+        while(!pq.isEmpty()){
+             newsfeed.add(0,pq.poll().tweetId);
+        }
+        
+        return newsfeed;
     }
-    List<Integer> myFeed = new LinkedList<>();
-    while(!feedHeap.isEmpty()){
-        myFeed.add(0, feedHeap.poll().tweetId);
+    
+    public void follow(int followerId, int followeeId) {
+         if(!followMap.containsKey(followerId))
+            followMap.put(followerId,new HashSet<>());
+        followMap.get(followerId).add(followeeId);
+        //followMap.computIfAbsent(followerId,(k->new HashSet<>())).add(followeeId);
     }
-    return myFeed;
+    
+    public void unfollow(int followerId, int followeeId) {
+        if(followMap.containsKey(followerId)&&followerId!=followeeId)
+            followMap.get(followerId).remove(followeeId);
+    }
 }
 
-/** Follower follows a followee. If the operation is invalid, it should be a no-op. */
-public void follow(int followerId, int followeeId) {
-    if(!followees.containsKey(followerId)) followees.put(followerId, new HashSet<Integer>());
-    followees.get(followerId).add(followeeId);
-}
-
-/** Follower unfollows a followee. If the operation is invalid, it should be a no-op. */
-public void unfollow(int followerId, int followeeId) {
-    if(!followees.containsKey(followerId) || followerId == followeeId) return; //cannot unfollow itself
-    followees.get(followerId).remove(followeeId);
-}
-}
