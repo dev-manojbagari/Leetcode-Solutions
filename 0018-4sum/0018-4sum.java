@@ -6,7 +6,7 @@ class Solution {
         
         for(int i=0;i<n;i++){
             for(int j=i+1;j<n;j++){
-            if (j > i + 1 && nums[j] == nums[j - 1]) continue;
+           // if (j > i + 1 && nums[j] == nums[j - 1]) continue;
                int k = j+1;
                int l = n-1;
                 
