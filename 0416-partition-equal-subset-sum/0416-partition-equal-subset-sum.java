@@ -13,15 +13,15 @@ class Solution {
         boolean[][] dp = new boolean[n][sum+1];
         
         for(int i=0;i<nums.length;i++){
-            for(int j=0;j<=sum;j++){
-                if(j==0)
-                    dp[i][j]=true;
+            for(int curSum=0;curSum<=sum;curSum++){
+                if(curSum==0)
+                    dp[i][curSum]=true;
                 else if(i==0)
-                    dp[i][j]=false;
-                else if(j-nums[i]>=0)
-                    dp[i][j] = dp[i-1][j]||dp[i-1][j-nums[i]];
+                    dp[i][curSum]=false;
+                else if(curSum-nums[i]>=0)
+                    dp[i][curSum] = dp[i-1][curSum]||dp[i-1][curSum-nums[i]];
                 else
-                    dp[i][j]=dp[i-1][j];
+                    dp[i][curSum]=dp[i-1][curSum];
             }
         }
         
