@@ -5,20 +5,26 @@ class Solution {
         if(arraySum%2!=0)
             return false;
         
-        return subsetSum(0,nums,arraySum/2,new Boolean[nums.length][arraySum/2+1]);
+        return subsetSum(0,nums,arraySum/2);
     }
     
-    private boolean subsetSum(int index,int[] nums,int sum,Boolean[][] cache){
-        if(sum==0)
-            return true;
-        if(sum<0)
-            return false;
-        if(index==nums.length)
-            return sum==0;
-
-        if(cache[index][sum]!=null)
-            return cache[index][sum];
+    private boolean subsetSum(int index,int[] nums,int sum){
+        int n = nums.length;
+        boolean[][] dp = new boolean[n][sum+1];
         
-        return cache[index][sum] = subsetSum(index+1,nums,sum,cache)||subsetSum(index+1,nums,sum-nums[index],cache);
+        for(int i=0;i<nums.length;i++){
+            for(int j=0;j<=sum;j++){
+                if(j==0)
+                    dp[i][j]=true;
+                else if(i==0)
+                    dp[i][j]=false;
+                else if(j-nums[i]>=0)
+                    dp[i][j] = dp[i-1][j]||dp[i-1][j-nums[i]];
+                else
+                    dp[i][j]=dp[i-1][j];
+            }
+        }
+        
+        return dp[n-1][sum];
     }
 }
