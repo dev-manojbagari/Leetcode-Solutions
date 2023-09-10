@@ -16,26 +16,26 @@
 class BSTIterator {
     List<Integer> list = new ArrayList<>();
     int index=0;
+    Stack<TreeNode> stack;
     public BSTIterator(TreeNode root) {
-        Stack<TreeNode> stack = new Stack<>();
-        TreeNode curr = root;
-        while(curr!=null||!stack.isEmpty()){
-            while(curr!=null){
-                stack.push(curr);
-                curr=curr.left;
-            }
-            curr=stack.pop();
-            list.add(curr.val);
-            curr=curr.right;
-        }
+        stack = new Stack<>();
+        pushAll(root);
     }
     
+    private void pushAll(TreeNode node){
+        while(node!=null){
+            stack.push(node);
+            node = node.left;
+        }
+    }
     public int next() {
-        return list.get(index++);
+        TreeNode node = stack.pop();
+        pushAll(node.right);
+        return node.val;
     }
     
     public boolean hasNext() {
-        return list.size()>index;
+        return !stack.isEmpty();
     }
 }
 
