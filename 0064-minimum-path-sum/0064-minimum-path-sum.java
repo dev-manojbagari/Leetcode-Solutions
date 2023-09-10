@@ -3,11 +3,11 @@ class Solution {
     public int minPathSum(int[][] grid) {
         int rows= grid.length,cols=grid[0].length;
         dp = new Integer[rows][cols];
-        return dfs(0,0,0,grid);        
+        return dfs(0,0,grid);        
         
     }
     
-    int  dfs(int i,int j,int curSum,int[][] grid){
+    int  dfs(int i,int j,int[][] grid){
         if(i==grid.length-1&&j==grid[0].length-1){
             return grid[i][j];
         }
@@ -19,8 +19,8 @@ class Solution {
             return dp[i][j];
         
         
-      int right =  dfs(i,j+1,curSum+grid[i][j],grid);
-      int down  =  dfs(i+1,j,curSum+grid[i][j],grid);
+      int right =  dfs(i,j+1,grid);
+      int down  =  dfs(i+1,j,grid);
         
       return dp[i][j] = Math.min(right,down)+grid[i][j];  
     }
