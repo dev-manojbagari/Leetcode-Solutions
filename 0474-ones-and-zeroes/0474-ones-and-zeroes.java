@@ -1,5 +1,5 @@
 class Solution {
-    static class Pair {
+     class Pair {
         int ones;
         int zeros;
 
