@@ -8,15 +8,15 @@ class Solution {
             this.ones = ones;
         }
     }
-    int[][][] dp;
+    Integer[][][] dp;
 
     int findMaxForm(String[] strs, int m, int n) {
-        dp = new int[strs.length + 1][m+1][n+1];
+        dp = new Integer[strs.length + 1][m+1][n+1];
 
         // initialize the 3-D array
-        Arrays.stream(dp)
-                .flatMap(Arrays::stream)
-                .forEach(col -> Arrays.fill(col, -1));
+        // Arrays.stream(dp)
+        //         .flatMap(Arrays::stream)
+        //         .forEach(col -> Arrays.fill(col, -1));
 
         List<Pair> pairs = new ArrayList<>();
         for (String str: strs) {
@@ -44,7 +44,7 @@ class Solution {
         }
 
         // dp[index][m][n] is already set, return the value
-        if (dp[index][m][n] != -1) {
+        if (dp[index][m][n] != null) {
             return dp[index][m][n];
         }
 
