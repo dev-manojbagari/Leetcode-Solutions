@@ -1,67 +1,50 @@
 class Solution {
-     class Pair {
-        int ones;
-        int zeros;
-
-        public Pair(int zeros, int ones) {
-            this.zeros = zeros;
-            this.ones = ones;
+    class Pair{
+        int ones=0,zeros=0;
+        Pair(int zeros,int ones){
+            this.ones=ones;
+            this.zeros=zeros;
         }
     }
-    Integer[][][] dp;
-
-    int findMaxForm(String[] strs, int m, int n) {
-        dp = new Integer[strs.length + 1][m+1][n+1];
-
-        // initialize the 3-D array
-        // Arrays.stream(dp)
-        //         .flatMap(Arrays::stream)
-        //         .forEach(col -> Arrays.fill(col, -1));
-
-        List<Pair> pairs = new ArrayList<>();
-        for (String str: strs) {
-            int indx = 0, ones = 0, zeros = 0;
-            while (indx < str.length()) {
-                if (str.charAt(indx) == '1') {
-                    ones++;
-                } else {
-                    zeros++;
-                }
-                indx++;
+    public int findMaxForm(String[] strs, int m, int n) {
+        List<Pair> list = new  ArrayList<>();
+        
+        for(String str:strs){
+            int oneCount=0,zeroCount=0;
+            for(char c:str.toCharArray()){
+                if(c=='0')
+                    zeroCount++;
+                else
+                    oneCount++;
             }
-            Pair p = new Pair(zeros, ones);
-            pairs.add(p);
+            if(zeroCount<=m&&oneCount<=n)
+            list.add(new Pair(zeroCount,oneCount));
         }
-
-        return sub(pairs, 0, m, n);
+        Integer[][][] dp = new Integer[list.size()][m+1][n+1];
+        return findMaxForm(0,list,m,n,dp);
     }
 
-    int sub(List<Pair> pairs, int index, int m, int n) {
-
-        // base condition
-        if (index == pairs.size() || (m == 0 && n == 0)) {
+    private int findMaxForm(int index,List<Pair> list , int maxZeros,int maxOnes,Integer[][][] dp){
+        
+        if(index==list.size()||(maxZeros==0&&maxOnes==0))
             return 0;
+        
+        
+        
+        if(dp[index][maxZeros][maxOnes]!=null)
+            return dp[index][maxZeros][maxOnes];
+        
+        int oneCount = list.get(index).ones;
+        int zeroCount = list.get(index).zeros;
+        
+        if(oneCount>maxOnes||zeroCount>maxZeros){
+            return dp[index][maxZeros][maxOnes]= findMaxForm(index+1,list,maxZeros,maxOnes,dp);
         }
-
-        // dp[index][m][n] is already set, return the value
-        if (dp[index][m][n] != null) {
-            return dp[index][m][n];
-        }
-
-        // for the index, if the number of ones or zeros are more than m or n - ignore the current pair/string and move to next string
-        int mZeros = pairs.get(index).zeros;
-        int nOnes = pairs.get(index).ones;
-        if (mZeros > m || nOnes > n ) {
-            dp[index][m][n] = sub(pairs, index + 1, m, n);
-            return dp[index][m][n];
-        }
-
-        // determine whether to include or exclude the current string as part of the largest subset
-        int include = 1 + sub(pairs, index + 1, m - mZeros, n - nOnes);
-        int exclude = sub(pairs, index + 1, m, n);
-
-        dp[index][m][n] = Math.max(include, exclude);
-
-        return dp[index][m][n];
+        
+        
+        int notInclude = findMaxForm(index+1,list,maxZeros,maxOnes,dp);
+        int include = 1+findMaxForm(index+1,list,maxZeros-zeroCount,maxOnes-oneCount,dp);
+        
+        return dp[index][maxZeros][maxOnes]= Math.max(notInclude,include);
     }
 }
