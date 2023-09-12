@@ -3,10 +3,11 @@ class Solution {
         int n = nums.length;
         int repeating =0,missing=0;
         for(int i=0;i<n;i++){
-           if(nums[Math.abs(nums[i])-1]<0){
-               repeating = Math.abs(nums[i]);
+            int index = Math.abs(nums[i])-1;
+           if(nums[index]<0){
+               repeating = index+1;
            }else{
-               nums[Math.abs(nums[i])-1]*=-1;    
+               nums[index]=-nums[index];    
            }
         }
         
