@@ -56,16 +56,17 @@ class Solution {
     private int largestSmaller(List<Integer> list, int target) {
         int left = 0;
         int right = list.size() - 1;
-        int ans = 0;
-        while (left + 1 < right) {
+        int ans = right;
+        while (left <= right) {
             int mid = left + (right - left) / 2;
             if (list.get(mid) < target) {
-                left = mid;
+                ans = mid;
+                left = mid+1;
             } else {
                 right = mid - 1;
             }
         }
 
-        return list.get(right) < target ? right : left;
+        return ans;
     }
 }
