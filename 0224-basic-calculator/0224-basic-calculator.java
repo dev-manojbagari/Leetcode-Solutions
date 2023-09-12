@@ -19,6 +19,7 @@ class Solution {
                 stack.push(result);
                 stack.push(sign);
                 result=0;
+                number=0;
                 sign=1;
             }else if(c==')'){
                 result += sign*number;
