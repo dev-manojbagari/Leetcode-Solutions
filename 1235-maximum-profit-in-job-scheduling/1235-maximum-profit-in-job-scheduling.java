@@ -39,7 +39,7 @@ class Solution {
         dpProfit.add(0);
 
         for (Job job : jobs) {
-            int prevIdx = largestSmaller(dpEndTime, job.start + 1); // previous job can end at job.start, so we use "job.start + 1"
+            int prevIdx = largestSmaller(dpEndTime, job.start); // previous job can end at job.start, so we use "job.start + 1"
             int case2Profit = dpProfit.get(prevIdx) + job.profit;
             int case1Profit = dpProfit.get(dpProfit.size() - 1);
             
@@ -59,7 +59,7 @@ class Solution {
         int ans = right;
         while (left <= right) {
             int mid = left + (right - left) / 2;
-            if (list.get(mid) < target) {
+            if (list.get(mid) <= target) {
                 ans = mid;
                 left = mid+1;
             } else {
