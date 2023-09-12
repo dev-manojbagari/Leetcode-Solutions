@@ -54,17 +54,21 @@ class Solution {
     
     
     public boolean findTarget(TreeNode root, int k) {
-            BSTIterator left  = new BSTIterator(root, true);
-        BSTIterator right = new BSTIterator(root, false);
-        while (left.hasNext() && right.hasNext()) {
-            int l = left.peek(), r = right.peek();
-            if (l >= r)  return false;
-            if (l + r == k) return true;
-            else if (l + r < k)
+        BSTIterator left = new BSTIterator(root,true);
+        BSTIterator right = new BSTIterator(root,false);
+        
+        while(left.hasNext()&&right.hasNext()){
+            if(left.peek()>=right.peek())
+                return false;
+            int sum = left.peek()+right.peek();
+            if(sum==k)
+                return true;
+            else if(sum<k)
                 left.next();
             else
                 right.next();
         }
+        
         return false;
         
     }
