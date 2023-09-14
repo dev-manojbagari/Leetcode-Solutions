@@ -12,7 +12,7 @@ class LFUCache {
         int freq;
         Node head,tail;
         DLinkedList(int freq){
-            this.freq =  freq;
+       //     this.freq =  freq;
             head = new Node(0,0);
             tail = new Node(0,0);
             head.next = tail;
