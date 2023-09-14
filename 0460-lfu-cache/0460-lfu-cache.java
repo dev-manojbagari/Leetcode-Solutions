@@ -28,9 +28,7 @@ class LFUCache {
         }
         if(size>=capacity)
         {
-            while(freqMap.get(minFreq).isEmpty()){
-            minFreq++;
-            }
+          
             Node node= freqMap.get(minFreq).pop();
             map.remove(node.key);
             size--;
@@ -49,7 +47,7 @@ class LFUCache {
         node.freq++;
         freqMap.computeIfAbsent(node.freq,key->new DLinkedList()).add(node);
         
-        if(node.freq==minFreq&&freqMap.get(minFreq).isEmpty())minFreq++;
+        if(freq==minFreq&&freqMap.get(minFreq).isEmpty())minFreq++;
     }
     
     class Node{
