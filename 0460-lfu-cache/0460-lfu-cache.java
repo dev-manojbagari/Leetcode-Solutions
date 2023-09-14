@@ -11,8 +11,8 @@ class LFUCache {
     class DLinkedList{
         int freq;
         Node head,tail;
-        DLinkedList(int freq){
-       //     this.freq =  freq;
+        DLinkedList(){
+      
             head = new Node(0,0);
             tail = new Node(0,0);
             head.next = tail;
@@ -52,14 +52,14 @@ class LFUCache {
         this.size = minFreq = 0;
         keyMap = new HashMap<>();
         freqMap = new HashMap<>();
-        freqMap.put(0,new DLinkedList(0));
+        freqMap.put(0,new DLinkedList());
     }
     
     private int _update(Node node){
         int freq = node.freq;
         freqMap.get(freq).delete(node);
         node.freq ++;
-        freqMap.computeIfAbsent(node.freq,k->new DLinkedList(node.freq)).add(node);
+        freqMap.computeIfAbsent(node.freq,k->new DLinkedList()).add(node);
         
        if (minFreq == freq && freqMap.get(minFreq).isEmpty()) minFreq++;
         return node.value;
