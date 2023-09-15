@@ -14,39 +14,48 @@
  * }
  */
 class Solution {
-    class MinMax{
-        int min=Integer.MAX_VALUE;
-        int max=Integer.MIN_VALUE;
-        int sum =0;
-        boolean isBST = true;
+     private class Tree {
+	boolean isBST = true;
+	int min = Integer.MAX_VALUE;
+	int max = Integer.MIN_VALUE;
+	int sum;
     }
-        int max[]={0};
+
     public int maxSumBST(TreeNode root) {
-        MinMax minMax = maxSumBST2(root);
-        return max[0];
+	if (root == null)
+	    return 0;
+
+	int[] maxSum = { 0 };
+
+	maxSumBST(root, new Tree(), maxSum);
+
+	return maxSum[0];
     }
-    
-    MinMax maxSumBST2(TreeNode root){
-        if(root==null)
-            return new MinMax();
-        
-        MinMax left = maxSumBST2(root.left);
-        MinMax right =maxSumBST2(root.right);
-        
-        MinMax minMax = new MinMax();
-        
-        if(left.isBST&&right.isBST&&left.max<root.val&&root.val<right.min){
-            minMax.isBST = true; 
-            minMax.min = Math.min(left.min,root.val);
-            minMax.max = Math.max(right.max,root.val);
-            minMax.sum = root.val+left.sum+right.sum;
-        
-            max[0] = Math.max(max[0],minMax.sum);
-            return minMax;
-        }
-        
-        minMax.isBST=false;
-        minMax.sum = Math.max(left.sum,right.sum);
-        return minMax;
+
+    private void maxSumBST(TreeNode root, Tree tree, int[] maxSum) {
+
+	if (root == null)
+	    return;
+
+	Tree lst = new Tree();
+	Tree rst = new Tree();
+
+	maxSumBST(root.left, lst, maxSum);
+	maxSumBST(root.right, rst, maxSum);
+
+	if (lst.isBST == true && rst.isBST == true && lst.max < root.val && root.val < rst.min) {
+
+	    tree.isBST = true;
+
+	    tree.min = root.left == null ? root.val : lst.min;
+	    tree.max = root.right == null ? root.val : rst.max;
+	    tree.sum = lst.sum + root.val + rst.sum;
+	    maxSum[0] = Math.max(maxSum[0], tree.sum);
+
+	} else {
+	    tree.isBST = false;
+	}
+
     }
 }
+
