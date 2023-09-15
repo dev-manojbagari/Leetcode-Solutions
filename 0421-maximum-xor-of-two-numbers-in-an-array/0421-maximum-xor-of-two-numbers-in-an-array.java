@@ -1,27 +1,55 @@
 class Solution {
-    public int findMaximumXOR(int[] nums) {
-        int max=0,mask=0;
-        for(int i=31;i>=0;i--){
-            mask = mask|(1<<i);
-            Set<Integer> set = new HashSet<>();
-            for(int num:nums){
-                set.add(num&mask);
-            }
-            
-            int greedyTry = max|(1<<i);
-            
-            for(int num:set){
-                if(set.contains(num^greedyTry)){
-                    max=greedyTry;
-                    break;
-                }
-            }
-            
-            
-            
-            
+    class Trie{
+        Node root;
+        public Trie(){
+            root = new Node();
         }
         
-        return max;
+        void insert(int num){
+            Node curr =root;
+            for(int i=31;i>=0;i--){
+                int bit = (num>>i)&1;
+                if(curr.child[bit]==null)
+                    curr.child[bit] = new Node();
+                curr = curr.child[bit];
+            }
+        }
+        
+        int maxXor(int num){
+            Node curr =root;
+            int maxXor = 0;
+            for(int i=31;i>=0;i--){
+                int bit = (num>>i)&1;
+                if(curr.child[1-bit]!=null){
+                    maxXor = maxXor|(1<<i);
+                    curr=curr.child[1-bit];
+                }else
+                    curr=curr.child[bit];
+            }
+            
+            return maxXor;
+        }
+        
+        class Node{
+            Node[] child;
+            Node(){
+                child = new Node[2];
+            }
+        }
+    }
+    
+    public int findMaximumXOR(int[] nums) {
+        Trie trie = new Trie();
+        
+        for(int num:nums)
+            trie.insert(num);
+    
+        int max = 0;        
+        
+        for(int num:nums){
+            max = Math.max(max,trie.maxXor(num));            
+        }
+        
+        return max;   
     }
 }
