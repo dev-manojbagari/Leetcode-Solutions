@@ -1,46 +1,33 @@
    class Solution {
-    public List<String> maxNumOfSubstrings(String s) {
-        List<String> result = new ArrayList<>();
-        Map<Character,int[]> map = new HashMap<>();
-        for(int i=0;i<s.length();i++)
-        {
-            if(map.containsKey(s.charAt(i)))
-            {
-                map.get(s.charAt(i))[1]=i;
-            }
-            else
-                map.put(s.charAt(i),new int[]{i,i});
-        }
-        int substringStart = -1;
-        for(int i=0;i<s.length();i++)
-        {
-            int start = map.get(s.charAt(i))[0];
-            if(start==i)
-            {
-                int substringEnd = getEnd(s,map,i);
-                if(substringEnd!=-1)
-                {
-                    if(substringEnd>substringStart)
-                    {
-                        result.add("");
-                    }
-                    substringStart = substringEnd;
-                    result.set(result.size()-1,s.substring(i,substringStart+1));
-                }
-            }
-        }
-            return result;
-        }
-        
-    
-    public int getEnd(String s, Map<Character,int[]> map, int start)
-    {
-        int end = map.get(s.charAt(start))[1];
-        for(int i=start;i<end;i++)
-        {
-             if(map.get(s.charAt(i))[0]<start) return -1;
-            end = Math.max(end,map.get(s.charAt(i))[1]);
-        }
-        return end;
+int checkSubstr(String s, int i, int l[], int r[]) {
+    int right = r[s.charAt(i) - 'a'];
+    for (int j = i; j <= right; ++j) {
+        if (l[s.charAt(j) - 'a'] < i)
+            return -1;
+        right = Math.max(right, r[s.charAt(j) - 'a']);
     }
+    return right;
+}    
+public List<String> maxNumOfSubstrings(String s) {
+    int l[] = new int[26], r[] = new int[26];
+    Arrays.fill(l, s.length());
+    var res = new ArrayList<String>();
+    for (int i = 0; i < s.length(); ++i) {
+        var ch = s.charAt(i) - 'a';
+        l[ch] = Math.min(l[ch], i);
+        r[ch] = i;
+    }
+    int right = -1;
+    for (int i = 0; i < s.length(); ++i)
+        if (i == l[s.charAt(i) - 'a']) {
+            int new_right = checkSubstr(s, i, l, r);
+            if (new_right != -1) {
+                if (i > right)
+                    res.add("");                     
+                right = new_right;
+                res.set(res.size() - 1, s.substring(i, right + 1));
+            }
+        }
+    return res;
+}
 }
