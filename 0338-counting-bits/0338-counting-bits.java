@@ -1,22 +1,15 @@
 class Solution {
     public int[] countBits(int n) {
-        int[] arr = new int[n+1];
+        int[]res  = new int[n+1];
+        res[0]=0;
         
-        for(int i=0;i<=n;i++){
-            arr[i]=countBitsUtil(i);
+        for(int i=1;i<=n;i++){
+            if(i%2==0)
+                res[i]=res[i>>1];
+            else
+                res[i]=res[i-1]+1;
         }
         
-        return arr;        
+        return res;
     }
-    
-    int countBitsUtil(int i){
-        int count=0;
-        for(int j=0;j<32;j++){
-            if((i&1)==1)
-                count++;
-            i=i>>1;
-        }
-        return count;
-    }
-    
 }
