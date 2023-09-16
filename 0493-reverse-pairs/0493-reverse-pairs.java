@@ -24,8 +24,8 @@ class Solution {
             i++;
             
         }
-       Arrays.sort(nums, left, right+1);
-        //    sortedMerge(nums,left,mid,right);
+     //  Arrays.sort(nums, left, right+1);
+            sortedMerge(nums,left,mid,right);
          return count;
     }
     
