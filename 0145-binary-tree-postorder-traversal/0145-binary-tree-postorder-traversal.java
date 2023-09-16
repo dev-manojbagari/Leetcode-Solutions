@@ -18,22 +18,25 @@ class Solution {
         List<Integer> list = new ArrayList<>();
         if(root==null)
             return list;
-        Stack<TreeNode> s1 = new Stack<>();
-        Stack<TreeNode> s2 = new Stack<>();
-        s1.push(root);
-        while(!s1.isEmpty()){
-            TreeNode node = s1.pop();
+        
+        Stack<TreeNode> stack1 = new Stack<>();
+        Stack<Integer> stack2 = new Stack<>();
+        
+        stack1.push(root);
+        
+        while(!stack1.isEmpty()){
+            TreeNode node = stack1.pop();
+         
+            stack2.push(node.val);
             
-            s2.push(node);
             if(node.left!=null)
-                s1.push(node.left);
+                stack1.push(node.left);
             if(node.right!=null)
-                s1.push(node.right);
+                stack1.push(node.right);
         }
         
-        while(!s2.isEmpty()){
-            TreeNode node = s2.pop();
-            list.add(node.val);
+        while(!stack2.isEmpty()){
+            list.add(stack2.pop());
         }
         
         return list;
