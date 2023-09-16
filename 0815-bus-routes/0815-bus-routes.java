@@ -1,46 +1,49 @@
 class Solution {
-    public int numBusesToDestination(int[][] routes, int S, int T) {
-        Map<Integer, List<Integer>> graph = new HashMap<>();
-        for (int k = 0; k < routes.length; k++) {
-            int[] route = routes[k];
-            int n = route.length;
-            for (int i = 0; i < n; i++) {
-                int stop = route[i];
-                if (!graph.containsKey(stop)) {
-                    graph.put(stop, new ArrayList<>());
-                }
-                graph.get(stop).add(k);
+    public int numBusesToDestination(int[][] routes, int source, int target) {
+        Map<Integer,List<Integer>> stopMap = new HashMap<>();
+        
+        for(int i=0;i<routes.length;i++){
+            for(int j=0;j<routes[i].length;j++){
+                int bus = i;
+                int stop = routes[i][j];
+            stopMap.computeIfAbsent(stop,(key->new ArrayList<>())).add(bus);
             }
         }
         
-        if (!graph.containsKey(S) || !graph.containsKey(T)) return -1;
-        if (S == T) return 0;
-        
-        Queue<Integer> q = new LinkedList<>();
+        if(!stopMap.containsKey(source)||!stopMap.containsKey(target))    
+            return -1;
+        if(source==target) return 0;
+        Queue<Integer> q  = new LinkedList<>();
+        q.add(source);
         Set<Integer> busTaken = new HashSet<>();
-        Set<Integer> stopVisited = new HashSet<>();
+        Set<Integer> stopTaken = new HashSet<>();
+        stopTaken.add(source); // Add source to visited stops
+        int busCount=0;
         
-        q.add(S);
-        
-        int cnt = 0;
-        
-        while (!q.isEmpty()) {
-            cnt++;
-            int size = q.size();
-            for (int i = 0; i < size; i++) {
-                int curStop = q.poll();
-                for (int bus : graph.get(curStop)) {
-                    if (busTaken.contains(bus)) continue; //not take the same bus again...
-                    busTaken.add(bus);
-                    for (int nextStop : routes[bus]) {
-                        if (stopVisited.contains(nextStop)) { continue; } //not visited the same stop...
-                        if (nextStop == T) { return cnt; }
-                        q.add(nextStop);
-                        stopVisited.add(nextStop);
-                    }
-                }
-            }
-        }
-        return -1;
+         while(!q.isEmpty()){
+             busCount++;
+             int size=q.size();
+             
+             for(int i=0; i<size; ++i){
+                 Integer curStop=q.poll();
+                 List<Integer> buses=stopMap.get(curStop);
+                 
+                 for(Integer bus:buses){
+                     if(busTaken.contains(bus)) continue;
+                     busTaken.add(bus);
+                     
+                     for(Integer nextStop:routes[bus]){
+                         if(stopTaken.contains(nextStop)) continue; // Corrected condition
+                         if(nextStop == target)
+                             return busCount;
+
+                         q.offer(nextStop);
+                         stopTaken.add(nextStop); 
+                     }
+                 }                
+             }
+         }
+
+         return -1;
     }
 }
