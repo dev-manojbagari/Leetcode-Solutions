@@ -1,9 +1,9 @@
 class Solution {
     public boolean isPalindrome(int x) {
+        if(x<0)
+            return false;
         int temp =x;
         int rev=0;
-        int sign = x>0?1:-1;
-       
         while(temp>0){
             int lastDigit = temp%10;
             rev = rev*10+lastDigit;
