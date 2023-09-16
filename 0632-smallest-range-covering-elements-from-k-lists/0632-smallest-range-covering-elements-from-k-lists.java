@@ -1,34 +1,36 @@
 class Solution {
- public int[] smallestRange(List<List<Integer>> nums) {
-	PriorityQueue<int[]> minHeap = new PriorityQueue<int[]>(nums.size(), new Comparator<int[]>(){
-		public int compare(int[] o1, int[] o2) {
-			return o1[0] - o2[0];
-		}
-	});
+    public int[] smallestRange(List<List<Integer>> nums) {
+        PriorityQueue<int[]> minHeap= new PriorityQueue<>((a,b)->a[0]-b[0]);
+        int max=Integer.MIN_VALUE;
 
-	int max = Integer.MIN_VALUE;
-	for(int i=0; i<nums.size(); i++) {
-		minHeap.add(new int[]{nums.get(i).get(0), i, 0});
-		max = Math.max(max, nums.get(i).get(0));
-	}
-	
-	int minRange = Integer.MAX_VALUE;
-	int start = -1;
-	while(minHeap.size() == nums.size()) {
-		int[] t = minHeap.poll();
-		if(max - t[0] < minRange) {
-			minRange = max - t[0];
-			start = t[0];
-		}
-		
-		if(t[2]+1 < nums.get(t[1]).size()) {
-			t[0] = nums.get(t[1]).get(t[2]+1);
-			t[2] ++;
-			minHeap.add(t);
-			max = Math.max(max, t[0]);
-		}
-	}
-	
-	return new int[]{start, start+minRange};
-}
+        for(int i=0;i<nums.size();i++){
+            minHeap.offer(new int[]{nums.get(i).get(0),i,0});
+            max = Math.max(max,nums.get(i).get(0));
+        }
+        int minRange = Integer.MAX_VALUE;
+        int start =0;
+        while(minHeap.size()==nums.size()){
+            int[] data = minHeap.poll();
+             
+            if(max-data[0]+1<minRange){
+                minRange = max-data[0]+1;
+                start = data[0];
+            }
+            
+            int curIndex = data[2];
+            int curList = data[1];
+            int curListSize = nums.get(curList).size();
+            
+            if(curIndex+1<curListSize){
+                int nextNum = nums.get(curList).get(curIndex+1);
+                minHeap.offer(new int[]{nextNum,curList,curIndex+1});
+                max = Math.max(max,nextNum);
+            }
+                     
+        }
+        
+        
+        
+        return new int[]{start,start+minRange-1};
+    }
 }
