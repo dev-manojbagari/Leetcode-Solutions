@@ -21,7 +21,6 @@ class Solution {
         int busCount=0;
         
          while(!q.isEmpty()){
-             busCount++;
              int size=q.size();
              
              for(int i=0; i<size; ++i){
@@ -35,13 +34,14 @@ class Solution {
                      for(Integer nextStop:routes[bus]){
                          if(stopTaken.contains(nextStop)) continue; // Corrected condition
                          if(nextStop == target)
-                             return busCount;
+                             return busCount+1;
 
                          q.offer(nextStop);
                          stopTaken.add(nextStop); 
                      }
                  }                
              }
+             busCount++;
          }
 
          return -1;
