@@ -15,43 +15,45 @@
  */
 class Solution {
     
+    enum order{
+        INCREASING,DECREASING;
+    }
+    
     class BSTIterator{
-        Stack<TreeNode> stack;
-        boolean isForward = false;
-       
-        BSTIterator(TreeNode root,boolean isForward){
-            this.isForward= isForward;
-            stack = new Stack<>();
-            while(root!=null){
-                stack.push(root);
-                root = isForward?root.left:root.right;
+        Stack<TreeNode> stack = new Stack<>();        
+        boolean increasingOrder;
+        public BSTIterator(TreeNode root,boolean increasingOrder){
+            this.increasingOrder = increasingOrder;
+            TreeNode curr = root;
+            while(curr!=null){
+                stack.push(curr);
+                curr=increasingOrder?curr.left:curr.right;   
             }
-            
-        }
-        
-        
-        boolean hasNext(){
-            return !stack.isEmpty();
-            
         }
         
         int peek(){
             return stack.peek().val;
         }
         
-        int next(){
+        boolean hasNext(){
+            return !stack.isEmpty();
+        }
+        
+        TreeNode next(){
+            if(stack.isEmpty())return null;
             TreeNode node = stack.pop();
-            TreeNode x = node;
-           node = isForward?node.right:node.left;
-            while(node!=null){
-                stack.push(node);
-                node = isForward?node.left:node.right;
+            TreeNode curr = increasingOrder?node.right:node.left;
+            
+            while(curr!=null){
+                stack.push(curr);
+                curr=increasingOrder?curr.left:curr.right;
             }
             
-            return x.val;
+            return node;
         }
+        
+        
     }
-    
     
     public boolean findTarget(TreeNode root, int k) {
         BSTIterator left = new BSTIterator(root,true);
@@ -65,11 +67,10 @@ class Solution {
                 return true;
             else if(sum<k)
                 left.next();
-            else
+            else 
                 right.next();
         }
         
         return false;
-        
     }
 }
