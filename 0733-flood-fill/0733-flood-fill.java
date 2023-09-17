@@ -1,39 +1,27 @@
 class Solution {
-    class Pair{
-        int i,j;
-        Pair(int i,int j){
-            this.i=i;
-            this.j=j;
-        }
-    }
-    
     public int[][] floodFill(int[][] image, int sr, int sc, int color) {
-            if(image[sr][sc]==color)
-                return image;
+        int initColor = image[sr][sc];
+        if(initColor==color)
+            return image;
         
-        int intialColor = image[sr][sc];
-        int rows=image.length,cols=image[0].length;
-        Queue<Pair> q = new LinkedList<>();
-        image[sr][sc]=color;
-        q.add(new Pair(sr,sc));
+        // image[sr][sc]=color;
         
-        int[][] dirs= {{0,1},{0,-1},{1,0},{-1,0}};
-        while(!q.isEmpty()){
-            Pair node = q.poll();
-            
-            for(int[] dir:dirs){
-                int x= node.i+dir[0];
-                int y = node.j+dir[1];
-                
-                if(x<0||x>=rows||y<0||y>=cols||image[x][y]!=intialColor)
-                    continue;
-                
-                image[x][y] = color;
-                q.offer(new Pair(x,y));
-            }
-        }
-        
+        dfs(sr,sc,image,color,initColor); 
         
         return image;
+    }
+    
+    void dfs(int i,int j,int[][] image,int color,int initColor){
+        
+        if(i<0||i>=image.length||j<0||j>=image[0].length||image[i][j]!=initColor)
+            return;
+        
+        image[i][j] = color;
+        
+         dfs(i+1,j,image,color,initColor);
+         dfs(i,j+1,image,color,initColor);
+         dfs(i-1,j,image,color,initColor);
+         dfs(i,j-1,image,color,initColor);
+        
     }
 }
