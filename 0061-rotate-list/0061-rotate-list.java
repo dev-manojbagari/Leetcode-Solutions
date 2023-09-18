@@ -10,14 +10,16 @@
  */
 class Solution {
     public ListNode rotateRight(ListNode head, int k) {
-        if(head==null)return head;
+        if(k==0||head==null)
+            return head;
         ListNode ptr1 = head;
         ListNode ptr2 = head;
-        int count =0;
-        int len = getLength(head);
-        k = k%len;
-        if(k==0) return head;
-        while(count!=k){
+        int length = getLength(head);
+        k = k%length;
+        if(k==0)
+            return head;
+        int count =1;
+        while(count!=k+1){
             ptr2=ptr2.next;
             count++;
         }
@@ -32,17 +34,16 @@ class Solution {
         ptr2.next=head;
         
         return newHead;
-        
-        
     }
     
     int getLength(ListNode node){
         int count =0;
         while(node!=null){
             count++;
-            node=node.next;
+             node=node.next;
         }
-        return count;
+    return count;
     }
-    
 }
+
+
