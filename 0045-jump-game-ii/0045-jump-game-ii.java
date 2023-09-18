@@ -1,29 +1,25 @@
 class Solution {
     public int jump(int[] nums) {
-        if(nums.length<=1)
-            return 0;
-        
+       if(nums.length<=1)
+           return 0;
         int ladder = nums[0];
         int stairs = nums[0];
-        
         int jump=1;
-        for(int level=1;level<nums.length;level++){
-            
-            if(level==nums.length-1)
-                return jump;
-            
-            if(nums[level]+level>ladder)
-                ladder=nums[level]+level;
-            
+        for(int i=1;i<nums.length;i++){
+            if(i==nums.length-1)
+                break;
+            if(i+nums[i]>ladder){
+                ladder = nums[i]+i;
+            }
             stairs--;
             
             if(stairs==0){
                 jump++;
-                stairs = ladder-level;
+                stairs = ladder-i;
             }
         }
         
         return jump;
         
     }
-}
+}   
