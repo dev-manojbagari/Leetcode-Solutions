@@ -5,9 +5,7 @@ class Solution {
         int ladder = nums[0];
         int stairs = nums[0];
         int jump=1;
-        for(int i=1;i<nums.length;i++){
-            if(i==nums.length-1)
-                break;
+        for(int i=1;i<nums.length-1;i++){
             if(i+nums[i]>ladder){
                 ladder = nums[i]+i;
             }
