@@ -13,11 +13,8 @@ class Solution {
         }
         int j= n-1;
         
-        while(j>=0&&nums[j]<=nums[i])
+        while(j>i&&nums[j]<=nums[i])
             j--;
-        
-        if(j==-1)
-            return;
         
         swap(nums,i,j);
         reverse(nums,i+1,n-1);
