@@ -1,29 +1,30 @@
 class Solution {
- public static String reverseWords(String s) {
-        if (s.length() < 1) return s; // empty string
-        int startIdx = 0;
-        char[] str = s.toCharArray();
-        // reverse whole string
-        reverse(str, 0, str.length - 1);
-        // reverse word one by one
-        for (int i = 0; i < str.length; i++) {
-            if (str[i] != ' ') {
-                if (startIdx != 0) str[startIdx++] = ' ';
-                int j = i;
-                while (j < str.length && str[j] != ' ')
-                    str[startIdx++] = str[j++];
-                reverse(str, startIdx - (j - i), startIdx - 1); // startIdx - 1, NOT startIdx; 
-                i = j;
-            }
-        }
-        return new String(str, 0, startIdx);
-    }
+    public String reverseWords(String s) {
+       StringBuilder sb = new StringBuilder();
+	   Stack<String> stack = new Stack<>();
 
-    private static void reverse(char[] str, int begin, int end) {
-        for (; begin < end; begin++, end--) {
-            char tmp = str[begin];
-            str[begin] = str[end];
-            str[end] = tmp;
-        }
+	for (int i = 0; i < s.length(); i++) {
+	    char c = s.charAt(i);
+	    if (Character.isDigit(c) || Character.isAlphabetic(c)) {
+		sb.append(c);
+		if (i == s.length() - 1)
+		    stack.push(sb.toString());
+	    } else if (sb.length() != 0) {
+		stack.push(sb.toString());
+		sb = new StringBuilder();
+	    }
+	}
+
+	System.out.println(stack);
+
+	StringBuilder res = new StringBuilder();
+	while (!stack.isEmpty()) {
+	    res.append(stack.pop());
+	    if (stack.isEmpty())
+		break;
+	    res.append(" ");
+	}
+
+	return res.toString();
     }
 }
