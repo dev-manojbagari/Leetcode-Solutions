@@ -16,32 +16,31 @@
 class Solution {
     int count =0;
     public int pathSum(TreeNode root, int targetSum) {
-        if(root==null)
-            return 0;
+
         Map<Long,Integer> map = new HashMap<>();
         map.put(0l,1);
         pathSum(root,targetSum,0,map);
+        
         return count;
     }
     
-    void pathSum(TreeNode root,int targetSum,long curPathSum,Map<Long,Integer> map ){
+    void pathSum(TreeNode root,int targetSum,long curSum,Map<Long,Integer> map){
         if(root==null)
             return;
         
-        curPathSum += root.val;
-        long oldPathSum = curPathSum-targetSum;
-        count += map.getOrDefault(oldPathSum,0);
+        curSum += root.val;
         
-        map.put(curPathSum,map.getOrDefault(curPathSum,0)+1);
+        count += map.getOrDefault(curSum-targetSum,0);
         
-        pathSum(root.left,targetSum,curPathSum,map);
-        pathSum(root.right,targetSum,curPathSum,map);
+        map.put(curSum,map.getOrDefault(curSum,0)+1);
         
-        if(map.get(curPathSum)==1){
-            map.remove(curPathSum);
-        }else{
-            map.put(curPathSum,map.get(curPathSum)-1);
-        }
-
+        pathSum(root.left,targetSum,curSum,map);
+        pathSum(root.right,targetSum,curSum,map);
+      
+        if(map.get(curSum)==1)
+            map.remove(curSum);
+        else
+            map.put(curSum,map.get(curSum)-1);
+        
     }
 }
