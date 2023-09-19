@@ -1,21 +1,20 @@
 class Solution {
     public List<List<Integer>> subsets(int[] nums) {
-     //   Arrays.sort(nums);
         List<List<Integer>> list = new ArrayList<>();
-        backtrack(list, new ArrayList<>(), nums, 0);
+        subsets(0,nums,list,new ArrayList<>());    
         return list;
     }
-
-    private void backtrack(List<List<Integer>> list , List<Integer> tempList, int [] nums, int start){
-        list.add(new ArrayList<>(tempList));
+    
+    private void subsets(int index,int[] nums,List<List<Integer>> list, List<Integer> tempList){
+            list.add(new ArrayList<>(tempList));
         
-        for(int i = start; i < nums.length; i++){
-            // Skip duplicates
-       //     if(i > start && nums[i] == nums[i-1]) continue;
+        for(int i=index;i<nums.length;i++){
             
             tempList.add(nums[i]);
-            backtrack(list, tempList, nums,i+1);
-            tempList.remove(tempList.size() - 1);
+            subsets(i+1,nums,list,tempList);
+            tempList.remove(tempList.size()-1);
         }
+        
+        
     }
 }
