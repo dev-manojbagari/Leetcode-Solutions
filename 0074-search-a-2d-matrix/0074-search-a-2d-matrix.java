@@ -1,20 +1,15 @@
-// 0(log(n))
 class Solution {
     public boolean searchMatrix(int[][] matrix, int target) {
-        int row = matrix.length,col=matrix[0].length;
-        int left=0,right=row*col-1;
-        while(left<=right){
-            int mid = left+(right-left)/2;
-            
-            int curRow = mid/col;
-            int curCol = mid%col;
-            
+        int curRow = 0;
+        int curCol = matrix[0].length-1;
+        
+        while(curRow<matrix.length&&curCol>=0){
             if(matrix[curRow][curCol]==target){
                 return true;
             }else if(matrix[curRow][curCol]<target){
-                left= mid+1;
+                curRow++;
             }else
-                right=mid-1;
+                curCol--;
         }
         
         return false;
