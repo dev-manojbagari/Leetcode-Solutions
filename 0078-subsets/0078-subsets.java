@@ -6,14 +6,19 @@ class Solution {
     }
     
     private void subsets(int index,int[] nums,List<List<Integer>> list, List<Integer> tempList){
+        if(index==nums.length){
             list.add(new ArrayList<>(tempList));
-        
-        for(int i=index;i<nums.length;i++){
-            
-            tempList.add(nums[i]);
-            subsets(i+1,nums,list,tempList);
-            tempList.remove(tempList.size()-1);
+            return ;
         }
+        
+            
+        
+        
+            subsets(index+1,nums,list,tempList);
+        
+            tempList.add(nums[index]);
+            subsets(index+1,nums,list,tempList);
+            tempList.remove(tempList.size()-1);
         
         
     }
