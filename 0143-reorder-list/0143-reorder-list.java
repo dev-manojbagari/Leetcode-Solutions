@@ -39,7 +39,7 @@ class Solution {
         else if(ptr2!=null)
             curr.next = ptr2;
         
-        head = preHead.next;
+     //   head = preHead.next;
         
     }
     
