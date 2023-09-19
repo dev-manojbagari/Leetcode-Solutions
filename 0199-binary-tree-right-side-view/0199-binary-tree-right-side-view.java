@@ -15,23 +15,24 @@
  */
 class Solution {
     public List<Integer> rightSideView(TreeNode root) {
-        List<Integer> list = new  ArrayList<>();
-        if(root==null)
-            return list;
-        
-        levelOrderTraversal(root,list,0);
-        
+        List<Integer> list = new ArrayList<>();
+        rightSideView(root,list,0);
         return list;
     }
     
-    void levelOrderTraversal(TreeNode root,List<Integer> list , int curLevel){
+    void rightSideView(TreeNode root,List<Integer> list,int level){
         if(root==null)
             return;
         
-        if(list.size()==curLevel)
+        if(level==list.size())
             list.add(root.val);
         
-        levelOrderTraversal(root.right,list,curLevel+1);
-        levelOrderTraversal(root.left,list,curLevel+1);
+        rightSideView(root.right,list,level+1);
+        rightSideView(root.left,list,level+1);
+        
+        
+        
     }
+    
+    
 }
