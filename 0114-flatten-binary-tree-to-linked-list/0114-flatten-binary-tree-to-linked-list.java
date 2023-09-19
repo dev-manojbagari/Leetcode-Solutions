@@ -16,31 +16,24 @@
 class Solution {
     TreeNode prev=null;
     public void flatten(TreeNode root) {
-        
-        preOrder(root);
-    
-    }
-    
-    TreeNode preOrder(TreeNode root){
         if(root==null)
-            return root;
-  
-     TreeNode leftTail =  preOrder(root.left);
-     TreeNode rightTail = preOrder(root.right);
+            return;
+        flattenUtil(root);
+    
+    }
+    
+    void flattenUtil(TreeNode root){
+        if(root==null)
+            return;
         
-     if(root.left!=null){
-         TreeNode temp = root.right;
-         root.right=root.left;
-         root.left=null;
-         leftTail.right=temp;
-     }
+        flattenUtil(root.right);
+        flattenUtil(root.left);
         
-    if(rightTail!=null)
-        return rightTail;
-    else if(leftTail!=null)
-        return leftTail;
-    else
-        return root;
+        root.left=null;
+        root.right=prev;
+        prev=root;
         
     }
+    
+    
 }
