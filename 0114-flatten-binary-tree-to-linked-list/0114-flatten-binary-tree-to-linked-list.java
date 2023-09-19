@@ -18,22 +18,13 @@ class Solution {
     public void flatten(TreeNode root) {
         if(root==null)
             return;
-        flattenUtil(root);
-    
-    }
-    
-    void flattenUtil(TreeNode root){
-        if(root==null)
-            return;
         
-        flattenUtil(root.right);
-        flattenUtil(root.left);
+        flatten(root.right);
+        flatten(root.left);
         
         root.left=null;
         root.right=prev;
+      
         prev=root;
-        
     }
-    
-    
 }
