@@ -14,24 +14,25 @@
  * }
  */
 class BSTIterator {
-    List<Integer> list = new ArrayList<>();
-    int index=0;
-    Stack<TreeNode> stack;
+    Stack<TreeNode> stack = new Stack<>();
     public BSTIterator(TreeNode root) {
-        stack = new Stack<>();
-        pushAll(root);
-    }
-    
-    private void pushAll(TreeNode node){
-        while(node!=null){
-            stack.push(node);
-            node = node.left;
+        TreeNode curr = root;
+        while(curr!=null){
+            stack.push(curr);
+            curr=curr.left;
         }
     }
+    
     public int next() {
         TreeNode node = stack.pop();
-        pushAll(node.right);
-        return node.val;
+        int next = node.val;
+        TreeNode curr = node.right;
+        while(curr!=null){
+            stack.push(curr);
+            curr=curr.left;
+        }
+        
+        return next;
     }
     
     public boolean hasNext() {
