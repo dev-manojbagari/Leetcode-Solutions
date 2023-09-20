@@ -8,43 +8,39 @@ class WordDictionary {
         Node curr = head;
         for(char c:word.toCharArray()){
             if(curr.child[c-'a']==null)
-                  curr.child[c-'a'] = new Node(c);
-                
+                curr.child[c-'a']=new Node(c);
             curr = curr.child[c-'a'];
         }
         curr.isWord=true;
+        
     }
-
-    
     
     public boolean search(String word) {
-        return isMatch(word.toCharArray(),0,head);    
+        Node curr =head;
+        return search(curr,0,word);
     }
-
     
-    boolean isMatch(char[] ca , int index,Node node){
-        if(index==ca.length) return node.isWord;
-        if(ca[index]!='.')
-            return node.child[ca[index]-'a']!=null&&isMatch(ca,index+1,node.child[ca[index]-'a']);
-        else
-        {
-            for(int i=0;i<26;i++){
-                if(node.child[i]!=null&&isMatch(ca,index+1,node.child[i]))
+    private boolean search(Node curr,int index,String word){
+        if(index==word.length())
+            return curr!=null&&curr.isWord;
+        if(word.charAt(index)!='.')
+            return curr!=null&&search(curr.child[word.charAt(index)-'a'],index+1,word);
+        else{
+            for(int i=0;i<26;i++)
+                if(curr!=null&&search(curr.child[i],index+1,word))
                     return true;
-            }
+            return false;
         }
-        
-        return false;
     }
     
     
-    
-    private class Node{
-        Node child[] = new Node[26];
+    class Node{
         char val;
+        Node[] child;
         boolean isWord=false;
         Node(char val){
-            this.val=val;
+            this.val= val;
+            child = new Node[27];
         }
     }
     
