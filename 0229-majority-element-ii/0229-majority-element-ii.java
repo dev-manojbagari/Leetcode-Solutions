@@ -23,10 +23,10 @@ class Solution {
         
         count1=0;count2=0;
         int n = nums.length;
-        for(int num:nums){
-            if(num1==num)
+        for(Integer num:nums){
+            if(num.equals(num1))
                 count1++;
-            else if(num2==num)
+            else if(num.equals(num2))
                 count2++;
         }
         List<Integer> list = new ArrayList<>();
