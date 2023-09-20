@@ -1,6 +1,6 @@
 class Solution {
     public List<Integer> majorityElement(int[] nums) {
-        Integer num1 = null;
+       Integer num1 = null;
         Integer num2 = null;
         int count1=0,count2=0;
         
@@ -36,6 +36,5 @@ class Solution {
             list.add(num2);
         
         return list;
-        
     }
 }
