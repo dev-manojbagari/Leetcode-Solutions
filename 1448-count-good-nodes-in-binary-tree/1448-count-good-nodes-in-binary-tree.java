@@ -14,21 +14,24 @@
  * }
  */
 class Solution {
-    int goodNodesCount =0;
+    int count =0;
     public int goodNodes(TreeNode root) {
-        goodNodes(root,root.val);
-        return goodNodesCount;
+        
+        goodNodes(root,Integer.MIN_VALUE);
+        return count;
     }
     
     void goodNodes(TreeNode root,int max){
         if(root==null)
             return;
         
-        if(root.val>=max)
-            goodNodesCount++;
+        if(max<=root.val){
+            count++;
+        }
         
         goodNodes(root.left,Math.max(max,root.val));
         goodNodes(root.right,Math.max(max,root.val));
-        
     }
+    
+    
 }
