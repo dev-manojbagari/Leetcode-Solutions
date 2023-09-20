@@ -8,25 +8,21 @@
  * }
  */
 public class Codec {
-
     // Encodes a tree to a single string.
     public String serialize(TreeNode root) {
-        StringBuilder sb = new StringBuilder();
         if(root==null)
-            return sb.toString();
-        
-        serialize(root,sb);
-        
+            return "";
+        StringBuilder sb = new StringBuilder();
+        preorder(root,sb);
         return sb.toString();
     }
 
-    private void serialize(TreeNode root,StringBuilder sb){
+    private void preorder(TreeNode root,StringBuilder sb){
         if(root==null)
             return;
-        
         sb.append(root.val).append(",");
-        serialize(root.left,sb);
-        serialize(root.right,sb);
+        preorder(root.left,sb);
+        preorder(root.right,sb);
     }
     
     // Decodes your encoded data to tree.
@@ -35,25 +31,26 @@ public class Codec {
             return null;
         
         Queue<String> q = new LinkedList<>(Arrays.asList(data.split(",")));
-        
         return deserialize(q,Integer.MIN_VALUE,Integer.MAX_VALUE);
     }
     
     private TreeNode deserialize(Queue<String> q,int min,int max){
         if(q.isEmpty())
             return null;
-        
         int val = Integer.parseInt(q.peek());
-        TreeNode node=null;
         
         if(min<val&&val<max){
-            node = new TreeNode(Integer.parseInt(q.poll()));
-            node.left = deserialize(q,min,val);
-            node.right = deserialize(q,val,max);
-        }
-        
-        return node;
+             TreeNode node = new TreeNode(Integer.parseInt(q.poll()));           
+             node.left = deserialize(q,min,node.val);
+             node.right = deserialize(q,node.val,max);
+             return node;
+        }else
+            return null;
     }
+    
+    
+    
+    
 }
 
 // Your Codec object will be instantiated and called as such:
