@@ -1,30 +1,28 @@
 class Solution {
     public boolean canPartition(int[] nums) {
         int arraySum = Arrays.stream(nums).sum();
-        
         if(arraySum%2!=0)
             return false;
-        
-        return subsetSum(0,nums,arraySum/2);
+        return canPartition(nums,arraySum/2);
     }
     
-    private boolean subsetSum(int index,int[] nums,int sum){
-        int n = nums.length;
-        boolean[][] dp = new boolean[n][sum+1];
+    boolean canPartition(int[] nums,int targetSum){
         
-        for(int i=0;i<nums.length;i++){
-            for(int curSum=0;curSum<=sum;curSum++){
+        boolean[][] dp = new boolean[targetSum+1][nums.length];
+        
+        for(int curSum=0;curSum<targetSum+1;curSum++){
+            for(int index=0;index<nums.length;index++){
                 if(curSum==0)
-                    dp[i][curSum]=true;
-                else if(i==0)
-                    dp[i][curSum]=false;
-                else if(curSum-nums[i]>=0)
-                    dp[i][curSum] = dp[i-1][curSum]||dp[i-1][curSum-nums[i]];
-                else
-                    dp[i][curSum]=dp[i-1][curSum];
+                    dp[curSum][index]=true;
+                else if(index==0)
+                    dp[curSum][index]= curSum == nums[0];
+                else if(curSum-nums[index]>=0)
+                    dp[curSum][index]= dp[curSum][index-1]||dp[curSum-nums[index]][index-1];
+                else 
+                    dp[curSum][index]= dp[curSum][index-1];
             }
         }
         
-        return dp[n-1][sum];
+        return dp[targetSum][nums.length-1];
     }
 }
