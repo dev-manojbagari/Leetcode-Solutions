@@ -1,59 +1,34 @@
-import java.util.*;
-
 class Solution {
-     public String decodeString(String s) {
-             Stack<Integer> countStack = new Stack<>();
-             Stack<StringBuilder> stringStack = new Stack<>();
+    public String decodeString(String s) {
         
-        int k=0;
-        StringBuilder curr= new StringBuilder();
+        StringBuilder sb = new StringBuilder();
+        int repeat =0;
+        Stack<Integer> stack1 = new Stack<>();
+        Stack<StringBuilder> stack2 = new Stack<>();
         for(char c:s.toCharArray()){
             
             if(Character.isDigit(c)){
-                k = k*10+c-'0';
+                repeat = repeat*10+c-'0';
             }else if(c=='['){
-                countStack.push(k);
-                stringStack.push(curr);
-                k=0;
-                curr=new StringBuilder();
+                stack1.push(repeat);
+                stack2.push(sb);
+                sb = new StringBuilder();
+                repeat=0;
+                
             }else if(c==']'){
-                StringBuilder temp = curr;
-                curr=stringStack.pop();
-                int j=countStack.pop();
-                for(int i=0;i<j;i++)
-                    curr.append(temp);
+                // int count = stack1.pop();
+                // StringBuilder oldSb =stack2.isEmpty()?new StringBuilder():stack2.pop();
+                // for(int i=0;i<count;i++)
+                //     oldSb.append(sb.toString());
+                // sb = oldSb;
+                 StringBuilder tmp = sb;
+                sb = stack2.pop();
+                for (repeat = stack1.pop(); repeat > 0; --repeat) sb.append(tmp);
             }else{
-                curr.append(c);
+                sb.append(c);
             }
-            
         }
         
-        return curr.toString();
-        
-    
-
-   // public String decodeString(String s) {
-   //      Deque<Integer> countStack = new ArrayDeque<>();
-   //      Deque<StringBuilder> stringStack = new ArrayDeque<>();
-   //      StringBuilder cur = new StringBuilder();
-   //      int k = 0;
-   //      for (char ch : s.toCharArray()) {
-   //          if (Character.isDigit(ch)) {
-   //              k = k * 10 + ch - '0';
-   //          } else if (ch == '[') {
-   //              countStack.push(k);
-   //              stringStack.push(cur);
-   //              cur = new StringBuilder();
-   //              k = 0;
-   //          } else if (ch == ']') {
-   //              StringBuilder tmp = cur;
-   //              cur = stringStack.pop();
-   //              for (k = countStack.pop(); k > 0; --k) cur.append(tmp);
-   //          } else cur.append(ch);
-   //      }
-   //      return cur.toString();
-   //  }
-
-
-}
+        return sb.toString();
+    }
 }
