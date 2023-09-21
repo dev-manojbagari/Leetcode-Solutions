@@ -1,47 +1,50 @@
 class Solution {
-    int[][] dirs = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
-    
-    public List<List<Integer>> pacificAtlantic(int[][] heights) {
-        List<List<Integer>> res = new ArrayList<>();
-        if(heights == null || heights.length == 0) return res;
+    public List<List<Integer>> pacificAtlantic(int[][] mat) {
+        int rows = mat.length,cols=mat[0].length;
         
-        int m = heights.length;
-        int n = heights[0].length;
+        boolean[][] po = new boolean[rows][cols];
+        boolean[][] ao = new boolean[rows][cols];
         
-        boolean[][] pacific = new boolean[m][n];
-        boolean[][] atlantic = new boolean[m][n];
-        
-        // Start DFS from each edge
-        for(int i=0; i<m; i++){
-            dfs(heights,pacific,Integer.MIN_VALUE,i,0);
-            dfs(heights,atlantic,Integer.MIN_VALUE,i,n-1);
+        for(int i=0;i<rows;i++){
+            for(int j=0;j<cols;j++){
+                if(i==0||j==0){
+                    dfs(i,j,mat,po,-1);
+                }
+            }
         }
         
-         for(int i=0; i<n; i++){
-            dfs(heights,pacific,Integer.MIN_VALUE, 0,i);
-            dfs(heights,atlantic,Integer.MIN_VALUE,m-1,i);
-         }
-         
-         // Check intersections
-         for(int i=0;i<m;i++){
-             for(int j=0;j<n;j++){
-                 if(pacific[i][j] && atlantic[i][j]){
-                     res.add(Arrays.asList(i,j));
-                 }
-             }
-         }
-         
-         return res;
+        for(int i=0;i<rows;i++){
+            for(int j=0;j<cols;j++){
+                if(i==rows-1||j==cols-1){
+                    dfs(i,j,mat,ao,-1);
+                }
+            }
+        }
+        
+        List<List<Integer>> res = new ArrayList<>();
+        for(int i=0;i<rows;i++){
+            for(int j=0;j<cols;j++){
+                if(po[i][j]&&ao[i][j]){
+                    res.add(Arrays.asList(i,j));
+                }
+            }
+        }
+        
+        return res;
     }
     
-    private void dfs(int[][] heights, boolean[][] visited, int height, int x, int y){
-        if(x<0 || x>=heights.length || y<0 || y>=heights[0].length || visited[x][y] || heights[x][y] < height)
+    void dfs(int i,int j,int[][] mat,boolean[][] vis,int prev){
+        
+        if(i<0||i>=mat.length||j<0||j>=mat[0].length||vis[i][j]||prev>mat[i][j])
             return;
         
-        visited[x][y] = true;
+        vis[i][j]=true;
         
-        for(int[] dir: dirs){
-            dfs(heights,visited,heights[x][y],x+dir[0],y+dir[1]);
-        }
-    } 
+         dfs(i+1,j,mat,vis,mat[i][j]);
+         dfs(i,j+1,mat,vis,mat[i][j]);
+         dfs(i-1,j,mat,vis,mat[i][j]);
+         dfs(i,j-1,mat,vis,mat[i][j]);
+    }
+    
+    
 }
