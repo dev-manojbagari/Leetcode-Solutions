@@ -8,9 +8,7 @@ class Solution {
     
     void backtrack(int start,int[] nums,Set<List<Integer>> set,List<Integer> tempList,int target){
         if(target==0){
-            List<Integer> temp = new ArrayList<>(tempList);
-            Collections.sort(temp);
-            set.add(new ArrayList<>(temp));
+            set.add(new ArrayList<>(tempList));
             return;
         }
         
@@ -18,7 +16,7 @@ class Solution {
         for(int i=start;i<nums.length;i++){
             if(target-nums[i]>=0){
                 tempList.add(nums[i]);
-                backtrack(start,nums,set,tempList,target-nums[i]);
+                backtrack(i,nums,set,tempList,target-nums[i]);
                 tempList.remove(tempList.size()-1);
             }
         }
