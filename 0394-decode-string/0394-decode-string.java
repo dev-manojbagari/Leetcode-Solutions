@@ -16,14 +16,14 @@ class Solution {
                 repeat=0;
                 
             }else if(c==']'){
-                // int count = stack1.pop();
-                // StringBuilder oldSb =stack2.isEmpty()?new StringBuilder():stack2.pop();
-                // for(int i=0;i<count;i++)
-                //     oldSb.append(sb.toString());
-                // sb = oldSb;
-                 StringBuilder tmp = sb;
-                sb = stack2.pop();
-                for (repeat = stack1.pop(); repeat > 0; --repeat) sb.append(tmp);
+                int count = stack1.pop();
+                StringBuilder oldSb =stack2.isEmpty()?new StringBuilder():stack2.pop();
+                for(int i=0;i<count;i++)
+                    oldSb.append(sb);
+                sb = oldSb;
+                //  StringBuilder tmp = sb;
+                // sb = stack2.pop();
+                // for (repeat = stack1.pop(); repeat > 0; --repeat) sb.append(tmp);
             }else{
                 sb.append(c);
             }
