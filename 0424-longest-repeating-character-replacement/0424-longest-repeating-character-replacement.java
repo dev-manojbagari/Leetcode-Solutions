@@ -13,7 +13,7 @@ class Solution {
                 maxC = map[c-'A'];
             }
             
-            while((end-start+1)-maxC>k){
+            if((end-start+1)-maxC>k){
                 c = s.charAt(start);
                 map[c-'A']--;
                 start++;
