@@ -11,9 +11,9 @@ class Solution {
                 repeat = repeat*10+c-'0';
             }else if(c=='['){
                 stack1.push(repeat);
-                stack2.push(sb);
-                sb = new StringBuilder();
+                    stack2.push(sb);
                 repeat=0;
+                sb = new StringBuilder();
                 
             }else if(c==']'){
                 int count = stack1.pop();
@@ -21,9 +21,6 @@ class Solution {
                 for(int i=0;i<count;i++)
                     oldSb.append(sb.toString());
                 sb = oldSb;
-                //  StringBuilder tmp = sb;
-                // sb = stack2.pop();
-                // for (repeat = stack1.pop(); repeat > 0; --repeat) sb.append(tmp);
             }else{
                 sb.append(c);
             }
