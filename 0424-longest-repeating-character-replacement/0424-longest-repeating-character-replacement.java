@@ -1,29 +1,27 @@
 class Solution {
     public int characterReplacement(String s, int k) {
+        int[] map = new int[26];
         int start=0;
-        char[] cmap= new char[26];
-        int maxFreq =1;
-        char maxChar='\0';
-        int maxL=1;
-        for(int end=0;end<s.length();end++){
+        int dup =0;
+        int maxL=0;
+        int maxC=0;
+        char maxCC='A';
+        for(int end =0;end<s.length();end++){
             char c = s.charAt(end);
-            cmap[c-'A']++;
-            
-            if(cmap[c-'A']>maxFreq){
-                maxFreq = cmap[c-'A'];
-                maxChar=c;
+            map[c-'A']++;
+            if(map[c-'A']>maxC){
+                maxC = map[c-'A'];
             }
             
-            if(end-start+1-maxFreq>k){
+            while((end-start+1)-maxC>k){
                 c = s.charAt(start);
-                cmap[c-'A']--;
-                // if(c==maxChar)
-                    // maxFreq--;
+                map[c-'A']--;
                 start++;
-            
             }
             
-            maxL = Math.max(maxL,end-start+1);
+
+            
+           maxL = Math.max(maxL,end-start+1); 
         }
         
         return maxL;
