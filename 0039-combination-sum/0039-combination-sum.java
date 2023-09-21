@@ -1,22 +1,25 @@
 class Solution {
     public List<List<Integer>> combinationSum(int[] nums, int target) {
-        List<List<Integer>> list = new ArrayList<>();
+        Set<List<Integer>> set = new HashSet<>();
         Arrays.sort(nums);
-        combinationSum(nums, target, 0, list, new ArrayList<>());
-        return list;
+        backtrack(0,nums,set,new ArrayList<>(),target);
+        return new ArrayList<>(set);
     }
     
-    void combinationSum(int[] nums, int target, int start, List<List<Integer>> list, List<Integer> tempList) {
-        if(target == 0){
-            list.add(new ArrayList<>(tempList));
+    void backtrack(int start,int[] nums,Set<List<Integer>> set,List<Integer> tempList,int target){
+        if(target==0){
+            List<Integer> temp = new ArrayList<>(tempList);
+            Collections.sort(temp);
+            set.add(new ArrayList<>(temp));
             return;
         }
         
-        for(int i = start; i < nums.length; i++){
-            if(target - nums[i] >= 0){
+        
+        for(int i=start;i<nums.length;i++){
+            if(target-nums[i]>=0){
                 tempList.add(nums[i]);
-                combinationSum(nums, target - nums[i], i, list, tempList);
-                tempList.remove(tempList.size() - 1);
+                backtrack(start,nums,set,tempList,target-nums[i]);
+                tempList.remove(tempList.size()-1);
             }
         }
     }
