@@ -19,7 +19,7 @@ class Solution {
                 int count = stack1.pop();
                 StringBuilder oldSb =stack2.isEmpty()?new StringBuilder():stack2.pop();
                 for(int i=0;i<count;i++)
-                    oldSb.append(sb);
+                    oldSb.append(sb.toString());
                 sb = oldSb;
                 //  StringBuilder tmp = sb;
                 // sb = stack2.pop();
