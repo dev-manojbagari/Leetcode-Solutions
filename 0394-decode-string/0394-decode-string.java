@@ -17,10 +17,10 @@ class Solution {
                 
             }else if(c==']'){
                 int count = stack1.pop();
-                StringBuilder oldSb =stack2.isEmpty()?new StringBuilder():stack2.pop();
+                StringBuilder temp  = sb;
+                 sb = stack2.pop();
                 for(int i=0;i<count;i++)
-                    oldSb.append(sb.toString());
-                sb = oldSb;
+                    sb.append(temp.toString());
                 repeat=0;
             }else{
                 sb.append(c);
