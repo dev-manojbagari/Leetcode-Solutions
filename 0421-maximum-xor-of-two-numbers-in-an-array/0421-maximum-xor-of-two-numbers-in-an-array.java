@@ -1,55 +1,57 @@
 class Solution {
+    
     class Trie{
-        Node root;
-        public Trie(){
-            root = new Node();
+        Node head;
+        Trie(){
+            head = new Node();
         }
         
-        void insert(int num){
-            Node curr =root;
+        void add(int val){
+            Node curr = head;
             for(int i=31;i>=0;i--){
-                int bit = (num>>i)&1;
-                if(curr.child[bit]==null)
-                    curr.child[bit] = new Node();
-                curr = curr.child[bit];
+                int bit = (val>>i)&1;
+                if(curr.next[bit]==null)
+                    curr.next[bit]=new Node();
+                curr = curr.next[bit];
             }
         }
-        
-        int maxXor(int num){
-            Node curr =root;
-            int maxXor = 0;
+
+        int maxXor(int candidate){
+            Node curr = head;
+            int max=0;
             for(int i=31;i>=0;i--){
-                int bit = (num>>i)&1;
-                if(curr.child[1-bit]!=null){
-                    maxXor = maxXor|(1<<i);
-                    curr=curr.child[1-bit];
-                }else
-                    curr=curr.child[bit];
+                int digit = (candidate>>i)&1;
+                if(curr.next[1-digit]!=null){
+                    max = max|(1<<i);
+                    curr=curr.next[1-digit];
+                }else{
+                    curr=curr.next[digit];
+                }
             }
             
-            return maxXor;
+            return max;
         }
         
+        
         class Node{
-            Node[] child;
+            Node[] next;
             Node(){
-                child = new Node[2];
+                next = new Node[2];
             }
         }
     }
     
-    public int findMaximumXOR(int[] nums) {
-        Trie trie = new Trie();
-        
-        for(int num:nums)
-            trie.insert(num);
     
-        int max = 0;        
+    public int findMaximumXOR(int[] nums) {
+
+        Trie trie = new Trie();
+        for(int num:nums)
+            trie.add(num);
         
-        for(int num:nums){
-            max = Math.max(max,trie.maxXor(num));            
-        }
+        int max=0;
+        for(int num:nums)
+            max = Math.max(max, trie.maxXor(num));
         
-        return max;   
+        return max;
     }
 }
