@@ -7,18 +7,19 @@ class Solution {
     }
     
     void backtrack(int start,int[] nums,List<List<Integer>> list,List<Integer> tempList,int target){
+        if(start==nums.length)
+            return;
         if(target==0){
             list.add(new ArrayList<>(tempList));
             return;
         }
         
+        backtrack(start+1,nums,list,tempList,target);
+        if(target-nums[start]>=0){
+        tempList.add(nums[start]);
+        backtrack(start,nums,list,tempList,target-nums[start]);
+        tempList.remove(tempList.size()-1);
+        }
         
-        for(int i=start;i<nums.length;i++){
-            if(target-nums[i]>=0){
-                tempList.add(nums[i]);
-                backtrack(i,nums,list,tempList,target-nums[i]);
-                tempList.remove(tempList.size()-1);
-            }
         }
     }
-}
