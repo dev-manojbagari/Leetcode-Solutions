@@ -1,35 +1,38 @@
 class Solution {
-    int prefixSum[];
+    int[] preSum;
     Random random = new Random();
-    int n=0;
-    int arraySum=0;
+    int[] w;
     public Solution(int[] w) {
-        n=w.length;
-        prefixSum = new int[w.length];
-        prefixSum[0] = w[0];
-        for(int i=1;i<n;i++){
-            prefixSum[i]+= w[i]+prefixSum[i-1];
+        this.w=w;
+        preSum = new int[w.length];
+        preSum[0]=w[0];
+        for(int i=1;i<w.length;i++){
+            preSum[i]= preSum[i-1]+w[i];
         }
-        arraySum = prefixSum[n-1];
+        // System.out.println(Arrays.toString(preSum));
     }
     
     public int pickIndex() {
-        int randomSum = random.nextInt(arraySum)+1;
-        return binarySearch(prefixSum,randomSum);
+        
+        int randomVal = random.nextInt(preSum[preSum.length-1])+1;
+        int ceilingIndex = ceiling(preSum,randomVal);
+        
+        return ceilingIndex;
     }
     
-    int binarySearch(int[] nums,int val){
-        int left=0,right=n-1;
+    int ceiling(int[] preSum,int val){
+        int left=0,right=preSum.length-1;
         int ans =-1;
+
         while(left<=right){
             int mid = left+(right-left)/2;
-            if(nums[mid]>=val){
+            
+            if(val<=preSum[mid]){
                 ans = mid;
-                right=mid-1;
+                right= mid-1;
             }else{
-                left=mid+1;
-            }
-        }
+                left = mid+1;
+        }}
         
         return ans;
     }
