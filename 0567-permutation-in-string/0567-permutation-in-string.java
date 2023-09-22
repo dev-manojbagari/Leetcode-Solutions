@@ -1,40 +1,49 @@
 class Solution {
     public boolean checkInclusion(String s1, String s2) {
-        int len1 = s1.length();
-        int len2 = s2.length();
-        
-        if(len1>len2)
+        if(s1.length()>s2.length())
             return false;
         
-        char[] charCount = new char[26];
-
-        for(char i=0;i<len1;i++){
-            charCount[s1.charAt(i)-'a']++;
-            charCount[s2.charAt(i)-'a']--;
+        int[] map = new int[26];
+        for(char c:s1.toCharArray()){
+            map[c-'a']++;
         }
         
-        if(allZero(charCount))
+        int start=0,end=0;
+        int diff=s1.length();
+        
+        for(;end<s1.length();end++){
+            char c = s2.charAt(end);
+            map[c-'a']--;
+            
+            if(map[c-'a']>=0)
+                diff--;
+        }
+        
+
+        if(diff==0)
             return true;
         
-        for(int i=len1;i<s2.length();i++){
-            charCount[s2.charAt(i)-'a']--;
-            charCount[s2.charAt(i-len1)-'a']++;
-            if(allZero(charCount))
+        for(;end<s2.length();end++){
+            char c = s2.charAt(start++);
+            map[c-'a']++;
+            
+            if(map[c-'a']>0)
+                diff++;
+            
+            c = s2.charAt(end);
+            map[c-'a']--;
+            
+            if(map[c-'a']>=0)
+                diff--;
+            
+            if(diff==0)
                 return true;
+            
         }
         
-        
-        
+                
         return false;
         
-    }
-    
-    private boolean allZero(char[] charCount){
         
-        for(int i:charCount)
-            if(i!=0)
-                return false;
-        
-        return true;
     }
 }
