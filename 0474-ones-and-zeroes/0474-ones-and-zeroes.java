@@ -4,7 +4,7 @@ class Solution {
     }
     
     int findMaxForm(int i,String[] strs,int zeroCount,int oneCount,Integer[][][] dp){
-        if(i==strs.length)
+        if(i==strs.length||(zeroCount==0&&oneCount==0))
             return 0;
         
         if(dp[i][zeroCount][oneCount]!=null)
