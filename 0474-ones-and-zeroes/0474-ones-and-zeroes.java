@@ -24,8 +24,10 @@ class Solution {
         return dp[i][zeroCount][oneCount]=Math.max(include,notInclude);
     }
     
-    
+    Map<String,int[]> map = new HashMap<>();
     int[] countZeroOne(String str){
+        if(map.containsKey(str))
+            return map.get(str);
         int zero=0,one=0;
         for(char c:str.toCharArray()){
             if(c=='0')
@@ -33,6 +35,7 @@ class Solution {
             else
                 one++;
         }
+        map.put(str,new int[]{zero,one});
         return new int[]{zero,one};
     }
     
