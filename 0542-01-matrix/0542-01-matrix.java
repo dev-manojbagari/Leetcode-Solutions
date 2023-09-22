@@ -1,48 +1,37 @@
 class Solution {
-    class Pair{
-        int i=0,j=0,dist=0;;
-        Pair(int i,int j,int dist){
-            this.i =i;
-            this.j = j;
-            this.dist=dist;
-        }
-    }
     public int[][] updateMatrix(int[][] mat) {
-        int rows=mat.length,cols=mat[0].length;
-     //  boolean[][] vis = new boolean[rows][cols];
-        int[][] dist = new int[rows][cols];        
-        Queue<Pair> q = new LinkedList<>();
+        int rows= mat.length,cols=mat[0].length;
+        Queue<int[]> q = new LinkedList<>();
+        boolean[][] vis = new boolean[rows][cols];
         
         for(int i=0;i<rows;i++){
             for(int j=0;j<cols;j++){
                 if(mat[i][j]==0){
-                    q.add(new Pair(i,j,0));
-                   // vis[i][j]=true;
-                }        
+                    q.offer(new int[]{i,j});
+                    vis[i][j]=true;
+                }
             }
         }
-        int[][] dirs ={{0,1},{1,0},{-1,0},{0,-1}};
+        int[][] dirs = {{1,0},{0,1},{-1,0},{0,-1}};
         while(!q.isEmpty()){
-            
-            Pair curNode = q.poll();
+            int[] cell = q.poll();
+            int i = cell[0];
+            int j = cell[1];
             
             for(int[] dir:dirs){
-                int x = curNode.i+dir[0];
-                int y = curNode.j+dir[1];
+                int x = i+dir[0];
+                int y = j+dir[1];
                 
-                if(x<0||x>=mat.length||y<0||y>=mat[0].length)
-                        continue;
+                if(x<0||x>=mat.length||y<0||y>=mat[0].length||vis[x][y])
+                    continue;
                 
-                    if(mat[x][y]==1&&dist[x][y]==0){
-                        dist[x][y]=curNode.dist+1;
-                        q.add(new Pair(x,y,curNode.dist+1));
-                    }
+                vis[x][y]=true;
+                mat[x][y] = mat[i][j]+1;
+                q.offer(new int[]{x,y});
             }
-            
         }
         
-        return dist;
+        
+        return mat;        
     }
-    
-    
 }
