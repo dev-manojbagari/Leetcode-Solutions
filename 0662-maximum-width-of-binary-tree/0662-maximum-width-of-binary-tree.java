@@ -14,25 +14,35 @@
  * }
  */
 class Solution {
-    int maxWidth=0;
+    int width=0;
+    
     public int widthOfBinaryTree(TreeNode root) {
-        List<Integer> startOfLevel = new ArrayList<>();
+        List<List<Integer>> list = new ArrayList<>();
         
-        levelOrder(root,startOfLevel,0,1);
+        widthOfBinaryTree(root,list,0,0);
         
-        return maxWidth;
+        return width;
     }
     
-    void levelOrder(TreeNode root,List<Integer> list,int curLevel,int index){
+    void widthOfBinaryTree(TreeNode root,List<List<Integer>> list , int level,int curIndex)
+    {
         if(root==null)
             return;
         
-        if(list.size()==curLevel)
-            list.add(index);
+        if(list.size()==level)
+            list.add(new ArrayList<>());
         
-        maxWidth = Math.max(maxWidth , index-list.get(curLevel)+1);
+        list.get(level).add(curIndex);
+        width = Math.max(width,Math.abs(curIndex-list.get(level).get(0))+1);
         
-        levelOrder(root.left,list,curLevel+1,2*index);
-        levelOrder(root.right,list,curLevel+1,2*index+1);
+        
+        widthOfBinaryTree(root.left,list,level+1,2*curIndex+1);
+        widthOfBinaryTree(root.right,list,level+1,2*curIndex+2);
+        
+        
+        
     }
+    
+    
+    
 }
