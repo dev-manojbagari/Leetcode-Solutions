@@ -33,7 +33,7 @@ class Solution {
             list.add(new ArrayList<>());
         
         list.get(level).add(curIndex);
-        width = Math.max(width,Math.abs(curIndex-list.get(level).get(0))+1);
+        width = Math.max(width,curIndex-list.get(level).get(0)+1);
         
         
         widthOfBinaryTree(root.left,list,level+1,2*curIndex+1);
