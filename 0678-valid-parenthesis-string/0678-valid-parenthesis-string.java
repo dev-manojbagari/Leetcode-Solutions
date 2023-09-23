@@ -1,25 +1,32 @@
 class Solution {
- public boolean checkValidString(String s) {
-        Stack<Integer> leftID = new Stack<>();
-        Stack<Integer> starID = new Stack<>();
-        for (int i = 0; i < s.length(); i++) {
-            char ch = s.charAt(i);
-            if (ch == '(')
-                leftID.push(i);
-            else if (ch == '*')
-                starID.push(i);
-            else {
-                if (leftID.isEmpty() && starID.isEmpty())   return false;
-                if (!leftID.isEmpty())
-                    leftID.pop();
-                else 
-                    starID.pop();
+    public boolean checkValidString(String s) {
+        Stack<Integer> openStack = new Stack<>();
+        Stack<Integer> starStack  = new Stack<>();
+        
+        for(int i=0;i<s.length();i++){
+            char c = s.charAt(i);
+            if(c=='('){
+                openStack.push(i);
+            }else if(c==')'){
+                if(!openStack.isEmpty()){
+                    openStack.pop();
+                }else if(!starStack.isEmpty()){
+                    starStack.pop();
+                }else{
+                    return false;
+                }
+            }else{
+                    starStack.push(i);                
             }
         }
-        while (!leftID.isEmpty() && !starID.isEmpty()) {
-            if (leftID.pop() > starID.pop()) 
+        
+        while(!openStack.isEmpty()&&!starStack.isEmpty()){
+            if(openStack.pop()>starStack.pop())
                 return false;
         }
-        return leftID.isEmpty();
+        
+        
+        
+        return openStack.isEmpty();
     }
 }
