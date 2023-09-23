@@ -1,24 +1,23 @@
-import java.util.Arrays;
-
-public class Solution {
+class Solution {
     public int leastInterval(char[] tasks, int n) {
-        int[] frequencies = new int[26];
-        
-        for (char task : tasks) {
-            frequencies[task - 'A']++;
+     int[] storage = new int[26];
+        for (char c : tasks) {
+            storage[(c - 'A')]++;
         }
-        
-        Arrays.sort(frequencies);
-        
-        int maxFrequency = frequencies[25];
-        int idleTime = (maxFrequency - 1) * n;
-        
-        for (int i = 24; i >= 0 && frequencies[i] > 0; i--) {
-            idleTime -= Math.min(maxFrequency - 1, frequencies[i]);
+        int max = 0;
+        int count = 1;
+        for (int num : storage) {
+            if (num == 0) {
+                continue;
+            }
+            if (max < num) {
+                max = num;
+                count = 1;
+            } else if (max == num) {
+                count++;
+            }
         }
-        
-        idleTime = Math.max(0, idleTime);
-        
-        return tasks.length + idleTime;
+        int space = (n + 1) * (max - 1) + count;
+        return (space < tasks.length) ? tasks.length : space; 
     }
 }
