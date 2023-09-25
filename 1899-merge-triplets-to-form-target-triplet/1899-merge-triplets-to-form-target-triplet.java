@@ -1,9 +1,14 @@
 class Solution {
-    public boolean mergeTriplets(int[][] triplets, int[] t) {
-     int[] res = new int[3];
-    for (var s : triplets)
-        if (s[0] <= t[0] && s[1] <= t[1] && s[2] <= t[2])
-            res = new int[]{ Math.max(res[0], s[0]), Math.max(res[1], s[1]), Math.max(res[2], s[2]) };
-    return Arrays.equals(res, t);
+    public boolean mergeTriplets(int[][] triplets, int[] target) {
+       int[] res = new int[3];
+        for(int[] triplet:triplets){
+            if(triplet[0]<=target[0]&&triplet[1]<=target[1]&&triplet[2]<=target[2]){
+                  res[0] = Math.max(res[0],triplet[0]);
+                  res[1] = Math.max(res[1],triplet[1]);
+                  res[2] = Math.max(res[2],triplet[2]);
+            }
+        }
+        
+        return Arrays.equals(res,target);
     }
 }
