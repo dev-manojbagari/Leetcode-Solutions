@@ -1,26 +1,34 @@
 class Solution {
+    class car {
+        int pos;
+        double time;
+        car(int pos,double time){
+            this.pos=pos;
+            this.time=time;
+        }
+    }
     public int carFleet(int target, int[] position, int[] speed) {
-        TreeMap<Integer,Integer> map = new TreeMap<>();
+        car[] cars = new car[position.length];
         
         for(int i=0;i<position.length;i++){
-            map.put(target-position[i],speed[i]);    
+            double time = (target-position[i])/(speed[i]*1.0);
+            cars[i]=new car(position[i],time);
         }
-        
-        int fleet=0;
-        double slowestTimeToTarget = 0.0;
-        
-        for(int key : map.keySet()){
-            int curDistance = key;
-            int curSpeed= map.get(key);
-            
-            double timeToTarget = (curDistance*1.0)/curSpeed;
-            
-            if(timeToTarget>slowestTimeToTarget){
-                fleet++;
-                slowestTimeToTarget = timeToTarget;
+            Arrays.sort(cars,(a,b)->b.pos-a.pos);
+        // for(car c:cars)
+        // {
+        //     System.out.println(c.pos+" "+c.time);
+        // }
+        int carFleet=1;
+        double time = cars[0].time;
+        for(int i=1;i<cars.length;i++){
+            if(cars[i].time>time){
+                carFleet++;
+                time = cars[i].time;
             }
         }
-
-        return fleet;
+        
+            
+        return carFleet;    
     }
 }
