@@ -1,17 +1,29 @@
 class StockSpanner {
-
-    public StockSpanner() {
+    class Node{
+        int price;
+        int count;
         
-    }
-    Stack<int[]> stack = new Stack<>();
-    public int next(int price) {
-        int res=1;
-        while(!stack.isEmpty()&&stack.peek()[0]<=price)
-            res +=  stack.pop()[1];
-        stack.push(new int[]{price,res});
-        
-        return res;
+        Node(int price,int count){
+            this.price=price;
+            this.count=count;
         }
+    }
+    
+    Stack<Node> stack;
+    public StockSpanner() {
+        stack = new Stack<>();
+    }
+    
+    public int next(int price) {
+        int count=1;
+        while(!stack.isEmpty()&&stack.peek().price<=price){
+            Node node=stack.pop();
+            count += node.count;
+        }
+        
+        stack.push(new Node(price,count));
+        return count;
+    }
 }
 
 /**
