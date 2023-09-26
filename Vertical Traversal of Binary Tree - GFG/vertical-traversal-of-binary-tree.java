@@ -106,45 +106,50 @@ class GfG {
 
 // } Driver Code Ends
 
+
+//User function Template for Java
+
+
 class Solution
 {
+    //Function to find the vertical order traversal of Binary Tree.
     static class Pair{
-         Node node;
-         int  hd;
+        Node node;
+        int hd;
         Pair(Node node,int hd){
             this.node=node;
             this.hd=hd;
         }
     }
     
-    
-    static ArrayList <Integer> verticalOrder(Node root)
-    {
+    static ArrayList <Integer> verticalOrder(Node root){
         ArrayList<Integer> list = new ArrayList<>();
+        if(root==null)
+            return list;
         Map<Integer,List<Integer>> map = new HashMap<>();
-        int minHd=Integer.MAX_VALUE,maxHd=Integer.MIN_VALUE;
-        
         Queue<Pair> q = new LinkedList<>();
         q.offer(new Pair(root,0));
-        
+        int minHd=Integer.MAX_VALUE,maxHd = Integer.MIN_VALUE;
         while(!q.isEmpty()){
-            int levelSize = q.size();
-            for(int i=0;i<levelSize;i++){
-                Pair pair = q.poll();
-                int hd = pair.hd;
-                Node node= pair.node;
-                minHd = Math.min(hd,minHd);
-                maxHd = Math.max(hd,maxHd);
-                
-                map.computeIfAbsent(hd,(k->new ArrayList<>())).add(node.data);
-                
-                if(node.left!=null)
-                    q.offer(new Pair(node.left,hd-1));
-                
-                if(node.right!=null)
-                    q.offer(new Pair(node.right,hd+1));
-            }
             
+            Pair pair = q.poll();
+            Node node = pair.node;
+            int hd = pair.hd;
+            
+            if(map.get(hd)==null)
+                map.put(hd,new ArrayList<>());
+                
+            map.get(hd).add(node.data);
+            
+            
+            minHd = Math.min(minHd,hd);
+            maxHd = Math.max(maxHd,hd);
+            
+            if(node.left!=null)
+                q.offer(new Pair(node.left,hd-1));
+            
+            if(node.right!=null)
+                q.offer(new Pair(node.right,hd+1));
             
         }
         
@@ -152,7 +157,7 @@ class Solution
             list.addAll(map.get(i));
         }
         
-        return list;
         
+        return list;
     }
 }
