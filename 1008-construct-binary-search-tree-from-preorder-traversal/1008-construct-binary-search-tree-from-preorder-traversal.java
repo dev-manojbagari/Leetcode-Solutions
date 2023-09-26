@@ -16,18 +16,29 @@
 class Solution {
     int preIndex=0;
     public TreeNode bstFromPreorder(int[] preorder) {
-        return buildBST(preorder,Integer.MAX_VALUE);
+    //   int[] inorder = preorder.clone();
+     //   Arrays.sort(inorder);
+       
+        
+        return buildBST(preorder,Integer.MIN_VALUE,Integer.MAX_VALUE);
     }
     
-    TreeNode buildBST(int[] preorder,int max){
-        if(preIndex>=preorder.length||preorder[preIndex]>=max)
+    private TreeNode buildBST(int[] preorder,int min,int max){
+        if(preIndex==preorder.length||min>=max)
             return null;
-        
+      
+        int next = preorder[preIndex];
+        if(min>=next||next>=max)
+            return null;
+       
         TreeNode node = new TreeNode(preorder[preIndex++]);
-        node.left= buildBST(preorder,node.val);
-        node.right=buildBST(preorder,max);
+        
+        node.left = buildBST(preorder,min,node.val);
+        node.right= buildBST(preorder,node.val,max);
+        
         return node;
     }
+    
     
     
 }
