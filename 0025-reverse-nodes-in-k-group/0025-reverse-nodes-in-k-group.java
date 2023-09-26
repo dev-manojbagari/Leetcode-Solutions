@@ -8,48 +8,38 @@
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
-// 
 class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
-        int len = getLength(head);
-        return reverse(head,k,len/k);
+        int len = getLen(head);
+        int freq = len/k;
+        // System.out.println(freq);
+        return reverse(head,k,freq);
     }
     
-    ListNode reverse(ListNode head,int k,int freq){
-        if(freq==0)
+    public ListNode reverse(ListNode head,int k,int freq){
+        if(head==null||freq==0)
             return head;
-        
-        ListNode preHead = new ListNode(-1);
-        ListNode pre = preHead;
-        ListNode curr= head;
-        
-        while(freq>0){
-            ListNode firstNode = curr;;
-            for(int i=0;i<k;i++){
-                ListNode temp = curr;
-                curr=curr.next;
-                temp.next=null;
-                temp.next=pre.next;
-                pre.next=temp;
-            }
-            freq--;
-            if(freq>0){
-                pre = firstNode;
-            }else{
-                firstNode.next=curr;
-            }
-            
-        
+        ListNode prev=null,curr=head,next=null;
+        int count =0;
+        while(curr!=null&&count<k){
+            next = curr.next;
+            curr.next=prev;
+            prev=curr;
+            curr=next;
+            count++;
         }
+    
+        if(next!=null)
+            head.next = reverse(next,k,freq-1);
         
-        return preHead.next;       
+        return prev;
     }
     
-    int getLength(ListNode node){
-        int count =0;
+    int getLen(ListNode node){
+        int count=0;
         while(node!=null){
-            count++;
             node=node.next;
+            count++;
         }
         return count;
     }
