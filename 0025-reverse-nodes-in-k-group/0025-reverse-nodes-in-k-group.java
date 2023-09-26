@@ -30,7 +30,7 @@ class Solution {
         }
     
         if(next!=null)
-            head.next = reverse(next,k,freq-1);
+            head.next = reverse(next,k,--freq);
         
         return prev;
     }
