@@ -24,10 +24,11 @@ class Solution {
     }
     
     private TreeNode buildBST(int[] preorder,int min,int max){
-        if(preIndex==preorder.length||min>=max)
+        if(preIndex==preorder.length)
             return null;
       
         int next = preorder[preIndex];
+        
         if(min>=next||next>=max)
             return null;
        
