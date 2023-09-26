@@ -19,7 +19,7 @@ class Solution {
         ListNode ptr=preHead;
         ListNode curr = head;
         for(int i=0;i<freq;i++){
-            ListNode first = curr;
+            ListNode firstNodeInGroup = curr;
             for(int count=0;count<k;count++){
                 ListNode next = curr.next;
                 curr.next = ptr.next;
@@ -28,7 +28,7 @@ class Solution {
             }   
             
             if(curr!=null){
-                ptr=first;
+                ptr=firstNodeInGroup;
             }else{
                 break;
             }
