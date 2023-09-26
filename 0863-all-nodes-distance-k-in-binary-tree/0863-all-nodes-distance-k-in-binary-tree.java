@@ -23,7 +23,7 @@ class Solution {
             return -1;
         
         if(root==target){
-            distanceKBelow(root,target,k,list);
+            distanceKBelow(root,k,list);
             return 0;
         }
         
@@ -33,7 +33,7 @@ class Solution {
             if(ld+1==k){
                 list.add(root.val);
             }else if(ld+1<k){
-                distanceKBelow(root.right,target,k-ld-2,list);
+                distanceKBelow(root.right,k-ld-2,list);
             }
             
             return ld+1;
@@ -45,7 +45,7 @@ class Solution {
             if(rd+1==k){
                 list.add(root.val);
             }else if(rd+1<k){
-                distanceKBelow(root.left,target,k-rd-2,list);
+                distanceKBelow(root.left,k-rd-2,list);
             }
             
             return rd+1;
@@ -54,7 +54,7 @@ class Solution {
         return -1;        
     }
     
-    private void distanceKBelow(TreeNode root,TreeNode target,int k,List<Integer> list){
+    private void distanceKBelow(TreeNode root,int k,List<Integer> list){
         if(root==null)
             return;
         
@@ -63,7 +63,7 @@ class Solution {
             return;
         }
         
-        distanceKBelow(root.left,target,k-1,list);
-        distanceKBelow(root.right,target,k-1,list);
+        distanceKBelow(root.left,k-1,list);
+        distanceKBelow(root.right,k-1,list);
     }
 }
