@@ -65,6 +65,7 @@ class Solution {
                     return a.node.val-b.node.val;
                 return a.hd-b.hd;
             });
+            
             List<Integer> temp = new ArrayList<>();
             for(Pair pair:tempList)
                 temp.add(pair.node.val);
