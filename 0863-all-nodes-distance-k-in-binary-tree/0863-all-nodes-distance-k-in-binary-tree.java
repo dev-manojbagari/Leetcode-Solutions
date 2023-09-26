@@ -1,62 +1,69 @@
-
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
 class Solution {
     public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
         List<Integer> list = new ArrayList<>();
-        if (root == null)
+        if(root==null)
             return list;
-
-        distanceK(root, target, k, list);
-
+        
+        distanceK(root,target,k,list);
+        
         return list;
     }
-
-    private int distanceK(TreeNode root, TreeNode target, int k, List<Integer> list) {
-        if (root == null)
+    
+    private int distanceK(TreeNode root,TreeNode target,int k,List<Integer> list){
+        if(root==null)
             return -1;
-
-        if (root == target) {
-            distanceKDown(root, list, k);
+        
+        if(root==target){
+            distanceKBelow(root,target,k,list);
             return 0;
         }
-
-        int dl = distanceK(root.left, target, k, list);
-
-        if (dl != -1) {
-            if (dl + 1 == k) {
+        
+        int ld = distanceK(root.left,target,k,list);
+        
+        if(ld!=-1){
+            if(ld+1==k){
                 list.add(root.val);
-            } else if (dl + 1 < k) {
-                distanceKDown(root.right,list,k-dl-2);
+            }else if(ld+1<k){
+                distanceKBelow(root.right,target,k-ld-2,list);
             }
-            return dl + 1;
-        }else{
-            int dr = distanceK(root.right, target, k, list);
-            if (dr != -1) {
-                if (dr + 1 == k) {
-                    list.add(root.val);
-                    // return dr + 1;
-                } else {
-                    distanceKDown(root.left,list,k-dr-2);
-                }
-            return dr + 1;
-            }
+            
+            return ld+1;
         }
-        return -1;
         
+        int rd = distanceK(root.right,target,k,list);
+        
+        if(rd!=-1){
+            if(rd+1==k){
+                list.add(root.val);
+            }else if(rd+1<k){
+                distanceKBelow(root.left,target,k-rd-2,list);
+            }
+            
+            return rd+1;
+        }
+        
+        return -1;        
     }
-
-    private void distanceKDown(TreeNode node, List<Integer> list, int level) {
-        if (node == null )
+    
+    private void distanceKBelow(TreeNode root,TreeNode target,int k,List<Integer> list){
+        if(root==null)
             return;
-
-        if (level == 0) {
-            list.add(node.val);
         
+        if(k==0){
+            list.add(root.val);
+            return;
         }
-
-        distanceKDown(node.left, list, level - 1);
-        distanceKDown(node.right, list, level - 1);
+        
+        distanceKBelow(root.left,target,k-1,list);
+        distanceKBelow(root.right,target,k-1,list);
     }
 }
-
-
-// With these modifications, the solution should provide the expected `[7, 4, 1]` output for the mentioned test case.
