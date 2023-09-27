@@ -76,8 +76,8 @@ class LFUCache {
          return head.next==tail;
      }
      void pop(){
-         if(isEmpty())
-             return;
+         // if(isEmpty())
+         //     return;
          delete(tail.prev);
      }
      
