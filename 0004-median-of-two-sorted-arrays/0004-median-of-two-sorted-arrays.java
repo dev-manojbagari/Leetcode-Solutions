@@ -5,14 +5,8 @@ class Solution {
             nums1=nums2;
             nums2=temp;
         }
-        int n1 = nums1.length,n2=nums2.length;
-        
-        return findMedianSortedArrays(nums1,nums2,n1,n2);
-    }
-    
-    private double findMedianSortedArrays(int[] nums1,int[] nums2,int n1,int n2){
-        
-        int low=0,high=nums1.length;
+            int n1 = nums1.length,n2=nums2.length;
+            int low=0,high=nums1.length;
         
         while(low<=high){
 
@@ -37,7 +31,6 @@ class Solution {
         
         return 0.0;
     }
-    
     
     
 }
