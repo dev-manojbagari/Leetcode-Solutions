@@ -6,10 +6,10 @@ class Solution {
             map[c]++;
         }
         
-        int start=0,end=0,count=t.length();
+        int start=0,count=t.length();
         int minLen = s.length()+1;
         int minStart=0;
-        for(;end<s.length();end++){
+        for(int end =0;end<s.length();end++){
             char c = s.charAt(end);
             map[c]--;
             if(map[c]>=0)
