@@ -8,7 +8,7 @@ class Solution {
                 dq.pollFirst();
             }
             
-            while(!dq.isEmpty()&&nums[dq.peekLast()]<nums[i]){
+            while(!dq.isEmpty()&&nums[dq.peekLast()]<=nums[i]){
                 dq.pollLast();
             }
             dq.offer(i);
