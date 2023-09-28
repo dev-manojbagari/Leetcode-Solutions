@@ -6,7 +6,7 @@ class Solution {
         
         for(int i=0;i<rows;i++){
             for(int j=0;j<cols;j++){
-                if(!vis[i][j]&&board[i][j]==word.charAt(0)){
+                if(board[i][j]==word.charAt(0)){
                     if(dfs(i,j,board,0,word,vis))
                         return true;
                 }
