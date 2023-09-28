@@ -22,15 +22,15 @@ class Solution {
         
         vis[i][j]=true;
         prev = matrix[i][j];
-        int a = 1+dfs(i+1,j,matrix,vis,prev,len,dp);
-        int b = 1+dfs(i,j+1,matrix,vis,prev,len,dp);
-        int c = 1+dfs(i-1,j,matrix,vis,prev,len,dp);
-        int d = 1+dfs(i,j-1,matrix,vis,prev,len,dp);
+        int a = dfs(i+1,j,matrix,vis,prev,len,dp);
+        int b = dfs(i,j+1,matrix,vis,prev,len,dp);
+        int c = dfs(i-1,j,matrix,vis,prev,len,dp);
+        int d = dfs(i,j-1,matrix,vis,prev,len,dp);
         
         vis[i][j]=false;
         
         
-        return dp[i][j]=Math.max(Math.max(a,b),Math.max(c,d));
+        return dp[i][j]=1+Math.max(Math.max(a,b),Math.max(c,d));
     }
     
     
