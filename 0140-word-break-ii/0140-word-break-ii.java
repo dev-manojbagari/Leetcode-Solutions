@@ -15,10 +15,10 @@ class Solution {
         for(int j=i;j<s.length();j++){
             if(set.contains(s.substring(i,j+1))){
                 int len = sb.length();
-                if(sb.length()!=0){
-                    sb.append(" "+s.substring(i,j+1));
-                }else{
+                if(sb.length()==0){
                     sb.append(s.substring(i,j+1));
+                }else{
+                    sb.append(" "+s.substring(i,j+1));
                 }
                 
                 wordBreak(j+1,s,set,list,sb);
