@@ -7,12 +7,18 @@ class MedianFinder {
     }
     
     public void addNum(int num) {
-        maxHeap.offer(num);
-        minHeap.offer(maxHeap.poll());
-        
-        if(minHeap.size()>maxHeap.size()){
-            maxHeap.offer(minHeap.poll());
+        if(!maxHeap.isEmpty()&&maxHeap.peek()<num){
+            minHeap.offer(num);
+            if(minHeap.size()>1+maxHeap.size()){
+                maxHeap.offer(minHeap.poll());
+            }
+        }else{
+            maxHeap.offer(num);
+            if(maxHeap.size()>1+minHeap.size()){
+                minHeap.offer(maxHeap.poll());
+            }
         }
+        
     }
     
     public double findMedian() {
@@ -20,6 +26,9 @@ class MedianFinder {
         if(n%2==0){
             return (minHeap.peek()+maxHeap.peek())/2.0;
         }else{
+            if(minHeap.size()>maxHeap.size())
+                return minHeap.peek();
+            else
                 return maxHeap.peek();
         }
     }
