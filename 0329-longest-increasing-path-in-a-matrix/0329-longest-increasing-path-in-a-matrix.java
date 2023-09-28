@@ -1,44 +1,37 @@
 class Solution {
     public int longestIncreasingPath(int[][] matrix) {
-        int maxLen =1;
-        int rows=matrix.length;
-        int cols = matrix[0].length;
-        boolean[][] vis = new boolean[rows][cols];    
-        int[][] cache = new int[rows][cols];
-        for(int i=0;i<matrix.length;i++){
-            for(int j=0;j<matrix[0].length;j++){
-                maxLen = Math.max(maxLen,dfs(i,j,matrix,vis,-1,cache));
+        int rows= matrix.length,cols=matrix[0].length;
+        boolean[][] vis = new boolean[rows][cols];
+        int max = 0;
+        for(int i=0;i<rows;i++){
+            for(int j=0;j<cols;j++){
+                max=Math.max(max,dfs(i,j,matrix,vis,-1,0,new Integer[rows][cols]));
             }
         }
         
-        return maxLen;
+        return max;
     }
     
-    int dfs(int i,int j,int[][] matrix,boolean[][] vis,int prev,int[][] cache){
+    int dfs(int i,int j,int[][] matrix,boolean[][] vis,int prev,int len,Integer[][] dp){
         
         if(i<0||i>=matrix.length||j<0||j>=matrix[0].length||vis[i][j]||prev>=matrix[i][j])
             return 0;
         
-         if(cache[i][j]!=0)
-             return cache[i][j];
-        
+        if(dp[i][j]!=null)
+            return dp[i][j];
         
         vis[i][j]=true;
-        
-        int a= dfs(i+1,j,matrix,vis,matrix[i][j],cache)+1;
-        int b= dfs(i,j+1,matrix,vis,matrix[i][j],cache)+1;
-        int c= dfs(i-1,j,matrix,vis,matrix[i][j],cache)+1;
-        int d= dfs(i,j-1,matrix,vis,matrix[i][j],cache)+1;
+        prev = matrix[i][j];
+        int a = 1+dfs(i+1,j,matrix,vis,prev,len,dp);
+        int b = 1+dfs(i,j+1,matrix,vis,prev,len,dp);
+        int c = 1+dfs(i-1,j,matrix,vis,prev,len,dp);
+        int d = 1+dfs(i,j-1,matrix,vis,prev,len,dp);
         
         vis[i][j]=false;
-
-        return cache[i][j]=Math.max(Math.max(a,b),Math.max(c,d));
         
+        
+        return dp[i][j]=Math.max(Math.max(a,b),Math.max(c,d));
     }
-    
-    
-    
-    
     
     
     
