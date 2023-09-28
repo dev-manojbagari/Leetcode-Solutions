@@ -1,6 +1,6 @@
 class Solution {
     public String minWindow(String s, String t) {
-        int[] map = new int[256];
+        int[] map = new int[128];
         
         for(char c:t.toCharArray()){
             map[c]++;
