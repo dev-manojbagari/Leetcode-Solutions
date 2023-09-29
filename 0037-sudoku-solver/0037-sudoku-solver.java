@@ -24,9 +24,10 @@ class Solution {
     }
     
     boolean isVaild(int row,int col,char[][] board,int num){
-        int blockRow = (row/3)*3,blockCol=(col/3)*3;
+        int blockRow  = row/3,blockCol=col/3;
+        int blockFirstRow = (blockRow)*3,blockFirstCol=(blockCol)*3;
         for(int i=0;i<9;i++){
-            if(board[row][i]==num||board[i][col]==num||board[blockRow+i/3][blockCol+i%3]==num){
+            if(board[row][i]==num||board[i][col]==num||board[blockFirstRow+i/3][blockFirstCol+i%3]==num){
                 return false;
             }
         }
