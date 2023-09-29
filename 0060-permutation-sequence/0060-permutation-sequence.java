@@ -1,30 +1,27 @@
 class Solution {
-    String str = "";
     public String getPermutation(int n, int k) {
-        int fact[] = new int[]{1,1,2,6,24,120,720,5040,40320,362880};
-        LinkedList list = new LinkedList<>();
-        for(int i=1;i<=n;i++)
-            list.add(i);
+        int fact[] = new int[n+1];
+        int mul=1;  
+        fact[0]=1;
         
-        getPermutation(n,k,fact,list);
-        return str;
-    }
-    
-    void getPermutation(int n,int k,int[] fact,LinkedList<Integer> list){
-        if(n==1)
-        {
-            str += list.get(list.size()-1);
-            return;
+        for(int i=1;i<=n;i++){
+            fact[i]=fact[i-1]*i;
         }
         
-        int index = k/fact[n-1];
+        List<Integer> nums = new ArrayList<>();
         
-        if(k%fact[n-1]==0)
-            index--;
+        for(int i=1;i<=n;i++){
+            nums.add(i);
+        }
         
-        str += Integer.toString(list.get(index));
-        list.remove(index);
-        k = k-index*fact[n-1];
-        getPermutation(n-1,k,fact,list);
+        StringBuilder sb = new StringBuilder();
+        k--;
+      for(int i = 1; i <= n; i++){
+        int index = k/fact[n-i];
+        sb.append(String.valueOf(nums.get(index)));
+        nums.remove(index);
+        k-=index*fact[n-i];
+    }
+        return sb.toString();
     }
 }
