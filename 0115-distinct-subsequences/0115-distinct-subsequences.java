@@ -1,27 +1,21 @@
 class Solution {
     public int numDistinct(String s, String t) {
-        if(t.length()>s.length())
-            return 0;
-        return numDistinct(0,0,s,t,new Integer[s.length()+1][t.length()+1]);
+        int[][] dp = new int[s.length()+1][t.length()+1];
+        
+        
+        for(int i=0;i<s.length();i++){
+            dp[i][0]=1;
+        }
+        for(int i=1;i<=s.length();i++){
+            for(int j=1;j<=t.length();j++){
+                if(s.charAt(i-1)==t.charAt(j-1))
+                    dp[i][j] = dp[i-1][j-1]+dp[i-1][j];
+                else
+                    dp[i][j]= dp[i-1][j];
+            }
+        }
+        
+        
+        return dp[s.length()][t.length()];
     }
-    
-    int numDistinct(int i,int j,String s,String t,Integer[][] dp){
-        if(j==t.length())
-            return 1;
-        if(i==s.length())
-            return 0;
-        
-        if(dp[i][j]!=null)
-            return dp[i][j];
-            
-        
-        if(s.charAt(i)!=t .charAt(j)){
-            dp[i][j]=numDistinct(i+1,j,s,t,dp);
-        }else{
-            dp[i][j]=numDistinct(i+1,j+1,s,t,dp)+numDistinct(i+1,j,s,t,dp);
-        }        
-        
-        return dp[i][j];
-    }
-    
 }
