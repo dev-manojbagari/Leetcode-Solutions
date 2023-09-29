@@ -16,12 +16,13 @@ class Solution {
         
         StringBuilder sb = new StringBuilder();
         k--;
-      for(int i = 1; i <= n; i++){
-        int index = k/fact[n-i];
-        sb.append(String.valueOf(nums.get(index)));
-        nums.remove(index);
-        k-=index*fact[n-i];
-    }
+         for(int i=1;i<=n;i++){
+            int index = k/fact[n-i];
+            sb.append(String.valueOf(nums.get(index)));
+            nums.remove(index);
+            k = k-index*fact[n-i];
+         }
+        
         return sb.toString();
     }
 }
