@@ -1,12 +1,13 @@
 class Solution {
-    class Job{
-        int startTime,endTime,profit;
-        Job(int startTime,int endTime,int profit){
-            this.startTime=startTime;
-            this.endTime=endTime;
-            this.profit= profit;
-        }
-    }
+    // class Job{
+    //     int startTime,endTime,profit;
+    //     Job(int startTime,int endTime,int profit){
+    //         this.startTime=startTime;
+    //         this.endTime=endTime;
+    //         this.profit= profit;
+    //     }
+    // }
+    record Job(int startTime,int endTime,int profit){}
     public int jobScheduling(int[] startTime, int[] endTime, int[] profit) {
         
         List<Job> jobs = new ArrayList<>();
@@ -14,7 +15,7 @@ class Solution {
             jobs.add(new Job(startTime[i],endTime[i],profit[i]));
         }
         
-        jobs.sort((a,b)->Integer.compare(a.endTime,b.endTime));
+        jobs.sort((a,b)->Integer.compare(a.endTime(),b.endTime()));
         
         
         List<Integer> endTimes = new ArrayList<>();
@@ -28,7 +29,7 @@ class Solution {
             int exclProfit = dpProfit.get(dpProfit.size()-1);
             
             if(inclProfit>exclProfit){
-                endTimes.add(job.endTime);
+                endTimes.add(job.endTime());
                 dpProfit.add(inclProfit);
             }
         }
