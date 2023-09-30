@@ -1,33 +1,46 @@
-   class Solution {
-int checkSubstr(String s, int i, int l[], int r[]) {
-    int right = r[s.charAt(i) - 'a'];
-    for (int j = i; j <= right; ++j) {
-        if (l[s.charAt(j) - 'a'] < i)
-            return -1;
-        right = Math.max(right, r[s.charAt(j) - 'a']);
-    }
-    return right;
-}    
-public List<String> maxNumOfSubstrings(String s) {
-    int l[] = new int[26], r[] = new int[26];
-    Arrays.fill(l, s.length());
-    var res = new ArrayList<String>();
-    for (int i = 0; i < s.length(); ++i) {
-        var ch = s.charAt(i) - 'a';
-        l[ch] = Math.min(l[ch], i);
-        r[ch] = i;
-    }
-    int right = -1;
-    for (int i = 0; i < s.length(); ++i)
-        if (i == l[s.charAt(i) - 'a']) {
-            int new_right = checkSubstr(s, i, l, r);
-            if (new_right != -1) {
-                if (i > right)
-                    res.add("");                     
-                right = new_right;
-                res.set(res.size() - 1, s.substring(i, right + 1));
-            }
+class Solution {
+    public List<String> maxNumOfSubstrings(String s) {
+        Map<Character,int[]> map = new HashMap<>();
+        
+        for(int i=0;i<s.length();i++){
+            char c = s.charAt(i);
+            if(!map.containsKey(c))
+                map.put(c,new int[]{i,i});
+            else
+                map.get(c)[1]=i;
         }
-    return res;
-}
+        
+        List<String> res = new ArrayList<>();
+        int prevEnd = -1;
+        for(int i=0;i<s.length();i++){
+            char c= s.charAt(i);
+            if(map.get(c)[0]==i){
+                int end = getEndTime(c,s,map);
+                if(end==-1) continue;
+                if(prevEnd<i)
+                    res.add("");
+                
+                res.set(res.size()-1,s.substring(i,end+1));
+                prevEnd=end;
+            }
+            
+            
+            
+        }
+            return res;            
+    }
+    
+    int getEndTime(char c,String s,Map<Character,int[]> map){
+        int start = map.get(c)[0],end = map.get(c)[1];
+        for(int i=start;i<=end;i++){
+            int curStart = map.get(s.charAt(i))[0];
+            if(curStart<start)
+                return -1;
+             int curEnd = map.get(s.charAt(i))[1];
+            if(curEnd>end)
+                end = curEnd;
+        }
+        
+        return end;
+    }
 }
