@@ -1,49 +1,45 @@
 class Solution {
     public int numBusesToDestination(int[][] routes, int source, int target) {
-        Map<Integer,List<Integer>> stopMap = new HashMap<>();
+        if(source==target)
+            return 0;
+        Map<Integer,List<Integer>> map = new HashMap<>();
         
-        for(int i=0;i<routes.length;i++){
-            for(int j=0;j<routes[i].length;j++){
-                int bus = i;
-                int stop = routes[i][j];
-            stopMap.computeIfAbsent(stop,(key->new ArrayList<>())).add(bus);
+        for(int bus=0;bus<routes.length;bus++){
+            for(int j=0;j<routes[bus].length;j++){
+                int curStop = routes[bus][j];
+                map.computeIfAbsent(curStop,(k->new ArrayList<>())).add(bus);    
             }
         }
         
-        if(!stopMap.containsKey(source)||!stopMap.containsKey(target))    
+        if(!map.containsKey(source)||!map.containsKey(target))
             return -1;
-        if(source==target) return 0;
+        
         Queue<Integer> q  = new LinkedList<>();
-        q.add(source);
         Set<Integer> busTaken = new HashSet<>();
         Set<Integer> stopTaken = new HashSet<>();
-        stopTaken.add(source); // Add source to visited stops
-        int busCount=0;
+        q.offer(source);
+        stopTaken.add(source);
+        int buses =0;
         
-         while(!q.isEmpty()){
-             int size=q.size();
-             
-             for(int i=0; i<size; ++i){
-                 Integer curStop=q.poll();
-                 List<Integer> buses=stopMap.get(curStop);
-                 
-                 for(Integer bus:buses){
-                     if(busTaken.contains(bus)) continue;
-                     busTaken.add(bus);
-                     
-                     for(Integer nextStop:routes[bus]){
-                         if(stopTaken.contains(nextStop)) continue; // Corrected condition
-                         if(nextStop == target)
-                             return busCount+1;
-
-                         q.offer(nextStop);
-                         stopTaken.add(nextStop); 
-                     }
-                 }                
-             }
-             busCount++;
-         }
-
-         return -1;
+        while(!q.isEmpty()){
+            int size = q.size();
+            for(int i=0;i<size;i++){
+                int curStop = q.poll();
+                for(int bus:map.get(curStop)){
+                    if(busTaken.contains(bus)) continue;
+                    busTaken.add(bus);
+                    for(int stop:routes[bus]){
+                        if(stop==target)
+                            return buses+1;
+                        if(stopTaken.contains(stop)) continue;
+                        stopTaken.add(stop);
+                        q.offer(stop);
+                    }
+                }                
+            }
+            buses++;
+        }
+        
+        return -1;
     }
 }
