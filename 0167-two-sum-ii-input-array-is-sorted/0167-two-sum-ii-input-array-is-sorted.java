@@ -11,12 +11,12 @@ class Solution {
                 break;
             }else if(sum<target){
                 i++;
-                // while(i<j&&nums[i]==nums[i-1])
-                //     i++;
+                while(i<j&&nums[i]==nums[i-1])
+                    i++;
             }else{
                 j--;
-                // while(i<j&&nums[j]==nums[j-1])
-                //     j--;
+                while(i<j&&nums[j]==nums[j+1])
+                    j--;
             }
         }
         
