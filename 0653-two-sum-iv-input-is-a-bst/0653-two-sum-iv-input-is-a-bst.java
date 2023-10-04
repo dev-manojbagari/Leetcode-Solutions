@@ -14,63 +14,59 @@
  * }
  */
 class Solution {
-    
-    enum order{
-        INCREASING,DECREASING;
-    }
-    
     class BSTIterator{
-        Stack<TreeNode> stack = new Stack<>();        
-        boolean increasingOrder;
-        public BSTIterator(TreeNode root,boolean increasingOrder){
-            this.increasingOrder = increasingOrder;
+        Stack<TreeNode> stack = new Stack<>();
+        boolean forward;
+        
+        BSTIterator(TreeNode root,boolean forward){
+            this.forward=forward;
+            
             TreeNode curr = root;
-            while(curr!=null){
-                stack.push(curr);
-                curr=increasingOrder?curr.left:curr.right;   
-            }
+                while(curr!=null){
+                    stack.push(curr);
+                    curr=forward?curr.left:curr.right;
+                }
+           
         }
         
-        int peek(){
+        int val(){
             return stack.peek().val;
         }
-        
         boolean hasNext(){
             return !stack.isEmpty();
         }
         
-        TreeNode next(){
-            if(stack.isEmpty())return null;
-            TreeNode node = stack.pop();
-            TreeNode curr = increasingOrder?node.right:node.left;
+        void next(){
+            TreeNode curr = stack.pop();
+            curr = forward?curr.right:curr.left;
             
-            while(curr!=null){
-                stack.push(curr);
-                curr=increasingOrder?curr.left:curr.right;
-            }
+                while(curr!=null){
+                    stack.push(curr);
+                    curr=forward?curr.left:curr.right;
+                }
             
-            return node;
         }
-        
-        
     }
     
     public boolean findTarget(TreeNode root, int k) {
+        
         BSTIterator left = new BSTIterator(root,true);
         BSTIterator right = new BSTIterator(root,false);
         
-        while(left.hasNext()&&right.hasNext()){
-            if(left.peek()>=right.peek())
-                return false;
-            int sum = left.peek()+right.peek();
-            if(sum==k)
-                return true;
-            else if(sum<k)
-                left.next();
-            else 
-                right.next();
-        }
         
+        while(left.hasNext()&&right.hasNext()&&left.val()<right.val()){
+            int sum = left.val()+right.val();
+            
+            if(sum==k){
+                return true;
+            }else if(sum<k){
+                left.next();                
+            }else{
+                right.next();
+            }
+            
+            
+        }
         return false;
     }
 }
