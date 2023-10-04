@@ -14,25 +14,21 @@
  * }
  */
 class Solution {
-    
     class Height{
         int h;
     }
-
     public boolean isBalanced(TreeNode root) {
         return isBalanced(root,new Height());
     }
     
-    public boolean isBalanced(TreeNode root,Height height){
-        if(root==null)
+    boolean isBalanced(TreeNode node,Height height){
+        if(node==null)
             return true;
-        
-        
-        Height lh = new Height();
+        Height lh  = new Height();
         Height rh = new Height();
-        
-        boolean l = isBalanced(root.left,lh);
-        boolean r = isBalanced(root.right,rh);
+
+        boolean l = isBalanced(node.left,lh);
+        boolean r = isBalanced(node.right,rh);
         
         height.h = 1+Math.max(lh.h,rh.h);
         
@@ -41,4 +37,5 @@ class Solution {
         
         return l&&r;
     }
+    
 }
