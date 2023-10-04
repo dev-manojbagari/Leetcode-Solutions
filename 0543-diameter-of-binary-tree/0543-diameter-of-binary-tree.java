@@ -29,8 +29,7 @@ class Solution {
         
         diameter[0] = Math.max(diameter[0],2+lh+rh);
         
-        return 1 + Math.max(lh,rh);
+        return 1+Math.max(lh,rh);
     }
-    
     
 }
