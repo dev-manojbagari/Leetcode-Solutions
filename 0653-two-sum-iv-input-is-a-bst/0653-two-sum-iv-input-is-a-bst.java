@@ -14,59 +14,21 @@
  * }
  */
 class Solution {
-    class BSTIterator{
-        Stack<TreeNode> stack = new Stack<>();
-        boolean forward;
-        
-        BSTIterator(TreeNode root,boolean forward){
-            this.forward=forward;
-            
-            TreeNode curr = root;
-                while(curr!=null){
-                    stack.push(curr);
-                    curr=forward?curr.left:curr.right;
-                }
-           
-        }
-        
-        int val(){
-            return stack.peek().val;
-        }
-        boolean hasNext(){
-            return !stack.isEmpty();
-        }
-        
-        void next(){
-            TreeNode curr = stack.pop();
-            curr = forward?curr.right:curr.left;
-            
-                while(curr!=null){
-                    stack.push(curr);
-                    curr=forward?curr.left:curr.right;
-                }
-            
-        }
+    public boolean findTarget(TreeNode root, int k) {
+        Set<Integer> set = new HashSet<>();
+        return preorder(root,k,set);
     }
     
-    public boolean findTarget(TreeNode root, int k) {
+    boolean preorder(TreeNode root,int k,Set<Integer> set){
+        if(root==null)
+            return false;
         
-        BSTIterator left = new BSTIterator(root,true);
-        BSTIterator right = new BSTIterator(root,false);
+        if(set.contains(k-root.val))
+            return true;
+        set.add(root.val);
+        boolean l = preorder(root.left,k,set);
+        boolean r = preorder(root.right,k,set);
         
-        
-        while(left.hasNext()&&right.hasNext()&&left.val()<right.val()){
-            int sum = left.val()+right.val();
-            
-            if(sum==k){
-                return true;
-            }else if(sum<k){
-                left.next();                
-            }else{
-                right.next();
-            }
-            
-            
-        }
-        return false;
+        return l||r;
     }
 }
