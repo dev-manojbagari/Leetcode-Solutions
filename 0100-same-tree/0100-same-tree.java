@@ -15,32 +15,15 @@
  */
 class Solution {
     public boolean isSameTree(TreeNode p, TreeNode q) {
-            
-        Queue<TreeNode> q1 = new LinkedList<>();
-        Queue<TreeNode> q2 = new LinkedList<>();
-        q1.offer(p);
-        q2.offer(q);
+        if(p==null&&q==null)
+            return true;
         
-        while(!q1.isEmpty()&&!q2.isEmpty()){
-            TreeNode pNode = q1.poll();
-            TreeNode qNode = q2.poll();
-            
-            if(pNode==null&&qNode==null)
-                continue;
-            if(pNode==null||qNode==null)
-                return false;
-            
-            if(pNode.val!=qNode.val)
-                return false;
-            
-            
-            q1.offer(pNode.left);
-            q1.offer(pNode.right);
-            
-            q2.offer(qNode.left);
-            q2.offer(qNode.right);
-        }
+        if(p==null||q==null)
+            return false;
         
-        return q1.isEmpty()&&q2.isEmpty();
+        if(p.val!=q.val)
+            return false;
+        
+        return isSameTree(p.left,q.left)&&isSameTree(p.right,q.right);
     }
 }
