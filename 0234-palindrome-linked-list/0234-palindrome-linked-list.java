@@ -23,9 +23,10 @@ class Solution {
         
         while(ptr1!=null&&ptr2!=null){
             
-            if(ptr1.val!=ptr2.val)
+            if(ptr1.val!=ptr2.val){
+                mid.next=reverse(midNext);
                 return false;
-            
+            }
             ptr1=ptr1.next;
             ptr2=ptr2.next;
         }
