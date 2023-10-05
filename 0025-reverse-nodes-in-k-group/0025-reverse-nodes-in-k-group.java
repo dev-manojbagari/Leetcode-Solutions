@@ -35,29 +35,9 @@ class Solution {
             ptr.next=curr;
         
         
-        
-        
-        
         return preHead.next;
     }
     
-    ListNode reverse(ListNode head,int k,int freq){
-        if(freq==0||head==null)
-            return head;
-        ListNode prev =null,curr=head,next=null;
-        int count=0;
-        while(curr!=null&&count<k){
-            next=curr.next;
-            curr.next=prev;
-            prev=curr;
-            curr=next;
-            count++;
-        }
-        
-        head.next= reverse(next,k,freq-1);
-       
-        return prev;
-    }
     
     int getLen(ListNode head){
         int count=0;
