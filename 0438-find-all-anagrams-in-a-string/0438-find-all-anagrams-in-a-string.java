@@ -1,39 +1,45 @@
 class Solution {
     public List<Integer> findAnagrams(String s, String p) {
-        int[] map = new int[26];
-        for(char c:p.toCharArray()){
-            map[c-'a']++;
-        }
-        int diff = p.length();
         List<Integer> res = new ArrayList<>();
-        if(s.length()==0||p.length()==0||s.length()<p.length())
+        if(p.length()>s.length())
             return res;
-        int start=0,end=0;
-        for(end=0;end<p.length();end++){
+        int[] cmap = new int[26];
+        
+        for(char c:p.toCharArray()){
+            cmap[c-'a']++;
+        }
+        int start = 0,end=0;
+        int count =0;
+        for(;end<p.length();end++){
             char c = s.charAt(end);
-            map[c-'a']--;
-            if(map[c-'a']>=0)
-                diff--;
+            if(cmap[c-'a']>0){
+                count++;
+            }
+                cmap[c-'a']--;
         }
         
-        if(diff==0)
-            res.add(0);
-
+        if(count==p.length()){
+            res.add(start);
+        }
+            
         for(;end<s.length();end++){
             char c = s.charAt(start++);
-            map[c-'a']++;
-            if(map[c-'a']>0)
-                diff++;
+            if(cmap[c-'a']>=0){
+                count--;
+            }
+                cmap[c-'a']++;
             
             c = s.charAt(end);
-            map[c-'a']--;
-            if(map[c-'a']>=0)
-                diff--;
-            if(diff==0)
-                res.add(start);
+            cmap[c-'a']--;
+            if(cmap[c-'a']>=0){
+                count++;
+            }
             
-        }
-        
+            if(count==p.length()){
+                res.add(start);
+            }
+        }    
+                
         return res;
     }
 }
