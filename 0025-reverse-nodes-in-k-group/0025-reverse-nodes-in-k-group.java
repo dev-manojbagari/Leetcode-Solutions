@@ -13,7 +13,32 @@ class Solution {
         if(k==1) return head;
         int freq = getLen(head)/k;
                 
-        return reverse(head,k,freq);
+        ListNode preHead = new ListNode(-1);
+        ListNode ptr = preHead;
+        ListNode curr = head;
+        
+        for(int i=0;i<freq;i++){
+            ListNode firstNodeInGroup = curr;
+            int count=0;
+            while(curr!=null&&count<k){
+                ListNode temp = curr.next;
+                curr.next=ptr.next;
+                ptr.next = curr;
+                curr=temp;
+                count++;
+            }
+            
+            ptr = firstNodeInGroup;
+        }
+        
+        if(curr!=null)
+            ptr.next=curr;
+        
+        
+        
+        
+        
+        return preHead.next;
     }
     
     ListNode reverse(ListNode head,int k,int freq){
