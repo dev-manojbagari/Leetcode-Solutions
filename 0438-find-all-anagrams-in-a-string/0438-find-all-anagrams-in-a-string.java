@@ -24,16 +24,16 @@ class Solution {
             
         for(;end<s.length();end++){
             char c = s.charAt(start++);
-            if(cmap[c-'a']>=0){
+            cmap[c-'a']++;
+            if(cmap[c-'a']>0){
                 count--;
             }
-                cmap[c-'a']++;
             
             c = s.charAt(end);
-            if(cmap[c-'a']>0){
+            cmap[c-'a']--;
+            if(cmap[c-'a']>=0){
                 count++;
             }
-            cmap[c-'a']--;
             
             if(count==p.length()){
                 res.add(start);
