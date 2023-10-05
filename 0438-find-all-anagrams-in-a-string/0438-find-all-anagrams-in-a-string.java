@@ -30,10 +30,10 @@ class Solution {
                 cmap[c-'a']++;
             
             c = s.charAt(end);
-            cmap[c-'a']--;
-            if(cmap[c-'a']>=0){
+            if(cmap[c-'a']>0){
                 count++;
             }
+            cmap[c-'a']--;
             
             if(count==p.length()){
                 res.add(start);
