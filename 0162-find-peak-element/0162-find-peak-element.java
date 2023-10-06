@@ -15,7 +15,7 @@ class Solution {
         while(left<=right){
             int mid = left+(right-left)/2;
             
-            if(mid>0&&nums[mid-1]<nums[mid]&&nums[mid]>nums[mid+1]){
+            if(mid>0&&mid<n&&nums[mid-1]<nums[mid]&&nums[mid]>nums[mid+1]){
                 ans = mid;
                 break;
             }else if(nums[mid]<nums[mid+1]){
