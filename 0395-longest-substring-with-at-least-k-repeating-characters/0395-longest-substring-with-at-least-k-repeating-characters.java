@@ -1,42 +1,44 @@
 class Solution {
     public int longestSubstring(String s, int k) {
-        int max=0;
-        for(int i=1;i<=26;i++){
-            max =Math.max(max,longestSubstring(s,k,i));
-        }
-
+      int max = 0;
+        
+      for(int distinct=1;distinct<=26;distinct++){
+          max = Math.max(max,longestSubstringUtil(s,k,distinct));
+      }
         return max;
     }
     
-    int longestSubstring(String s, int k ,int targetDistinct){
-        char[] cmap = new char[26];
-        int start =0;
-        int curDistinct=0;
-        int kOrMore=0;
-        int maxL = 0;
+    int longestSubstringUtil(String s,int k,int targetDistinct){
         
-        for(int end =0;end<s.length();end++){
+        
+        int[] cmap = new int[128];
+        
+        int start=0,kOrMore=0,distinct=0,max=0;
+        
+        for(int end=0;end<s.length();end++){
             char c = s.charAt(end);
-            cmap[c-'a']++;
-            if(cmap[c-'a']==1)
-                curDistinct++;
-            if(cmap[c-'a']==k)
+            cmap[c]++;
+            if(cmap[c]==1)
+                distinct++;
+            if(cmap[c]==k)
                 kOrMore++;
             
-            while(curDistinct>targetDistinct){
-                c = s.charAt(start);
-                cmap[c-'a']--;
-                if(cmap[c-'a']==0)
-                    curDistinct--;
-                if(cmap[c-'a']==k-1)
+            while(distinct>targetDistinct){
+                c= s.charAt(start++);
+                cmap[c]--;
+                if(cmap[c]==0)
+                    distinct--;
+                if(cmap[c]==k-1)
                     kOrMore--;
-                start++;
             }
             
-            if(targetDistinct==curDistinct&&curDistinct==kOrMore)
-                maxL = Math.max(maxL,end-start+1);
+            
+            if(distinct==targetDistinct&&distinct<=kOrMore)
+                max = Math.max(max,end-start+1);
         }
         
-        return maxL;
+        
+        return max;
+        
     }
 }
