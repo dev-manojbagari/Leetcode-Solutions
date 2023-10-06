@@ -1,45 +1,41 @@
-   class Solution {
+class Solution {
     public List<String> maxNumOfSubstrings(String s) {
-        List<String> result = new ArrayList<>();
+        List<String> res = new ArrayList<>();
         Map<Character,int[]> map = new HashMap<>();
-        for(int i=0;i<s.length();i++)
-        {
-            if(map.containsKey(s.charAt(i)))
-            {
-                map.get(s.charAt(i))[1]=i;
-            }
+        
+        for(int i=0;i<s.length();i++){
+            char c = s.charAt(i);
+            if(!map.containsKey(c))
+                map.put(c,new int[]{i,i});
             else
-                map.put(s.charAt(i),new int[]{i,i});
+                map.get(s.charAt(i))[1]=i;
         }
-        int substringStart = -1;
-        for(int i=0;i<s.length();i++)
-        {
-            int start = map.get(s.charAt(i))[0];
-            if(start==i)
-            {
-                int substringEnd = getEnd(s,map,i);
-                if(substringEnd!=-1)
-                {
-                    if(substringEnd>substringStart)
-                    {
-                        result.add("");
-                    }
-                    substringStart = substringEnd;
-                    result.set(result.size()-1,s.substring(i,substringStart+1));
+        
+        int prevEnd = -1;
+        for(int i=0;i<s.length();i++){
+            char c = s.charAt(i);
+            int start = map.get(c)[0];
+            if(start == i){
+                int curEnd = getEnd(s,start,map.get(c)[1],map);
+                if(curEnd!=-1){
+                    if(prevEnd<curEnd)
+                        res.add("");
+                    res.set(res.size()-1,s.substring(start,curEnd+1));
+                    prevEnd = curEnd;
                 }
             }
         }
-            return result;
-        }
         
-    
-    public int getEnd(String s, Map<Character,int[]> map, int start)
-    {
-        int end = map.get(s.charAt(start))[1];
-        for(int i=start;i<end;i++)
-        {
-             if(map.get(s.charAt(i))[0]<start) return -1;
-            end = Math.max(end,map.get(s.charAt(i))[1]);
+        return res;
+    }
+    private int getEnd(String s,int start,int end,Map<Character,int[]> map){
+        
+        for(int i=start;i<end;i++){
+            char c = s.charAt(i);
+            if(map.get(c)[0]<start)
+                return -1;
+            
+            end = Math.max(end,map.get(c)[1]);
         }
         return end;
     }
