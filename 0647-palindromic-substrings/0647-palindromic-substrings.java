@@ -1,31 +1,21 @@
 class Solution {
     public int countSubstrings(String s) {
-        return countSubstrings(0,s);
+         int[] count= {0};
+        for(int i=0;i<s.length();i++){
+            palindrome(s,i,i+1,count);
+            palindrome(s,i,i,count);
+        }    
+        
+        return count[0]++;
     }
     
-    int countSubstrings(int index,String s){
-        if(index==s.length())
-            return 0;
-        int count = 0;
-        for(int i=index;i<s.length();i++){
-            if(isPalindrome(s.substring(index,i+1))){
-                count++;
-            }
+      void palindrome(String s,int i,int j,int[] count){
+        
+        while(i>=0&&j<s.length()&&s.charAt(i)==s.charAt(j)){
+            i--;
+            j++;
+            count[0]++;
         }
         
-        return count + countSubstrings(index+1,s);       
     }
-    
-    boolean isPalindrome(String str){
-        int left=0,right=str.length()-1;
-        
-        while(left<=right){
-            if(str.charAt(left)!=str.charAt(right))
-                return false;
-            left++;
-            right--;
-        }
-
-       return true;
-   }
 }
