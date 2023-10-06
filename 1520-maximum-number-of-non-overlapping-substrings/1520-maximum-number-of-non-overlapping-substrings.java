@@ -18,9 +18,11 @@ class Solution {
             if(start == i){
                 int curEnd = getEnd(s,start,map.get(c)[1],map);
                 if(curEnd!=-1){
-                    if(prevEnd<curEnd)
-                        res.add("");
+                    if(curEnd<=prevEnd){                    
                     res.set(res.size()-1,s.substring(start,curEnd+1));
+                    }else{
+                        res.add(s.substring(start,curEnd+1));
+                    }
                     prevEnd = curEnd;
                 }
             }
