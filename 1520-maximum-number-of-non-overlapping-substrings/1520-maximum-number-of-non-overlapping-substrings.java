@@ -1,46 +1,46 @@
-class Solution {
+   class Solution {
     public List<String> maxNumOfSubstrings(String s) {
+        List<String> result = new ArrayList<>();
         Map<Character,int[]> map = new HashMap<>();
-        
-        for(int i=0;i<s.length();i++){
-            char c = s.charAt(i);
-            if(!map.containsKey(c))
-                map.put(c,new int[]{i,i});
-            else
-                map.get(c)[1]=i;
-        }
-        
-        List<String> res = new ArrayList<>();
-        int prevEnd = -1;
-        for(int i=0;i<s.length();i++){
-            char c= s.charAt(i);
-            if(map.get(c)[0]==i){
-                int end = getEndTime(c,s,map);
-                if(end==-1) continue;
-                if(prevEnd<i)
-                    res.add("");
-                
-                res.set(res.size()-1,s.substring(i,end+1));
-                prevEnd=end;
+        for(int i=0;i<s.length();i++)
+        {
+            if(map.containsKey(s.charAt(i)))
+            {
+                map.get(s.charAt(i))[1]=i;
             }
-            
-            
-            
+            else
+                map.put(s.charAt(i),new int[]{i,i});
         }
-            return res;            
-    }
-    
-    int getEndTime(char c,String s,Map<Character,int[]> map){
-        int start = map.get(c)[0],end = map.get(c)[1];
-        for(int i=start;i<=end;i++){
-            int curStart = map.get(s.charAt(i))[0];
-            if(curStart<start)
-                return -1;
-             int curEnd = map.get(s.charAt(i))[1];
-            if(curEnd>end)
-                end = curEnd;
+        int substringStart = -1;
+        for(int i=0;i<s.length();i++)
+        {
+            int start = map.get(s.charAt(i))[0];
+            if(start==i)
+            {
+                int substringEnd = getEnd(s,map,i);
+                if(substringEnd!=-1)
+                {
+                    if(substringEnd>substringStart)
+                    {
+                        result.add("");
+                    }
+                    substringStart = substringEnd;
+                    result.set(result.size()-1,s.substring(i,substringStart+1));
+                }
+            }
+        }
+            return result;
         }
         
+    
+    public int getEnd(String s, Map<Character,int[]> map, int start)
+    {
+        int end = map.get(s.charAt(start))[1];
+        for(int i=start;i<end;i++)
+        {
+             if(map.get(s.charAt(i))[0]<start) return -1;
+            end = Math.max(end,map.get(s.charAt(i))[1]);
+        }
         return end;
     }
 }
