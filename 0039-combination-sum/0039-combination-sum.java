@@ -1,13 +1,14 @@
 class Solution {
-    public List<List<Integer>> combinationSum(int[] nums, int target) {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> list = new ArrayList<>();
-        Arrays.sort(nums);
-        backtrack(0,nums,list,new ArrayList<>(),target);
+        
+        combinationSumUtil(0,candidates,target,list,new ArrayList<>());
+        
         return list;
     }
     
-    void backtrack(int start,int[] nums,List<List<Integer>> list,List<Integer> tempList,int target){
-        if(target<0||start==nums.length)
+    void combinationSumUtil(int index,int[] candidates,int target,List<List<Integer>> list,List<Integer> tempList){
+        if(index>=candidates.length)
             return;
         
         if(target==0){
@@ -15,11 +16,13 @@ class Solution {
             return;
         }
         
-        backtrack(start+1,nums,list,tempList,target);
-        
-        tempList.add(nums[start]);
-        backtrack(start,nums,list,tempList,target-nums[start]);
-        tempList.remove(tempList.size()-1);
-        
+        for(int i=index;i<candidates.length;i++){
+            if(target-candidates[i]>=0){
+                tempList.add(candidates[i]);
+                combinationSumUtil(i,candidates,target-candidates[i],list,tempList);
+                tempList.remove(tempList.size()-1);
+            }            
         }
+        
     }
+}
