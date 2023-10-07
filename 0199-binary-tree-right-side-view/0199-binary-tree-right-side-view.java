@@ -16,23 +16,23 @@
 class Solution {
     public List<Integer> rightSideView(TreeNode root) {
         List<Integer> list = new ArrayList<>();
-        rightSideView(root,list,0);
+        
+        levelOrder(root,list,0);
+        
         return list;
     }
     
-    void rightSideView(TreeNode root,List<Integer> list,int level){
+    void levelOrder(TreeNode root,List<Integer> list,int level){
         if(root==null)
             return;
         
-        if(level==list.size())
+        if(list.size()==level){
             list.add(root.val);
-        
-        rightSideView(root.right,list,level+1);
-        rightSideView(root.left,list,level+1);
+        }
         
         
-        
+        levelOrder(root.right,list,level+1);
+        levelOrder(root.left,list,level+1);
     }
-    
     
 }
