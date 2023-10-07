@@ -37,11 +37,9 @@ public class Codec {
     }
     
     TreeNode deserialize(Queue<String> q,int min,int max){
-        String  valStr = q.peek();
-       
-        if(valStr==null)
+        if(q.isEmpty())
             return null;
-        int val = Integer.parseInt(valStr);
+        int val = Integer.parseInt(q.peek());
         if(min>=val||val>=max)
             return null;
         
