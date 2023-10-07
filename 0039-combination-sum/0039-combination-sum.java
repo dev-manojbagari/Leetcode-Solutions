@@ -8,8 +8,6 @@ class Solution {
     }
     
     void combinationSumUtil(int index,int[] candidates,int target,List<List<Integer>> list,List<Integer> tempList){
-        if(index>=candidates.length)
-            return;
         
         if(target==0){
             list.add(new ArrayList<>(tempList));
