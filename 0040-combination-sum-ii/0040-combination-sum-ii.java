@@ -1,25 +1,27 @@
 class Solution {
-   public List<List<Integer>> combinationSum2(int[] nums, int target) {
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
         List<List<Integer>> list = new ArrayList<>();
-        Arrays.sort(nums);
-        backtrack(0,nums,list,new ArrayList<>(),target);
+        Arrays.sort(candidates);
+        combinationSumUtil(0,candidates,target,list,new ArrayList<>());
+        
         return list;
     }
     
-    void backtrack(int start,int[] nums,List<List<Integer>> list,List<Integer> tempList,int target){
+    void combinationSumUtil(int index,int[] candidates,int target,List<List<Integer>> list,List<Integer> tempList){
         if(target==0){
             list.add(new ArrayList<>(tempList));
             return;
         }
         
-        
-        for(int i=start;i<nums.length;i++){
-            if(i>start&&nums[i]==nums[i-1]) continue;
-            if(target-nums[i]>=0){
-                tempList.add(nums[i]);
-                backtrack(i+1,nums,list,tempList,target-nums[i]);
+        for(int i=index;i<candidates.length;i++){
+            if(i>index&&candidates[i-1]==candidates[i])
+                continue;
+            if(target-candidates[i]>=0){
+                tempList.add(candidates[i]);
+                combinationSumUtil(i+1,candidates,target-candidates[i],list,tempList);
                 tempList.remove(tempList.size()-1);
-            }
+            }            
         }
+        
     }
 }
