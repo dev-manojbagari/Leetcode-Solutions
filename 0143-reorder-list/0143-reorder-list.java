@@ -18,27 +18,13 @@ class Solution {
         ListNode ptr1 = head;
         ListNode ptr2 = reverse(midNext);
         
-        ListNode preHead = new ListNode(-1);
-        ListNode curr =preHead,temp=null;
-        int count=1;
-        
         while(ptr2!=null){
-            if(count%2!=0){
-                temp = ptr1;
-                ptr1=ptr1.next;
-                temp.next=null;
-            }else{
-                temp = ptr2;
-                ptr2=ptr2.next;
-                temp.next=null;
-            }
-            curr.next=temp;
-            curr=curr.next;
-            count++;
+            ListNode temp = ptr2.next;
+            ptr2.next=ptr1.next;
+            ptr1.next=ptr2;
+            ptr1=ptr1.next.next;
+            ptr2=temp;
         }
-        if(ptr1!=null)
-            curr.next=ptr1;
-        head=preHead.next;
     }
     
     ListNode getMid(ListNode head){
