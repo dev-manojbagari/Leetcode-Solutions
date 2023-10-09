@@ -6,50 +6,42 @@ class Trie {
     
     public void insert(String word) {
         Node curr = head;
-            for(char c:word.toCharArray()){
-                if(curr.child[c-'a']==null)
-                    curr.child[c-'a']=new Node(c);
-                    
-                curr= curr.child[c-'a'];
-            
+        for(char c:word.toCharArray()){
+            if(curr.next[c-'a']==null)
+                curr.next[c-'a']=new Node(c);
+            curr=curr.next[c-'a'];
         }
-            curr.isWord=true;
-        
-        
+        curr.isWord=true;
     }
     
     public boolean search(String word) {
         Node curr = head;
-            for(char c:word.toCharArray()){
-                curr= curr.child[c-'a'];
-                if(curr==null)
-                    break;
-
-            }
-            
-            return curr!=null&&curr.isWord;
+        for(char c:word.toCharArray()){
+            if(curr==null)
+                break;
+            curr=curr.next[c-'a'];
+        }
+        return curr!=null&&curr.isWord;
     }
     
     public boolean startsWith(String prefix) {
-        Node curr = head;
-            for(char c:prefix.toCharArray()){
-                curr= curr.child[c-'a'];
-                if(curr==null)
-                    break;
-
-            }
-            
-            
-        
-       return curr!=null;
+         Node curr = head;
+        for(char c:prefix.toCharArray()){
+            if(curr==null)
+                break;
+            curr=curr.next[c-'a'];
+        }
+        return curr!=null;
     }
+    
     
     class Node{
         char val;
-        Node[] child=new Node[26];
+        Node[] next;
         boolean isWord;
         Node(char val){
             this.val=val;
+            next = new Node[26];
         }
     }
 }
