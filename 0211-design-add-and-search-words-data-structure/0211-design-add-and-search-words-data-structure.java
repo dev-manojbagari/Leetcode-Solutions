@@ -18,43 +18,22 @@ class WordDictionary {
         if(word.length()==0)
             return false;
         Node curr = head; 
-        return search(word,0,curr);           
+        return search(word.toCharArray(),0,curr);           
     }
     
-    boolean search(String word,int index,Node curr){
-        if(index==word.length())
+    boolean search(char word[],int index,Node curr){
+        if(index==word.length)
             return curr.isWord;
-        else if(word.charAt(index)!='.'){
-            char c = word.charAt(index);
-            return curr.next[c-'a']!=null
-                &&search(word,index+1,curr.next[word.charAt(index)-'a']);
+        else if(word[index]!='.'){
+            return curr.next[word[index]-'a']!=null&&search(word,index+1,curr.next[word[index]-'a']);
         }else{
-            for(int c=0;c<26;c++){
-                if(curr.next[c]!=null&&search(word,index+1,curr.next[c]))
+            for(int i=0;i<26;i++){
+                if( curr.next[i]!=null&&search(word,index+1,curr.next[i]))
                     return true;
             }
-          return false;  
+            return false;
         }
-    
     }
-//       public boolean search(String word) {
-//         return isMatch(word.toCharArray(),0,head);    
-//     }
-    
-//     boolean isMatch(char[] ca , int index,Node node){
-//         if(index==ca.length) return node.isWord;
-//         if(ca[index]!='.')
-//             return node.child[ca[index]-'a']!=null&&isMatch(ca,index+1,node.child[ca[index]-'a']);
-//         else
-//         {
-//             for(int i=0;i<26;i++){
-//                 if(node.child[i]!=null&&isMatch(ca,index+1,node.child[i]))
-//                     return true;
-//             }
-//         }
-        
-//         return false;
-//     }
     class Node{
         char val;
         Node[] next;
