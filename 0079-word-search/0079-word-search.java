@@ -1,15 +1,14 @@
 class Solution {
     public boolean exist(char[][] board, String word) {
-        int rows= board.length,cols=board[0].length;
-        boolean[][] vis = new boolean[rows][cols];
-        Queue<int[]> q = new LinkedList<>();
+        boolean[][] vis = new boolean[board.length][board[0].length];
         
-        for(int i=0;i<rows;i++){
-            for(int j=0;j<cols;j++){
-                if(board[i][j]==word.charAt(0)){
-                    if(dfs(i,j,board,0,word,vis))
-                        return true;
-                }
+        for(int i=0;i<board.length;i++){
+            for(int j=0;j<board[0].length;j++){
+                 if(board[i][j]==word.charAt(0)){
+                     if(dfs(i,j,board,vis,0,word)){
+                         return true;
+                     }
+                 }        
             }
         }
         
@@ -17,22 +16,23 @@ class Solution {
     }
     
     
-    boolean dfs(int i,int j,char[][] board,int curIndex,String word,boolean[][] vis){
+    boolean dfs(int i,int j,char[][] board,boolean[][] vis,int index,String word){
+        if(index==word.length())
+            return true;
         
-        if(i<0||i>=board.length||j<0||j>=board[0].length||vis[i][j]||word.charAt(curIndex)!=board[i][j])
+        if(i<0||i>=board.length||j<0||j>=board[0].length||vis[i][j]||word.charAt(index)!=board[i][j])
             return false;
         
         vis[i][j]=true;
         
-        if(curIndex==word.length()-1&&word.charAt(curIndex)==board[i][j])
+        if(dfs(i+1,j,board,vis,index+1,word)||
+        dfs(i,j+1,board,vis,index+1,word)||
+        dfs(i-1,j,board,vis,index+1,word)||
+        dfs(i,j-1,board,vis,index+1,word))
             return true;
         
-        if(dfs(i+1,j,board,curIndex+1,word,vis)||
-           dfs(i,j+1,board,curIndex+1,word,vis)||
-           dfs(i-1,j,board,curIndex+1,word,vis)||
-           dfs(i,j-1,board,curIndex+1,word,vis))
-            return true;
         vis[i][j]=false;
+        
         return false;
     }
 }
