@@ -7,44 +7,63 @@ class WordDictionary {
     public void addWord(String word) {
         Node curr = head;
         for(char c:word.toCharArray()){
-            if(curr.child[c-'a']==null)
-                curr.child[c-'a']=new Node(c);
-            curr = curr.child[c-'a'];
+            if(curr.next[c-'a']==null)
+                curr.next[c-'a']=new Node(c);
+            curr=curr.next[c-'a'];
         }
         curr.isWord=true;
-        
     }
     
     public boolean search(String word) {
-        Node curr =head;
-        return search(curr,0,word);
-    }
-    
-    private boolean search(Node curr,int index,String word){
-        if(index==word.length())
-            return curr!=null&&curr.isWord;
-        if(word.charAt(index)!='.')
-            return curr!=null&&search(curr.child[word.charAt(index)-'a'],index+1,word);
-        else{
-            for(int i=0;i<26;i++)
-                if(curr!=null&&search(curr.child[i],index+1,word))
-                    return true;
+        if(word.length()==0)
             return false;
-        }
+        Node curr = head; 
+        return search(word,0,curr);           
     }
     
+    boolean search(String word,int index,Node curr){
+        if(index==word.length())
+            return curr.isWord;
+        else if(word.charAt(index)!='.'){
+            char c = word.charAt(index);
+            return curr.next[c-'a']!=null
+                &&search(word,index+1,curr.next[word.charAt(index)-'a']);
+        }else{
+            for(int c=0;c<26;c++){
+                if(curr.next[c]!=null&&search(word,index+1,curr.next[c]))
+                    return true;
+            }
+          return false;  
+        }
     
+    }
+//       public boolean search(String word) {
+//         return isMatch(word.toCharArray(),0,head);    
+//     }
+    
+//     boolean isMatch(char[] ca , int index,Node node){
+//         if(index==ca.length) return node.isWord;
+//         if(ca[index]!='.')
+//             return node.child[ca[index]-'a']!=null&&isMatch(ca,index+1,node.child[ca[index]-'a']);
+//         else
+//         {
+//             for(int i=0;i<26;i++){
+//                 if(node.child[i]!=null&&isMatch(ca,index+1,node.child[i]))
+//                     return true;
+//             }
+//         }
+        
+//         return false;
+//     }
     class Node{
         char val;
-        Node[] child;
-        boolean isWord=false;
+        Node[] next;
+        boolean isWord;
         Node(char val){
-            this.val= val;
-            child = new Node[27];
+            this.val=val;
+            next=new Node[26];
         }
     }
-    
-    
 }
 
 /**
