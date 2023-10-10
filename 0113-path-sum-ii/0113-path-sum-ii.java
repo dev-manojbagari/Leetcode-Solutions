@@ -30,14 +30,12 @@ class Solution {
             if(root.left==null&&root.right==null){
                 if(targetSum==root.val){
                     list.add(new ArrayList<>(tempList));
-                    tempList.remove(tempList.size()-1);
-                    return;
                 }
-            }
+            }else{
                 
             pathSum(root.left,targetSum-root.val,list,tempList);
             pathSum(root.right,targetSum-root.val,list,tempList);
-            
+            }
             tempList.remove(tempList.size()-1);
         
     }
