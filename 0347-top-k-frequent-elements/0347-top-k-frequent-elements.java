@@ -7,24 +7,20 @@ class Solution {
         
         PriorityQueue<Map.Entry<Integer,Integer>> pq = new PriorityQueue<>((a,b)->a.getValue()-b.getValue());
         
-        for(Map.Entry<Integer,Integer> entry : map.entrySet()){
+        for(Map.Entry<Integer,Integer> entry :map.entrySet()){
             if(pq.size()<k){
                 pq.offer(entry);
-            }else{
-                if(pq.peek().getValue()<entry.getValue()){
-                    pq.poll();
-                    pq.offer(entry);
-                }
+            }else if(entry.getValue()>pq.peek().getValue()){
+                pq.poll();
+                pq.offer(entry);
             }
-            
         }
-        int[] res = new int[pq.size()];
-        int i=0;
+        
+        int[] res = new int[k];
+        int index=0;
         while(!pq.isEmpty()){
-            res[i++] = pq.poll().getKey();
+            res[index++] = pq.poll().getKey();
         }
-        
         return res;
-        
     }
 }
