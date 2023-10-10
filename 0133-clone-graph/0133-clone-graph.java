@@ -20,15 +20,14 @@ class Node {
 
 class Solution {
     public Node cloneGraph(Node node) {
-        
+        if(node==null)
+            return null;
         Map<Node,Node> map = new HashMap<>();
         return cloneGraph(node,map);
         
     }
     
     private Node cloneGraph(Node node,Map<Node,Node> map){
-        if(node==null)
-            return null;
         
         if(map.containsKey(node))
             return map.get(node);
