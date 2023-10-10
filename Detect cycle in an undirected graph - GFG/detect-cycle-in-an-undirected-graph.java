@@ -47,16 +47,16 @@ class Solution {
     }
        boolean dfs(int i,ArrayList<ArrayList<Integer>> adjList,boolean[] vis,int parent ){
 
+                vis[i]=true;
         for(int x:adjList.get(i)){
             if(vis[x]==false){
-                vis[x]=true;
                 if(dfs(x,adjList,vis,i))
                     return true;
             }else if(parent!=x){
                 return true;
             }
         }
-        vis[i]=false;
+        // vis[i]=false;
     return false;
 
     }
