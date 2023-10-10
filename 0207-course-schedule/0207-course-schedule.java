@@ -19,11 +19,11 @@ class Solution {
         }
         
         boolean[] vis= new boolean[n];
-        List<Integer> list = new ArrayList<>();
+        int count=0;
         while(!q.isEmpty()){
             int node = q.poll();
             vis[node]=true;
-            list.add(node);
+            count++;
             for(int x:adjList.get(node)){
                 if(!vis[x]){
                     inDeg[x]--;
@@ -34,7 +34,7 @@ class Solution {
             }
         }
         
-        return list.size()==n; 
+        return count==n; 
         
         
         
