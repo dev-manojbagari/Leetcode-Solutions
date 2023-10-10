@@ -15,22 +15,20 @@
  */
 class Solution {
     public boolean hasPathSum(TreeNode root, int targetSum) {
-        if(root==null)
-            return false;
-        return preOrder(root,targetSum);
+        if(root==null)return false;
+        return hasPathSumUtil(root,targetSum);
     }
     
-    boolean preOrder(TreeNode root,int targetSum){
+    
+    boolean hasPathSumUtil(TreeNode root,int targetSum){
         if(root==null)
             return false;
         
         if(root.left==null&&root.right==null)
-            return targetSum-root.val==0;
+            return root.val==targetSum;
+        boolean l= hasPathSumUtil(root.left,targetSum-root.val);
+        boolean r = hasPathSumUtil(root.right,targetSum-root.val);
         
-        boolean left=preOrder(root.left,targetSum-root.val);
-        boolean right=preOrder(root.right,targetSum-root.val);
-        
-        return left||right;
-        
+        return l||r;
     }
 }
