@@ -31,6 +31,14 @@ class Solution {
         return start;
         }
         
+    void shuffet(int[] nums,int n){
+        Random random = new Random();
+        for(int i=n-1;i>=0;i--){
+            int index = random.nextInt(i+1);
+            swap(nums,index,i);
+        }
+    }
+    
     void swap(int[] nums,int i,int j){
         int temp = nums[i];
         nums[i] = nums[j];
