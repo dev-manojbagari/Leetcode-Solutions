@@ -32,37 +32,32 @@ class GFG {
 // } Driver Code Ends
 
 
-
-
 class Solution {
     // Function to detect cycle in an undirected graph.
     public boolean isCycle(int V, ArrayList<ArrayList<Integer>> adj) {
         boolean[] vis = new boolean[V];
-        
         for(int i=0;i<V;i++){
             if(vis[i]==false){
                 if(dfs(i,adj,vis,-1))
                     return true;
             }
         }
-    
-        return false;
-            
-    }
-    
-    
-    boolean dfs(int i,ArrayList<ArrayList<Integer>> adj,boolean[] vis,int parent){
-        vis[i]=true;
         
-        for(int x:adj.get(i)){
+        return false;
+    }
+       boolean dfs(int i,ArrayList<ArrayList<Integer>> adjList,boolean[] vis,int parent ){
+
+        for(int x:adjList.get(i)){
             if(vis[x]==false){
-                if(dfs(x,adj,vis,i))
+                vis[x]=true;
+                if(dfs(x,adjList,vis,i))
                     return true;
-            }else if(x!=parent)
+            }else if(parent!=x){
                 return true;
+            }
         }
-        
-        return false;
+        vis[i]=false;
+    return false;
+
     }
-    
 }
