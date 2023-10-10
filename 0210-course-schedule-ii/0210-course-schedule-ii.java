@@ -1,39 +1,43 @@
 class Solution {
     public int[] findOrder(int n, int[][] prereq) {
-        List<List<Integer>> list = new ArrayList<>();
+        List<List<Integer>> adjList = new ArrayList<>();
+        int[] inDeg = new int[n];
         for(int i=0;i<n;i++)
-            list.add(new ArrayList<>());
+            adjList.add(new ArrayList<>());
         
-        int inDeg[] = new int[n];
-        
-        for(int[] c:prereq){
-            list.get(c[1]).add(c[0]);
-            inDeg[c[0]]++;
+        for(int[] pre:prereq){
+            adjList.get(pre[1]).add(pre[0]);
+            inDeg[pre[0]]++;
         }
         
-        List<Integer> res = new ArrayList<>();
-        
         Queue<Integer> q = new LinkedList<>();
+        
         for(int i=0;i<inDeg.length;i++){
             if(inDeg[i]==0){
                 q.offer(i);
-                }
+            }
         }
         
+        boolean[] vis= new boolean[n];
+        List<Integer> list = new ArrayList<>();
         while(!q.isEmpty()){
             int node = q.poll();
-            res.add(node);
-            for(int x:list.get(node)){
-                inDeg[x]--;
-                if(inDeg[x]==0){
-                    q.offer(x);
+            vis[node]=true;
+            list.add(node);
+            for(int x:adjList.get(node)){
+                if(!vis[x]){
+                    inDeg[x]--;
+                    if(inDeg[x]==0){
+                        q.offer(x);
+                    }
                 }
             }
-            
         }
         
-        return res.size()==n?res.stream().mapToInt(j->j).toArray():new int[0];
-        
+        if(list.size()!=n)
+            return new int[]{};
+        else
+            return list.stream().mapToInt(i->i).toArray();
         
     }
 }
