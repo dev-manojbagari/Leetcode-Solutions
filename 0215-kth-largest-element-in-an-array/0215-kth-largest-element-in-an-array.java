@@ -1,6 +1,7 @@
 class Solution {
     public int findKthLargest(int[] nums, int k) {
         int n =nums.length;
+        shuffle(nums,n);
         int left=0,right=n-1;
         int ans = 0;
         while(left<=right){
@@ -31,7 +32,7 @@ class Solution {
         return start;
         }
         
-    void shuffet(int[] nums,int n){
+    void shuffle(int[] nums,int n){
         Random random = new Random();
         for(int i=n-1;i>=0;i--){
             int index = random.nextInt(i+1);
