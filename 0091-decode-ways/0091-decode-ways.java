@@ -2,17 +2,15 @@ class Solution {
     public int numDecodings(String s) {
         int n = s.length();
         char[] ca = s.toCharArray();
-        int[] dp = new int[n+1];
-        dp[n]=1;
-        
+        int dp1=1,dp2=0;
         for(int i=n-1;i>=0;i--){
-            if(ca[i]!='0'){
-            dp[i] =dp[i+1];
+            int dp = ca[i]=='0'?0:dp1;
             if(i+1<n&&(ca[i]=='1'||ca[i]=='2'&&ca[i+1]<='6'))
-                dp[i] += dp[i+2];
-            }
+                dp += dp2;
+            dp2=dp1;
+            dp1=dp;
         }
         
-        return dp[0];
+        return dp1;
     }
 }
