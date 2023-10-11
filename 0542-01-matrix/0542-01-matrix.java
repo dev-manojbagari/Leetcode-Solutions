@@ -27,7 +27,7 @@ class Solution {
                 int x = i+dir[0];
                 int y = j+dir[1];
                 
-                if(x<0||x>=mat.length||y<0||y>=mat[0].length||vis[x][y]||mat[x][y]==0)
+                if(x<0||x>=mat.length||y<0||y>=mat[0].length||vis[x][y])
                     continue;
                 
                 vis[x][y]=true;
