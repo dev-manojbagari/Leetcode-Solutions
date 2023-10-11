@@ -25,12 +25,13 @@ class Solution {
                 int x = i+dir[0];
                 int y = j+dir[1];
                 
-                if(x<0||x>=mat.length||y<0||y>=mat[0].length||mat[x][y]==0||res[x][y]!=0)
+                if(x<0||x>=mat.length||y<0||y>=mat[0].length)
                     continue;
                 
+                if(mat[x][y]==1&&res[x][y]==0){
                 res[x][y]=1+data[2];
                 q.offer(new int[]{x,y,1+data[2]});
-
+                }
             }
         }
         
