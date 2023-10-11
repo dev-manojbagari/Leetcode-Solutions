@@ -7,7 +7,7 @@ class Solution {
     
     void permute(int index,int[] nums,List<List<Integer>> list){
         if(index==nums.length){
-            list.add(Arrays.stream(nums).boxed().toList());
+            list.add(new ArrayList(Arrays.stream(nums).boxed().toList()));
             return;
         }
         
