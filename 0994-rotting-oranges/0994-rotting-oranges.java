@@ -1,41 +1,45 @@
 class Solution {
     public int orangesRotting(int[][] grid) {
-        Queue<int[]> q = new LinkedList<>();
         int rows=grid.length,cols=grid[0].length;
         int freshOranges=0;
+        Queue<int[]> q = new LinkedList<>();
+        
         for(int i=0;i<rows;i++){
             for(int j=0;j<cols;j++){
                 if(grid[i][j]==2){
                     q.offer(new int[]{i,j,0});
-                }else if(grid[i][j]==1){
+                }else if(grid[i][j]==1){ 
                     freshOranges++;
                 }
             }
         }
-        int[][] dirs = {{1,0},{-1,0},{0,1},{0,-1}};
-        int time=0;
+        // System.out.println(freshOranges);
+        int max=0;
+        int[][] dirs={{0,1},{1,0},{-1,0},{0,-1}};
         while(!q.isEmpty()){
-            int[] cell = q.poll();
-            int i= cell[0];
-            int j= cell[1];
-            int curTime = cell[2];
+            int[] data = q.poll();
+            int i = data[0];
+            int j = data[1];
+            int time = data[2];
+            max = Math.max(max,time);
             for(int[] dir:dirs){
                 int x = i+dir[0];
                 int y = j+dir[1];
-            
-                if(x<0||x>=rows||y<0||y>=cols||grid[x][y]!=1)
+                
+                if(x<0||x>=grid.length||y<0||y>=grid[0].length)
                     continue;
-            
-                grid[x][y]=2;
-                freshOranges--;
-                time = Math.max(time,curTime+1);
-                q.offer(new int[]{x,y,curTime+1});
+                
+                if(grid[x][y]==1){
+                    grid[x][y]=2;
+                    freshOranges--;
+                    q.offer(new int[]{x,y,time+1});
+                }
+                
             }
-            
         }
+                // System.out.println(freshOranges);
+
         
-        
-            
-        return freshOranges==0?time:-1;    
+        return freshOranges==0?max:-1;
     }
 }
