@@ -1,23 +1,23 @@
 class Solution {
     public int leastInterval(char[] tasks, int n) {
-     int[] storage = new int[26];
-        for (char c : tasks) {
-            storage[(c - 'A')]++;
+        int[] cmap = new int[26];
+        
+        for(char task:tasks){
+            cmap[task-'A']++;
         }
-        int max = 0;
-        int count = 1;
-        for (int num : storage) {
-            if (num == 0) {
-                continue;
+        
+        int maxFreq=0,groupSize=0;
+
+        for(int count:cmap){
+            if(maxFreq<count){
+                maxFreq = count;
+                groupSize=0;
             }
-            if (max < num) {
-                max = num;
-                count = 1;
-            } else if (max == num) {
-                count++;
+            if(maxFreq==count){
+                groupSize++;
             }
         }
-        int space = (n + 1) * (max - 1) + count;
-        return (space < tasks.length) ? tasks.length : space; 
+        
+        return Math.max(tasks.length,(n+1)*(maxFreq-1)+groupSize);
     }
 }
