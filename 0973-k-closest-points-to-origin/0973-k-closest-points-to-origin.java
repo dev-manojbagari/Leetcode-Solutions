@@ -1,32 +1,26 @@
 class Solution {
     public int[][] kClosest(int[][] points, int k) {
-        PriorityQueue<int[]> maxHeap = new PriorityQueue<>((a,b)->(b[0]*b[0]+b[1]*b[1])-(a[0]*a[0]+a[1]*a[1]));
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b)->((b[0]*b[0]+b[1]*b[1])-(a[0]*a[0]+a[1]*a[1])));
     
-        for(int[] point:points){
-            if(maxHeap.size()<k){
-                maxHeap.offer(point);
-            }else {
-                int[] curPoint = maxHeap.peek();
-                int[] origin = {0,0};
-                if(getDistance(curPoint,origin)>getDistance(point,origin)){
-                    maxHeap.poll();
-                    maxHeap.offer(point);
-                }
-            }
+         for(int[] point:points){
+             if(pq.size()<k){
+                 pq.offer(point);
+             }else if(distanceFromOrigin(point)<distanceFromOrigin(pq.peek())){
+                 pq.poll();
+                 pq.offer(point);
+             }
+         }
+        int[][] res = new int[k][2];
+        int index=0;
+        while(!pq.isEmpty()){
+            res[index++] = pq.poll();
         }
         
-        List<int[]> list = new ArrayList<>();
-        
-        while(!maxHeap.isEmpty()){
-            list.add(maxHeap.poll());
-        }
-        
-        return list.toArray(new int[list.size()][2]);
-    
-    }
-    
-    
-    int getDistance(int[] a,int[] b){
-        return (a[0]-b[0])*(a[0]-b[0])+(a[1]-b[1])*(a[1]-b[1]);
-    }
+        return res;
+}
+int distanceFromOrigin(int[] p){
+    return p[0]*p[0]+p[1]*p[1];
+}
+
+
 }
