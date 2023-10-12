@@ -1,6 +1,6 @@
 class Solution {
     public int[][] kClosest(int[][] points, int k) {
-        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b)->((b[0]*b[0]+b[1]*b[1])-(a[0]*a[0]+a[1]*a[1])));
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b)->(distanceFromOrigin(b)-distanceFromOrigin(a)));
     
          for(int[] point:points){
              if(pq.size()<k){
@@ -18,6 +18,8 @@ class Solution {
         
         return res;
 }
+    
+    
 int distanceFromOrigin(int[] p){
     return p[0]*p[0]+p[1]*p[1];
 }
