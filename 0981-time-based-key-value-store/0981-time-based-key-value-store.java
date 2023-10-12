@@ -1,9 +1,8 @@
 class TimeMap {
     class Data{
         int timestamp;
-        String key,value;
-        Data(String key,String value,int timestamp){
-            this.key=key;
+        String value;
+        Data(String value,int timestamp){
             this.value=value;
             this.timestamp=timestamp;
         }
@@ -15,7 +14,7 @@ class TimeMap {
     }
     
     public void set(String key, String value, int timestamp) {
-        map.computeIfAbsent(key,(k->new ArrayList<>())).add(new Data(key,value,timestamp));
+        map.computeIfAbsent(key,(k->new ArrayList<>())).add(new Data(value,timestamp));
     }
     
     public String get(String key, int timestamp) {
