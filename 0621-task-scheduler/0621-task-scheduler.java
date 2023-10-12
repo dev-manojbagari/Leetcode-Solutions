@@ -15,14 +15,21 @@ class Solution {
             }
         }
         
-        int partCount = max - 1;
+//         int partCount = max - 1;
+//         int partLength = n - (maxCount - 1);
+//         if(partLength==0)
+//             return tasks.length;
+        
+//         int emptySlots = partCount * partLength;
+//         int availableTasks = tasks.length - max * maxCount;
+//         int idles = emptySlots - availableTasks;
+         int partCount = max - 1;
         int partLength = n - (maxCount - 1);
         if(partLength==0)
             return tasks.length;
         int emptySlots = partCount * partLength;
         int availableTasks = tasks.length - max * maxCount;
         int idles = Math.max(0,emptySlots - availableTasks);
-        
         return tasks.length + idles;
     }
 }
