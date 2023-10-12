@@ -6,7 +6,6 @@ class Solution {
         Stack<Integer> stack = new Stack<>();
         
         for(char c:s.toCharArray()){
-            
             if('0'<=c&&c<='9'){
                 num = num*10+c-'0';
             }else if(c=='+'){
@@ -30,7 +29,6 @@ class Solution {
                 result = prevSign*result;
                 result += prevResult;
             }
-            
         }
         
         result += sign*num;
