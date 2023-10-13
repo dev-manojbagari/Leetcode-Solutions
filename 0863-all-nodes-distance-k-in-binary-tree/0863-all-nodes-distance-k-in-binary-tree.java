@@ -10,60 +10,56 @@
 class Solution {
     public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
         List<Integer> list = new ArrayList<>();
-        if(root==null)
-            return list;
-        
         distanceK(root,target,k,list);
-        
         return list;
     }
     
-    private int distanceK(TreeNode root,TreeNode target,int k,List<Integer> list){
+    int distanceK(TreeNode root,TreeNode target,int k,List<Integer> list){
         if(root==null)
             return -1;
         
         if(root==target){
-            distanceKBelow(root,k,list);
+            distanceKDown(root,k,list);
             return 0;
         }
         
-        int ld = distanceK(root.left,target,k,list);
+        int dl = distanceK(root.left,target,k,list);
         
-        if(ld!=-1){
-            if(ld+1==k){
+        if(dl!=-1){
+            if(1+dl==k){
                 list.add(root.val);
-            }else if(ld+1<k){
-                distanceKBelow(root.right,k-ld-2,list);
+            }else{
+                distanceKDown(root.right,k-dl-2,list);
             }
             
-            return ld+1;
+            return dl+1;
         }
         
-        int rd = distanceK(root.right,target,k,list);
+        int dr = distanceK(root.right,target,k,list);
         
-        if(rd!=-1){
-            if(rd+1==k){
+        if(dr!=-1){
+            if(1+dr==k){
                 list.add(root.val);
-            }else if(rd+1<k){
-                distanceKBelow(root.left,k-rd-2,list);
+            }else{
+                distanceKDown(root.left,k-dr-2,list);
             }
             
-            return rd+1;
+            return dr+1;
         }
         
-        return -1;        
+        return -1;
     }
     
-    private void distanceKBelow(TreeNode root,int k,List<Integer> list){
+    void distanceKDown(TreeNode root,int level ,List<Integer> list){
         if(root==null)
             return;
         
-        if(k==0){
+        if(level==0){
             list.add(root.val);
-            return;
+        }else{
+            distanceKDown(root.left,level-1,list);
+            distanceKDown(root.right,level-1,list);
         }
-        
-        distanceKBelow(root.left,k-1,list);
-        distanceKBelow(root.right,k-1,list);
+
     }
 }
