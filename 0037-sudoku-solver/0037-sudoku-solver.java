@@ -1,39 +1,38 @@
 class Solution {
     public void solveSudoku(char[][] board) {
-        solveSudoku(board,0,0);
+        solve(board,0,0);
     }
     
-    boolean solveSudoku(char[][] board,int row,int col){
-        for(int i=row;i<9;i++,col=0){
-            for(int j=col;j<9;j++){
+    boolean solve(char[][] board,int row,int col){
+        for(int i=row;i<board.length;i++,col=0){
+            for(int j=col;j<board[0].length;j++){
                 if(board[i][j]=='.'){
                     for(char num='1';num<='9';num++){
-                        if(isVaild(i,j,board,num)){
+                        if(isVaild(board,i,j,num)){
                             board[i][j]=num;
-                            if(solveSudoku(board,i,j+1))
+                            if(solve(board,i,j+1)){
                                 return true;
+                            }
                             board[i][j]='.';
-                        }                        
-                    }            
+                        }
+                        
+                    }
                     return false;
                 }
-                
             }
         }
+        
         return true;
     }
     
-    boolean isVaild(int row,int col,char[][] board,int num){
-        int blockRow  = row/3,blockCol=col/3;
-        int blockFirstRow = (blockRow)*3,blockFirstCol=(blockCol)*3;
+    boolean isVaild(char[][] board,int row,int col,char num){
+        int blockRow = (row/3)*3,blockCol=(col/3)*3;
+        
         for(int i=0;i<9;i++){
-            if(board[row][i]==num||board[i][col]==num||board[blockFirstRow+i/3][blockFirstCol+i%3]==num){
+            if(board[row][i]==num||board[i][col]==num||board[blockRow+i/3][blockCol+i%3]==num)
                 return false;
-            }
         }
+        
         return true;
     }
-    
-    
-    
 }
