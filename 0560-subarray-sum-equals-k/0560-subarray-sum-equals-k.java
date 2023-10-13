@@ -2,8 +2,7 @@ class Solution {
     public int subarraySum(int[] nums, int k) {
         Map<Integer,Integer> map = new HashMap<>();
         map.put(0,1);
-        int commulativeSum=0;
-        int count=0;
+        int commulativeSum=0,count=0;
         for(int num:nums){
             commulativeSum+=num;
             count += map.getOrDefault(commulativeSum-k,0);
