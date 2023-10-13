@@ -9,14 +9,13 @@ class Solution {
             return (s2+s1).compareTo(s1+s2);
         });
         
+        if(list.get(0)==0)
+            return "0";
         StringBuilder sb = new StringBuilder();
-        boolean allZero=true;
         for(int num:list){
-            if(num!=0)
-                allZero=false;
             sb.append(num);
         }
         
-        return allZero?"0":sb.toString();
+        return sb.toString();
     }
 }
