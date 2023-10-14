@@ -40,13 +40,12 @@ class Solution {
         for(int row=0;row<curRow;row++)
             if(board[row][curCol]=='Q')
                 return false;
-        int row=0,col=0;
-        for(row=curRow-1,col=curCol+1;row>=0&&col<board.length;row--,col++){
+        for(int row=curRow-1,col=curCol+1;row>=0&&col<board.length;row--,col++){
             if(board[row][col]=='Q')
                 return false;
         }
         
-        for(row=curRow-1,col=curCol-1;row>=0&&col>=0;row--,col--){
+        for(int row=curRow-1,col=curCol-1;row>=0&&col>=0;row--,col--){
             if(board[row][col]=='Q')
                 return false;
         }
