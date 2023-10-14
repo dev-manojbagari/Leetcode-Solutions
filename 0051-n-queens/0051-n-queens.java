@@ -1,64 +1,57 @@
 class Solution {
     public List<List<String>> solveNQueens(int n) {
         char[][] board = new char[n][n];
+        
+        for(char[] row:board)
+            Arrays.fill(row,'.');
+        
         List<List<String>> list = new ArrayList<>();
         
-        for(char[] row:board){
-            Arrays.fill(row,'.');
-        }
+        solveNQueens(0,board,list);
         
-        solve(0,n,board,list);
-
         return list;
     }
     
-    void solve(int curRow,int n,char[][] board,List<List<String>> res){
-        
-        if(curRow==n){
-            res.add(construct(board));
+    void solveNQueens(int curRow,char[][] board,List<List<String>> list){
+        if(curRow==board.length){
+            constructResult(board,list);
             return;
-        }
+        }        
         
-        for(int curCol=0;curCol<n;curCol++){
-            if(isBoardVaild(board,curRow,curCol)){
-                board[curRow][curCol]='Q';
-                solve(curRow+1,n,board,res);
-                board[curRow][curCol]='.';
-            }
-        }
+        for(int curCol=0;curCol<board.length;curCol++){
+            board[curRow][curCol]='Q';
+            if(isVaild(board,curRow,curCol))
+                solveNQueens(curRow+1,board,list);
+            board[curRow][curCol]='.';
+        }            
     }
     
-    boolean isBoardVaild(char[][] board,int curRow,int curCol){
+    void constructResult(char[][] board,List<List<String>> list){
+        List<String> tempList= new ArrayList<>();
         
-        for(int row = 0;row<curRow;row++){
+        for(char[] row:board)
+            tempList.add(new String(row));
+        
+        list.add(tempList);        
+    }
+
+    boolean isVaild(char[][] board,int curRow,int curCol){
+            
+        for(int row=0;row<curRow;row++)
             if(board[row][curCol]=='Q')
                 return false;
-        }
-
-        for(int row=curRow-1,col=curCol+1;row>=0&&col<board.length;row--,col++){
+        int row=0,col=0;
+        for(row=curRow-1,col=curCol+1;row>=0&&col<board.length;row--,col++){
             if(board[row][col]=='Q')
                 return false;
         }
         
-        for(int row=curRow-1,col=curCol-1;row>=0&&col>=0;row--,col--){
+        for(row=curRow-1,col=curCol-1;row>=0&&col>=0;row--,col--){
             if(board[row][col]=='Q')
                 return false;
         }
+        
         
         return true;
     }
-    
-    
-    
-    List<String> construct(char[][] board){
-        List<String> list = new ArrayList<>();
-        for(char[] row:board){
-            list.add(new String(row));
-        }
-        return list;
-    }
-    
-    
-    
-    
 }
