@@ -10,16 +10,16 @@ class Solution {
     
     boolean canPartition(int[] nums,int sum){
         
-        boolean[][] dp = new boolean[nums.length][sum+1];        
-       for(int index=0;index<nums.length;index++){ 
+        boolean[][] dp = new boolean[nums.length+1][sum+1];        
+       for(int index=0;index<=nums.length;index++){ 
             for(int curSum=0;curSum<=sum;curSum++){
                 if(curSum==0)
                     dp[index][curSum]=true;
                 else if(index==0)
                     dp[index][curSum]=false;
                 else{
-                    if(curSum-nums[index]>=0)
-                        dp[index][curSum] = dp[index-1][curSum]||dp[index-1][curSum-nums[index]];
+                    if(curSum-nums[index-1]>=0)
+                        dp[index][curSum] = dp[index-1][curSum]||dp[index-1][curSum-nums[index-1]];
                     else
                         dp[index][curSum] = dp[index-1][curSum];
                     
@@ -27,7 +27,7 @@ class Solution {
          }
        }
         
-        return dp[nums.length-1][sum];
+        return dp[nums.length][sum];
         
     }
     
