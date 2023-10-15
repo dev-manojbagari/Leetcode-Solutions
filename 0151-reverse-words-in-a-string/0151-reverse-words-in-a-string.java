@@ -1,45 +1,33 @@
 class Solution {
     public String reverseWords(String s) {
-        StringBuilder sb = new StringBuilder();
-        int n = s.length();
-        
-        // Remove leading and trailing white spaces
-        int start = 0;
-        while (start < n && s.charAt(start) == ' ') {
+        StringBuilder res = new StringBuilder();
+        int n=s.length();
+        int start=0,end=n-1;
+        while(start<=end&&s.charAt(start)==' ')
             start++;
-        }
         
-        int end = n - 1;
-        while (end >= 0 && s.charAt(end) == ' ') {
+        if(start==n)
+            return "";
+        
+        while(end>=start&&s.charAt(end)==' ')
             end--;
+        
+        for(int i=end;i>=start;i--){
+            if(s.charAt(i)==' ')
+                continue;
+            int j=i;
+            while(j>=start&&s.charAt(j)!=' ')
+                j--;
+            
+            for(int k=j+1;k<=i;k++)
+                res.append(s.charAt(k));
+            
+            if(j>=start)
+                res.append(" ");
+            
+            i=j;
         }
         
-        // Reverse each word and append to the result
-        for (int i = end; i >= start; i--) {
-            if (s.charAt(i) == ' ') {
-                continue;
-            }
-            
-            int j = i;
-            
-            // Find the start index of the current word
-            while (j >= start && s.charAt(j) != ' ') {
-                j--;
-            }
-            
-            // Append the reversed word to the result
-            for (int k = j + 1; k <= i; k++) {
-                sb.append(s.charAt(k));
-            }
-            
-			// Append a space between words except for the last word
-			if (j >= start) {
-				sb.append(' ');
-			}
-			
-			i = j; // Move to the next word
-		}
-		
-		return sb.toString();
+        return res.toString();
     }
 }
