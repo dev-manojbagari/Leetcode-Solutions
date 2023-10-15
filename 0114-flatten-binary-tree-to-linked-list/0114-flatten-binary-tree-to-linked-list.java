@@ -16,13 +16,16 @@
 class Solution {
     TreeNode prev =null;
     public void flatten(TreeNode root) {
+        flatten(root,new TreeNode[1]);
+    }
+    void flatten(TreeNode root,TreeNode[] prev){
         if(root==null)
             return;
         
-        flatten(root.right);
-        flatten(root.left);
-        root.right=prev;
+        flatten(root.right,prev);
+        flatten(root.left,prev);
+        root.right=prev[0];
         root.left=null;
-        prev=root;
+        prev[0]=root;
     }
 }
