@@ -37,10 +37,8 @@ class Solution {
         curr=head;
        
         while(curr!=null){
-            Node temp = curr.next;
-            
+            ptr.next=curr.next; 
             curr.next= curr.next.next;
-            ptr.next=temp; 
             
             curr= curr.next;
             ptr=ptr.next;
