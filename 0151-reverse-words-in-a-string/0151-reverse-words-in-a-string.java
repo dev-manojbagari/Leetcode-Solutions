@@ -37,7 +37,7 @@ class Solution {
 				sb.append(' ');
 			}
 			
-			i = j + 1; // Move to the next word
+			i = j; // Move to the next word
 		}
 		
 		return sb.toString();
