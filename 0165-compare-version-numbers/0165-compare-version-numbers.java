@@ -1,16 +1,18 @@
 class Solution {
     public int compareVersion(String version1, String version2) {
-        String[] s1 = version1.split("\\.");
-        String[] s2 = version2.split("\\.");
-        
-        for(int i=0;i<Math.max(s1.length,s2.length);i++){
-            Integer n1 = i>=s1.length?0:Integer.parseInt(s1[i]);
-            Integer n2 = i>=s2.length?0:Integer.parseInt(s2[i]);
-            if(n1==n2)
-                continue;
-            else
-                return n1.compareTo(n2);
+        String[] v1 = version1.split("\\.");
+        String[] v2 = version2.split("\\.");
+        int i=0,j=0;
+        while(i<v1.length||j<v2.length){
+            int num1 = i<v1.length?Integer.parseInt(v1[i]):0;
+            int num2 = j<v2.length?Integer.parseInt(v2[j]):0;
             
+            if(num1>num2)
+                return 1;
+            else if(num1<num2)
+                return -1;
+            i++;
+            j++;
         }
         
         return 0;
