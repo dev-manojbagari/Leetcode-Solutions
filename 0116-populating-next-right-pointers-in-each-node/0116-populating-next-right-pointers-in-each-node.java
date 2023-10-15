@@ -36,6 +36,7 @@ class Solution {
                 temp = temp.next;
             }
             curr = curr.left;
+            
         }
         
         return root;
