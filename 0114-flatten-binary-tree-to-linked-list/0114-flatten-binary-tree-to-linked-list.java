@@ -15,7 +15,8 @@
  */
 class Solution {
     public void flatten(TreeNode root) {
-        flatten(root,new TreeNode[1]);
+        TreeNode[] prev = {null};
+        flatten(root,prev);
     }
     void flatten(TreeNode root,TreeNode[] prev){
         if(root==null)
