@@ -14,35 +14,26 @@
  * }
  */
 class Solution {
-    int width=0;
-    
     public int widthOfBinaryTree(TreeNode root) {
+        int[] max = {0};
         List<List<Integer>> list = new ArrayList<>();
-        
-        widthOfBinaryTree(root,list,0,0);
-        
-        return width;
+        widthOfBinaryTree(root,list,max,0,0);
+        return max[0];
     }
     
-    void widthOfBinaryTree(TreeNode root,List<List<Integer>> list , int level,int curIndex)
-    {
+    void widthOfBinaryTree(TreeNode root,List<List<Integer>> list ,int[] max,int curLevel,int curIndex){
         if(root==null)
             return;
         
-        if(list.size()==level)
-            list.add(new ArrayList<>());
+        if(list.size()==curLevel){
+            list.add(new ArrayList());
+        }
         
-        list.get(level).add(curIndex);
-        width = Math.max(width,curIndex-list.get(level).get(0)+1);
+        list.get(curLevel).add(curIndex);
         
+        max[0] = Math.max(max[0],curIndex-list.get(curLevel).get(0)+1);
         
-        widthOfBinaryTree(root.left,list,level+1,2*curIndex+1);
-        widthOfBinaryTree(root.right,list,level+1,2*curIndex+2);
-        
-        
-        
+        widthOfBinaryTree(root.left,list,max,curLevel+1,curIndex*2);
+        widthOfBinaryTree(root.right,list,max,curLevel+1,curIndex*2+1);
     }
-    
-    
-    
 }
