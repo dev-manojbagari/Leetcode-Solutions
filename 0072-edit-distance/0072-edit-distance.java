@@ -1,22 +1,22 @@
 class Solution {
     public int minDistance(String word1, String word2) {
-        int n1 = word1.length(),n2=word2.length();
-        Integer[][] dp = new Integer[n1+1][n2+1];
-        
-        for(int i=0;i<=n1;i++){
-            for(int j=0;j<=n2;j++){
-                if(i==0)
-                    dp[i][j]=j;
-                else if(j==0)
-                    dp[i][j]=i;
-                else if(word1.charAt(i-1)==word2.charAt(j-1))
-                    dp[i][j] = dp[i-1][j-1];
-                else
-                    dp[i][j] = 1+Math.min(dp[i-1][j-1],Math.min(dp[i-1][j],dp[i][j-1]));
-            }
-        }
-        
-        
-        return dp[n1][n2];
+        return minDistance(word1.length()-1,word2.length()-1,word1,word2,new Integer[word1.length()][word2.length()]);
     }
+    
+    int minDistance(int i,int j,String word1,String word2,Integer[][] dp){
+        if(i==-1)
+            return j+1;
+        
+        if(j==-1)
+            return i+1;
+        if(dp[i][j]!=null)
+            return dp[i][j];
+        
+        if(word1.charAt(i)==word2.charAt(j))
+            return dp[i][j]=minDistance(i-1,j-1,word1,word2,dp);
+        else
+            return dp[i][j]= 1+Math.min(minDistance(i-1,j,word1,word2,dp),Math.min(minDistance(i-1,j-1,word1,word2,dp),minDistance(i,j-1,word1,word2,dp)));
+    }
+    
+    
 }
