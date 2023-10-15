@@ -24,19 +24,26 @@ class Node {
 class Solution {
     public Node connect(Node root) {
         
+         Node preHead = new Node(-1);
+        Node pre = preHead;
         Node curr = root;
         while(curr!=null){
             Node temp = curr;
             while(temp!=null){
-                if(temp.left!=null)
-                    temp.left.next=temp.right;
-                if(temp.right!=null&&temp.next!=null)
-                    temp.right.next=temp.next.left!=null?temp.next.left:temp.next.right;
-                
+                if(temp.left!=null){
+                    pre.next=temp.left;
+                    pre=pre.next;
+                }
+                                 
+                if(temp.right!=null){
+                    pre.next=temp.right;
+                    pre=pre.next;
+                }
                 temp = temp.next;
             }
-            curr = curr.left;
-            
+            curr=preHead.next;
+            preHead.next=null;
+            pre=preHead;
         }
         
         return root;
