@@ -20,8 +20,10 @@ class Solution {
         
         for(int i=0;i<a.length();i++){
             int j=0;
-            while((i+j)<a.length()&&j<b.length()&&a.charAt(i+j)==b.charAt(j)){
+            while(a.charAt(i+j)==b.charAt(j)){
                 j++;
+                if(i+j==a.length()||j==b.length())
+                    break;
             }
             if(j==b.length())
                 return true;
