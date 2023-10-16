@@ -19,10 +19,8 @@ class Solution {
     boolean isMatch(String a,String b){
         
         for(int i=0;i<a.length();i++){
-            int start=i;
             int j=0;
-            while(start<a.length()&&j<b.length()&&a.charAt(start)==b.charAt(j)){
-                start++;
+            while((i+j)<a.length()&&j<b.length()&&a.charAt(i+j)==b.charAt(j)){
                 j++;
             }
             if(j==b.length())
