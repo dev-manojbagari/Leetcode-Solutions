@@ -14,66 +14,57 @@
  * }
  */
 class Solution {
-     class Pair{
+    class Pair{
         TreeNode node;
         int hd;
         int level;
         Pair(TreeNode node,int hd,int level){
-            this.node=node;
+            this.node = node;
             this.hd=hd;
-            this.level=level;
+            this.level = level;
         }
     }
     public List<List<Integer>> verticalTraversal(TreeNode root) {
-        List<List<Integer>> list = new ArrayList<>();
-        if(root==null)
-            return list;
-        Map<Integer,List<Pair>> map = new HashMap<>();
+        List<List<Integer>> list  = new ArrayList<>();
         Queue<Pair> q = new LinkedList<>();
         q.offer(new Pair(root,0,0));
-        int minHd=Integer.MAX_VALUE,maxHd = Integer.MIN_VALUE;
-        int curLevel=0;
+        Map<Integer,List<Pair>> map = new HashMap<>();
+        int minHD=Integer.MAX_VALUE,maxHD=Integer.MIN_VALUE;
+        int level=0;
         while(!q.isEmpty()){
             int size = q.size();
             for(int i=0;i<size;i++){
-            Pair pair = q.poll();
-            TreeNode node = pair.node;
-            int hd = pair.hd;
-            
-            if(map.get(hd)==null)
-                map.put(hd,new ArrayList<>());
+                Pair pair = q.poll();
+                TreeNode node = pair.node;
+                int hd = pair.hd;
+                minHD = Math.min(minHD,hd);
+                maxHD = Math.max(maxHD,hd);
                 
-            map.get(hd).add(pair);
-            
-            
-            minHd = Math.min(minHd,hd);
-            maxHd = Math.max(maxHd,hd);
-            
-            if(node.left!=null)
-                q.offer(new Pair(node.left,hd-1,curLevel));
-            
-            if(node.right!=null)
-                q.offer(new Pair(node.right,hd+1,curLevel));
-            
+                map.computeIfAbsent(hd,(k->new ArrayList<>())).add(pair);
+                
+                if(node.left!=null)
+                    q.offer(new Pair(node.left,hd-1,level+1));
+                if(node.right!=null)
+                    q.offer(new Pair(node.right,hd+1,level+1));
             }
-            curLevel++;
+            level++;
         }
-        for(int i=minHd;i<=maxHd;i++){
+        
+        for(int i=minHD;i<=maxHD;i++){
             List<Pair> tempList = map.get(i);
             tempList.sort((a,b)->{
                 if(a.level==b.level)
-                    return a.node.val-b.node.val;
-                return a.hd-b.hd;
+                    return Integer.compare(a.node.val,b.node.val);
+                return Integer.compare(a.level,b.level);
             });
-            
-            List<Integer> temp = new ArrayList<>();
-            for(Pair pair:tempList)
-                temp.add(pair.node.val);
-            
-            list.add(temp);
+            List<Integer> tempList2 = new ArrayList<>();
+            for(Pair p:tempList){
+                tempList2.add(p.node.val);
+            }
+            list.add(tempList2);
         }
         
-        
         return list;
+        
     }
 }
