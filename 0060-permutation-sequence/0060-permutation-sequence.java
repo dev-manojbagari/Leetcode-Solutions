@@ -1,8 +1,8 @@
 class Solution {
     public String getPermutation(int n, int k) {
-        int fact[] =  new int[]{1,1,2,6,24,120,720,5040,40320,362880};
-      //  for(int i=0;i<=9;)
-       //     fact[i]=fact(i);
+        int fact[] = new int[10];
+        for(int i=0;i<=9;i++)
+            fact[i]=fact(i);
         
         List<Integer> list = new ArrayList<>();
         for(int i=1;i<=n;i++)
