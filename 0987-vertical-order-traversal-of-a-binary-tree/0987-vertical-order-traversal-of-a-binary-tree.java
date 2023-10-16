@@ -51,17 +51,16 @@ class Solution {
         }
         
         for(int i=minHD;i<=maxHD;i++){
-            // List<Pair> tempList = map.get(i);
             map.get(i).sort((a,b)->{
                 if(a.level==b.level)
                     return Integer.compare(a.node.val,b.node.val);
                 return Integer.compare(a.level,b.level);
             });
-            List<Integer> tempList2 = new ArrayList<>();
+            List<Integer> tempList = new ArrayList<>();
             for(Pair p:map.get(i)){
-                tempList2.add(p.node.val);
+                tempList.add(p.node.val);
             }
-            list.add(tempList2);
+            list.add(tempList);
         }
         
         return list;
