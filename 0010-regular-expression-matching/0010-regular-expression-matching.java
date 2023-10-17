@@ -1,31 +1,21 @@
 class Solution {
     public boolean isMatch(String s, String p) {
-        return isMatch(s,p,0,0,new Boolean[s.length()+1][p.length()+1]);
+          return isMatch(0,0,s,p,new Boolean[s.length()+1][p.length()+1]);
     }
     
-    boolean isMatch(String s,String p,int sl,int pl,Boolean[][] dp){
-         if(sl==s.length()&&pl==p.length())
-            return true;
-        else if(sl!=s.length()&&pl==p.length())
-            return false;
-        else if(sl==s.length()&&pl!=p.length()){
-            if(pl+1<p.length()&&p.charAt(pl+1)=='*')
-                return isMatch(s,p,sl,pl+2,dp);
-            else
-                return false;
-        }
+    boolean isMatch(int i,int j,String s,String p,Boolean[][] cache){
+        if(j==p.length())
+            return i==s.length();
         
-        boolean ans = false;
-        boolean firstMatch = s.charAt(sl)==p.charAt(pl)||p.charAt(pl)=='.';
+        if(cache[i][j]!=null)
+            return cache[i][j];
         
-        if(pl+1<p.length()&&p.charAt(pl+1)=='*'){
-           ans = isMatch(s,p,sl,pl+2,dp)||(firstMatch&&isMatch(s,p,sl+1,pl,dp));
-        }else
-            ans= firstMatch&&isMatch(s,p,sl+1,pl+1,dp);
-                
-        
-         return dp[sl][pl]=ans;
-    
-}
-
+        boolean firstMatch = i<s.length()&&(p.charAt(j)==s.charAt(i)||p.charAt(j)=='.');
+      
+        if(j+1<p.length()&&p.charAt(j+1)=='*')
+            return cache[i][j]=isMatch(i,j+2,s,p,cache)||firstMatch&&isMatch(i+1,j,s,p,cache);
+        else
+            return cache[i][j]=firstMatch&&isMatch(i+1,j+1,s,p,cache);
+  
+    }
 }
