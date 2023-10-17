@@ -2,19 +2,18 @@ class Twitter {
     class TweetInfo{
         int tweetId;
         int count;
-        
-        TweetInfo(int tweetId,int count){
-            this.tweetId=tweetId;
+        TweetInfo(int count,int tweetId){
             this.count=count;
+            this.tweetId=tweetId;
         }
     }
     
+    Map<Integer,Set<Integer>> followMap;
+    Map<Integer,List<TweetInfo>> userTweets;
     static int count=0;
-    Map<Integer,Set<Integer>> followees;
-    Map<Integer,LinkedList<TweetInfo>> userTweets;
-    
+
     public Twitter() {
-        followees = new HashMap<>();
+        followMap = new HashMap<>();
         userTweets = new HashMap<>();
     }
     
@@ -23,47 +22,44 @@ class Twitter {
             userTweets.put(userId,new LinkedList<>());
             follow(userId,userId);
         }
-        userTweets.get(userId).add(0,new TweetInfo(tweetId,count++));
+        
+        userTweets.get(userId).add(new TweetInfo(count++,tweetId));
     }
     
     public List<Integer> getNewsFeed(int userId) {
-        // get follwers , fillter ten recet tweets
-        List<Integer> newsfeed = new ArrayList<>();        
-        Set<Integer> users = followees.get(userId);
-        if(users==null)
-            return newsfeed;
-        PriorityQueue<TweetInfo> maxHeap = new PriorityQueue<>((a,b)->a.count-b.count);
+        PriorityQueue<TweetInfo> pq = new PriorityQueue<>((a,b)->a.count-b.count);
+        List<Integer> newsFeed = new ArrayList<>();
+        Set<Integer> followees = followMap.get(userId);
+        if(followees==null)
+            return newsFeed;
         
-        for(int user:users){
-            List<TweetInfo> tweetInfos = userTweets.get(user);
-            if(tweetInfos==null)
+        for(int followee:followees){
+            List<TweetInfo> tweets = userTweets.get(followee);
+            if(tweets==null)
                 continue;
-            for(TweetInfo tweetInfo:tweetInfos){
-                
-                if(maxHeap.size()<10){
-                    maxHeap.offer(tweetInfo);
-                }else if(tweetInfo.count>maxHeap.peek().count){
-                    maxHeap.poll();
-                    maxHeap.offer(tweetInfo);
-                }else{
-                    break;
+            for(TweetInfo tweet:tweets){
+                if(pq.size()<10){
+                    pq.offer(tweet);
+                }else if(tweet.count>pq.peek().count){
+                    pq.poll();
+                    pq.offer(tweet);
                 }
             }
         }
         
-         while(!maxHeap.isEmpty()){
-             newsfeed.add(0,maxHeap.poll().tweetId);
-        }
-        return newsfeed;
+        while(!pq.isEmpty())
+            newsFeed.add(0,pq.poll().tweetId);
+        
+        return newsFeed;
     }
     
     public void follow(int followerId, int followeeId) {
-        followees.computeIfAbsent(followerId,(k->new HashSet<>())).add(followeeId);
+        followMap.computeIfAbsent(followerId,(k->new HashSet<>())).add(followeeId);
     }
     
     public void unfollow(int followerId, int followeeId) {
-        if(followerId!=followeeId&&followees.containsKey(followerId))
-            followees.get(followerId).remove(followeeId);
+        if(followMap.containsKey(followerId)&&followerId!=followeeId)
+            followMap.get(followerId).remove(followeeId);
     }
 }
 
