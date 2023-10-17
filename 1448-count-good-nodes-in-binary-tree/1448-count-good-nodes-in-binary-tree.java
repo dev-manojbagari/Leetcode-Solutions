@@ -15,22 +15,20 @@
  */
 class Solution {
     public int goodNodes(TreeNode root) {
-        int[] count = {0};
-        goodNodes(root,Integer.MIN_VALUE,count);
-        return count[0];
+        int goodNodes[] ={0};
+        countGoodNodes(root,goodNodes,root.val);
+        return goodNodes[0];
     }
     
-    void goodNodes(TreeNode root,int max,int[] count){
+    void countGoodNodes(TreeNode root,int[] goodNodes,int max){
         if(root==null)
             return;
         
-        if(max<=root.val){
-            count[0]++;
+        if(root.val>=max){
+            goodNodes[0]++;
         }
         
-        goodNodes(root.left,Math.max(max,root.val),count);
-        goodNodes(root.right,Math.max(max,root.val),count);
+        countGoodNodes(root.left,goodNodes,Math.max(max,root.val));
+        countGoodNodes(root.right,goodNodes,Math.max(max,root.val));
     }
-    
-    
 }
