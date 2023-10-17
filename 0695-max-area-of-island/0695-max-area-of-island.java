@@ -4,7 +4,8 @@ class Solution {
         boolean[][] vis = new boolean[grid.length][grid[0].length];
         for(int i=0;i<grid.length;i++){
             for(int j=0;j<grid[0].length;j++){
-                max = Math.max(max,dfs(i,j,grid,vis));
+                if(grid[i][j]==1&&!vis[i][j])
+                    max = Math.max(max,dfs(i,j,grid,vis));
             }
         }
         
