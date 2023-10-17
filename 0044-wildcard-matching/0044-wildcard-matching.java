@@ -1,40 +1,32 @@
 class Solution {
     public boolean isMatch(String s, String p) {
-        return isMatch(s,p,s.length()-1,p.length()-1,new Boolean[s.length()+1][p.length()+1]);
+        return isMatch(0,0,s,p,new Boolean[s.length()+1][p.length()+1]);
     }
     
-    private boolean isMatch(String s,String p,int sl,int pl,Boolean[][] dp){
-            if(pl==-1)
-                return sl==-1;
-            else if(sl==-1){
-                if(allStars(p,pl))
-                    return true;
-                else
-                    return false;
-            }
-        
-        
-        
-        if(dp[sl][pl]!=null)
-            return dp[sl][pl];
-        boolean ans = false;
-        if(s.charAt(sl)==p.charAt(pl)||p.charAt(pl)=='?')
-            ans =isMatch(s,p,sl-1,pl-1,dp);
-        else if(p.charAt(pl)=='*')
-            ans = isMatch(s,p,sl,pl-1,dp)||isMatch(s,p,sl-1,pl,dp);
-        else 
-            ans= false;
-        
-        return dp[sl][pl]=ans;
-    }
-    
-    boolean allStars(String str,int j){
-        for(int i=j;i>=0;i--)
-            if(str.charAt(i)!='*')
+    boolean isMatch(int i,int j,String s,String p,Boolean[][] cache){
+        if(i==s.length()){
+            if(allStars(p,j))
+                return true;
+            else
                 return false;
+        }else if(j==p.length())
+            return i==s.length();
+            
+        if(cache[i][j]!=null)
+            return cache[i][j];
         
+        if(p.charAt(j)=='?'||s.charAt(i)==p.charAt(j))
+            return cache[i][j]=isMatch(i+1,j+1,s,p,cache);
+        else if(p.charAt(j)=='*')
+            return cache[i][j]=isMatch(i+1,j,s,p,cache)||isMatch(i,j+1,s,p,cache);
+        else
+            return cache[i][j]=false;
+    }
+    
+    boolean allStars(String p,int j){
+        for(int i=j;i<p.length();i++)
+            if(p.charAt(i)!='*')
+                return false;
         return true;
     }
-    
-    
 }
