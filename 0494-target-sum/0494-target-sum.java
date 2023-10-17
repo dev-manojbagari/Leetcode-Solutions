@@ -1,26 +1,23 @@
 class Solution {
-    Map<Pair<Integer,Integer>,Integer> map= new HashMap<>();
     public int findTargetSumWays(int[] nums, int target) {
-        return findTargetSumWays(0,nums,target);
+        return findTargetSumWays(0,0,nums,target,new HashMap<>());
     }
     
-    int findTargetSumWays(int i,int[] nums,int target){
+    int findTargetSumWays(int index,int curSum,int[] nums,int target,Map<String,Integer> map){
+        if(index==nums.length)
+            return curSum==target?1:0;
         
-        if(i==nums.length)
-            return target==0?1:0;
-
-        Pair<Integer,Integer> pair = new Pair<>(i,target);
+         int count=0;
+        String key = index+","+curSum;
+        if(map.containsKey(key))
+            return map.get(key);
+            
         
-        if(map.containsKey(pair))
-            return map.get(pair);
+        count += findTargetSumWays(index+1,curSum+nums[index],nums,target,map);
+        count+=  findTargetSumWays(index+1,curSum-nums[index],nums,target,map);
+        map.put(key,count);
         
+        return count;
         
-        int total =0;
-        
-        total += findTargetSumWays(i+1,nums,target-nums[i]);
-        total += findTargetSumWays(i+1,nums,target+nums[i]);
-        
-        map.put(pair,total);
-        return total;
     }
 }
