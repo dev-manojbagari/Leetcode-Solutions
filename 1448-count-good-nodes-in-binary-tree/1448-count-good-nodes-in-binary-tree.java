@@ -26,9 +26,10 @@ class Solution {
         
         if(root.val>=max){
             goodNodes[0]++;
+            max = Math.max(max,root.val);
         }
         
-        countGoodNodes(root.left,goodNodes,Math.max(max,root.val));
-        countGoodNodes(root.right,goodNodes,Math.max(max,root.val));
+        countGoodNodes(root.left,goodNodes,max);
+        countGoodNodes(root.right,goodNodes,max);
     }
 }
