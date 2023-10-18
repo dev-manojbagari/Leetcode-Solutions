@@ -1,24 +1,18 @@
 class Solution {
     public List<String> fizzBuzz(int n) {
-        // modulo operation allowed
         List<String> list = new ArrayList<>();
-        
-        Map<Integer,String> map = new HashMap<>();
-        map.put(3,"Fizz");
-        map.put(5,"Buzz");
-        
-        for(int i=1;i<=n;i++){
-            StringBuilder sb = new StringBuilder();
-            for(Integer num:map.keySet()){
-                if(i%num==0)
-                    sb.append(map.get(num));
+        for(int num=1;num<=n;num++){
+            if(num%3==0&&num%5==0){
+                list.add("FizzBuzz");
+            }else if(num%3==0){
+                list.add("Fizz");
+            }else if(num%5==0){
+                list.add("Buzz");
+            }else{
+                list.add(Integer.toString(num));
             }
-            
-            if(sb.length()==0)
-                list.add(String.valueOf(i));
-            else
-                list.add(sb.toString());
         }
+        
         return list;
     }
 }
