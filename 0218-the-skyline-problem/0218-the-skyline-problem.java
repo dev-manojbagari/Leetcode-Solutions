@@ -6,35 +6,35 @@ class Solution {
             list.add(new int[]{building[1],building[2]});
         }
         
-        
-        List<List<Integer>> res = new ArrayList<>();
-        
-        
-       list.sort((a,b)->{
+        list.sort((a,b)->{
             if(a[0]!=b[0])
                 return a[0]-b[0];
-            return a[1]-b[1];
-       }); 
-        
-        PriorityQueue<Integer> pq = new PriorityQueue<>((a,b)->b-a);
-         
+            else
+                return a[1]-b[1];
+            
+        });
+        List<List<Integer>> res = new ArrayList<>();
+        TreeMap<Integer,Integer> treeMap = new TreeMap<>(Collections.reverseOrder());
         int prevHeight=0;
-        
         for(int[] height:list){
+            if(height[1]<0)
+                treeMap.put(-height[1],treeMap.getOrDefault(-height[1],0)+1);
+            else{
+                int count = treeMap.get(height[1]);
+                if(count==1)
+                    treeMap.remove(height[1]);
+                else
+                    treeMap.put(height[1],count-1);
+            }
             
-            if(height[1]<0){
-                pq.offer(-height[1]);
-            }else
-                pq.remove(height[1]);
+            int curHeight = treeMap.isEmpty()?0:treeMap.firstKey();
             
-            int curHeight = pq.isEmpty()?0:pq.peek();
-            
-            if(curHeight!=prevHeight){
+            if(prevHeight!=curHeight){
                 res.add(Arrays.asList(height[0],curHeight));
                 prevHeight=curHeight;
             }
         }
         
-        return res;
+        return res;        
     }
 }
