@@ -1,24 +1,24 @@
 class Solution {
     int[] origArray;
+    Random random = new Random();
     int[] nums;
-    Random random;
     public Solution(int[] nums) {
-        origArray = nums.clone();
         this.nums=nums;
-        random = new Random();
+        origArray = nums.clone();
+        
     }
     
     public int[] reset() {
-        nums = origArray.clone();
+        nums=origArray.clone();
         return nums;
     }
     
     public int[] shuffle() {
-        for(int i=0;i<nums.length;i++){
+        for(int i=nums.length-1;i>=0;i--){
             int randomIndex = random.nextInt(i+1);
-            int temp = nums[randomIndex];
-            nums[randomIndex] =nums[i];
-            nums[i]=temp;
+            int t = nums[i];
+            nums[i]=nums[randomIndex];
+            nums[randomIndex]=t;
         }
         return nums;
     }
