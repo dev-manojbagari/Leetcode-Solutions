@@ -16,22 +16,23 @@
  * }
  */
 public class NestedIterator implements Iterator<Integer> {
-    List<Integer> list  = new ArrayList<>();
+    List<Integer> list = new ArrayList<>();
     int index=0;
     public NestedIterator(List<NestedInteger> nestedList) {
         extract(nestedList);
     }
-
+    
     private void extract(List<NestedInteger> nestedList){
+        
         for(NestedInteger nestedInteger:nestedList){
-            if(nestedInteger.isInteger())
+            if(nestedInteger.isInteger()){
                 list.add(nestedInteger.getInteger());
-            else
+            }else
                 extract(nestedInteger.getList());
         }
+        
     }
-    
-    
+
     @Override
     public Integer next() {
         return list.get(index++);
