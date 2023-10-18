@@ -1,31 +1,32 @@
 class Solution {
     public int[] minInterval(int[][] intervals, int[] queries) {
-        Arrays.sort(intervals,(a,b)->a[0]-b[0]);
-        int[] q = queries.clone();
-        Arrays.sort(q);
-        int[] res = new int[q.length];
-        TreeMap<Integer,Integer> treeMap = new TreeMap<>();
+         int[] q = queries.clone();
+         Arrays.sort(q);
+         Arrays.sort(intervals,(a,b)->a[0]-b[0]);
+         TreeMap<Integer,Integer> treeMap = new TreeMap<>();
+         Map<Integer,Integer> map = new HashMap<>();
         int index=0;
-        Map<Integer,Integer> resMap= new HashMap<>();
+        
         for(int i=0;i<q.length;i++){
+             int query = q[i];
+             while(index<intervals.length&&intervals[index][0]<=query){
+                 treeMap.put(intervals[index][1]-intervals[index][0]+1,intervals[index][1]);
+                 index++;
+             }
             
-            while(index<intervals.length&&intervals[index][0]<=q[i]){
-                int start = intervals[index][0],end = intervals[index][1];
-                treeMap.put(end-start+1,end);
-                index++;
-            }
-            
-            while(!treeMap.isEmpty()&&treeMap.firstEntry().getValue()<q[i]){
-                treeMap.pollFirstEntry();
-            }
-            
-            resMap.put(q[i],treeMap.isEmpty()?-1:treeMap.firstKey());
-        }
+             while(!treeMap.isEmpty()&&treeMap.firstEntry().getValue()<query)
+                    treeMap.pollFirstEntry();
+             
+             map.put(query,treeMap.isEmpty()?-1:treeMap.firstKey());
+             
+         }
+        
+         int[] res =new int[q.length];
         
         for(int i=0;i<queries.length;i++){
-            res[i] = resMap.get(queries[i]);
-        }        
-        
+            res[i]=map.get(queries[i]);
+        }
+            
         return res;
     }
 }
