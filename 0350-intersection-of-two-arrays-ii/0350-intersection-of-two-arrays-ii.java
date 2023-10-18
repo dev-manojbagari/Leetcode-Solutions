@@ -4,22 +4,17 @@ class Solution {
         
         for(int num:nums1)
             map.put(num,map.getOrDefault(num,0)+1);
-        
         List<Integer> list = new ArrayList<>();
-        int count =0;
         for(int num:nums2){
             if(map.containsKey(num)){
                 list.add(num);
-                int freq = map.get(num);
-                freq--;
-                if(freq==0)
+                if(map.get(num)==1)
                     map.remove(num);
                 else
-                    map.put(num,freq);
+                    map.put(num,map.get(num)-1);
             }
         }
         
-        return list.stream().mapToInt(x->x).toArray();
-        
+        return list.stream().mapToInt(i->i).toArray();
     }
 }
