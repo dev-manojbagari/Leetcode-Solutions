@@ -1,67 +1,61 @@
 class Solution {
-    record Pair(int index,int val){};
-    int[] res;
-    public List<Integer> countSmaller(int[] nums) {
-        Pair[] pairs = new Pair[nums.length];
-        
-        for(int i=0;i<nums.length;i++){
-            pairs[i]= new Pair(i,nums[i]);
+    class Pair{
+        int val,index;
+        Pair(int val,int index){
+            this.val=val;
+            this.index=index;
         }
+    }
+    public List<Integer> countSmaller(int[] nums) {
+        int n =nums.length;
+        Pair[] pairs = new Pair[n];
         
-        res = new int[nums.length];
-        mergeSort(0,pairs.length-1,pairs);
-        
+        for(int i=0;i<n;i++)
+            pairs[i]=new Pair(nums[i],i);
+        int[] res = new int[n];
+        mergeSort(pairs,0,n-1,res);
         return Arrays.stream(res).boxed().toList();
     }
     
-    void mergeSort(int start,int end,Pair[] pairs){
+    void mergeSort(Pair[] pairs,int start,int end,int[] res){
         if(start>=end)
             return;
         
         int mid = start+(end-start)/2;
+        mergeSort(pairs,start,mid,res);
+        mergeSort(pairs,mid+1,end,res);
         
-        mergeSort(start,mid,pairs);
-        mergeSort(mid+1,end,pairs);
-        
-        sortedMerge(start,mid,end,pairs);
+        sortedMerge(pairs,start,mid,end,res);        
     }
     
-    void sortedMerge(int start,int mid,int end,Pair[] pairs){
-        Pair[] L = new Pair[mid-start+1];        
-        Pair[] R = new Pair[end-mid];        
+    void sortedMerge(Pair[] pairs,int start,int mid,int end,int[] res){
         
-        for(int i=0;i<L.length;i++){
-            L[i]=pairs[start+i];
-        }
+        Pair[] L = new Pair[mid-start+1];
+        Pair[] R = new Pair[end-mid];
         
-        for(int i=0;i<R.length;i++){
-            R[i]=pairs[mid+1+i];
-        }
+        for(int i=0;i<L.length;i++)
+            L[i] = pairs[start+i];
         
+        for(int i=0;i<R.length;i++)
+            R[i] = pairs[mid+1+i];
         int i=0,j=0,k=start;
         
         while(i<L.length&&j<R.length){
-            if(L[i].val()<=R[j].val()){
+            if(L[i].val<=R[j].val){
                 res[L[i].index]+=j;
-                pairs[k]=L[i];
-                i++;
-                k++;
+                pairs[k++] = L[i++];
             }else{
-                pairs[k]=R[j];
-                j++;
-                k++;
+                pairs[k++]=R[j++];
             }
         }
         
+        while(j<R.length){
+            pairs[k++]=R[j++];
+         }
         while(i<L.length){
-             res[L[i].index]+=j;
+            res[L[i].index]+=j;
              pairs[k++]=L[i++];
         }
-        
-        while(j<R.length){
-             pairs[k++]=R[j++];
-        }
-        
-        
+
     }
 }
