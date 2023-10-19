@@ -34,30 +34,29 @@ class GFG {
 
 class Solution {
     // Function to detect cycle in an undirected graph.
-    public boolean isCycle(int V, ArrayList<ArrayList<Integer>> adj) {
-        boolean[] vis = new boolean[V];
-        for(int i=0;i<V;i++){
-            if(vis[i]==false){
-                if(dfs(i,adj,vis,-1))
+    public boolean isCycle(int v, ArrayList<ArrayList<Integer>> adj) {
+        boolean[] vis = new boolean[v];
+        for(int i=0;i<v;i++){
+            if(!vis[i]){
+                if(isCycle(i,adj,vis,-1)){
                     return true;
+                }
             }
         }
-        
         return false;
     }
-       boolean dfs(int i,ArrayList<ArrayList<Integer>> adjList,boolean[] vis,int parent ){
-
-                vis[i]=true;
-        for(int x:adjList.get(i)){
-            if(vis[x]==false){
-                if(dfs(x,adjList,vis,i))
+    
+    boolean isCycle(int curNode,ArrayList<ArrayList<Integer>> list,boolean[] vis,int parent){
+        
+        vis[curNode]=true;
+        
+        for(int nbr:list.get(curNode)){
+            if(vis[nbr]==false){
+                if(isCycle(nbr,list,vis,curNode))
                     return true;
-            }else if(parent!=x){
+            }else if(nbr!=parent)
                 return true;
-            }
         }
-        // vis[i]=false;
-    return false;
-
+        return false;
     }
 }
