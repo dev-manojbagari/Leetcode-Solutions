@@ -36,8 +36,8 @@ class GFG {
 
 class Solution {
     public ArrayList<Integer> dfsOfGraph(int V, ArrayList<ArrayList<Integer>> adj) {
-        
-        boolean[] vis = new boolean[V];
+        int n = adj.size();
+        boolean[] vis = new boolean[n];
         ArrayList<Integer> list = new ArrayList<>();
         dfs(0,adj,vis,list);
         return list;
