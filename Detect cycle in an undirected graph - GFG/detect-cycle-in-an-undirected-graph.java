@@ -34,28 +34,48 @@ class GFG {
 
 class Solution {
     // Function to detect cycle in an undirected graph.
-    public boolean isCycle(int v, ArrayList<ArrayList<Integer>> adj) {
-        boolean[] vis = new boolean[v];
-        for(int i=0;i<v;i++){
-            if(!vis[i]){
-                if(isCycle(i,adj,vis,-1)){
+    public boolean isCycle(int V, ArrayList<ArrayList<Integer>> adj) {
+        boolean[] vis = new boolean[V];
+        for(int i=0;i<V;i++){
+            if(vis[i]==false){
+                if(isCycle(i,adj,vis)){
                     return true;
                 }
-            }
+            }   
         }
         return false;
     }
     
-    boolean isCycle(int curNode,ArrayList<ArrayList<Integer>> list,boolean[] vis,int parent){
-        
-        vis[curNode]=true;
-        
-        for(int nbr:list.get(curNode)){
-            if(vis[nbr]==false){
-                if(isCycle(nbr,list,vis,curNode))
+    boolean isCycle(int curNode,ArrayList<ArrayList<Integer>> adj,boolean[] vis){
+            Queue<int[]> q = new LinkedList<>();
+            q.offer(new int[]{curNode,-1});
+            vis[curNode]=true;
+            
+            // while(!q.isEmpty()){
+            //       int[] data = q.poll();
+                  
+            //       for(int nbr:adj.get(data[0])){
+            //           if(vis[nbr]==false){
+            //               vis[nbr]=true;
+            //               q.offer(new int[]{nbr,curNode});
+            //           }else if(nbr!=data[1]){
+            //               return true;
+            //           }
+            //       }
+            // }
+            // return false;
+              while(!q.isEmpty()){
+            int data[] = q.poll();
+            int node= data[0];
+            int parent = data[1];
+            
+            for(int x:adj.get(node)){
+                if(vis[x]==false){
+                    vis[x]=true;
+                    q.add(new int[]{x,node});
+                }else if(x!=parent)
                     return true;
-            }else if(nbr!=parent)
-                return true;
+            }
         }
         return false;
     }
