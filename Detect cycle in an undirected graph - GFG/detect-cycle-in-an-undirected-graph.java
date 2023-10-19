@@ -51,32 +51,32 @@ class Solution {
             q.offer(new int[]{curNode,-1});
             vis[curNode]=true;
             
-            // while(!q.isEmpty()){
-            //       int[] data = q.poll();
+            while(!q.isEmpty()){
+                  int[] data = q.poll();
                   
-            //       for(int nbr:adj.get(data[0])){
-            //           if(vis[nbr]==false){
-            //               vis[nbr]=true;
-            //               q.offer(new int[]{nbr,curNode});
-            //           }else if(nbr!=data[1]){
-            //               return true;
-            //           }
-            //       }
-            // }
-            // return false;
-              while(!q.isEmpty()){
-            int data[] = q.poll();
-            int node= data[0];
-            int parent = data[1];
-            
-            for(int x:adj.get(node)){
-                if(vis[x]==false){
-                    vis[x]=true;
-                    q.add(new int[]{x,node});
-                }else if(x!=parent)
-                    return true;
+                  for(int nbr:adj.get(data[0])){
+                      if(vis[nbr]==false){
+                          vis[nbr]=true;
+                          q.offer(new int[]{nbr,data[0]});
+                      }else if(nbr!=data[1]){
+                          return true;
+                      }
+                  }
             }
-        }
-        return false;
+            return false;
+        //       while(!q.isEmpty()){
+        //     int data[] = q.poll();
+        //     int node= data[0];
+        //     int parent = data[1];
+            
+        //     for(int x:adj.get(node)){
+        //         if(vis[x]==false){
+        //             vis[x]=true;
+        //             q.add(new int[]{x,node});
+        //         }else if(x!=parent)
+        //             return true;
+        //     }
+        // }
+        // return false;
     }
 }
