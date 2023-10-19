@@ -1,42 +1,37 @@
 class Solution {
     public boolean canFinish(int n, int[][] prereq) {
-        List<List<Integer>> adjList = new ArrayList<>();
-        int[] inDeg = new int[n];
+       int[] inDegree = new int[n];
+       List<List<Integer>> adj = new ArrayList<>();
+       
         for(int i=0;i<n;i++)
-            adjList.add(new ArrayList<>());
+           adj.add(new ArrayList<>());
         
-        for(int[] pre:prereq){
-            adjList.get(pre[1]).add(pre[0]);
-            inDeg[pre[0]]++;
+        for(int i=0;i<prereq.length;i++){
+            adj.get(prereq[i][1]).add(prereq[i][0]);
+            inDegree[prereq[i][0]]++;
         }
         
-        Queue<Integer> q = new LinkedList<>();
-        
-        for(int i=0;i<inDeg.length;i++){
-            if(inDeg[i]==0){
-                q.offer(i);
-            }
-        }
-        
-        boolean[] vis= new boolean[n];
-        int count=0;
-        while(!q.isEmpty()){
+
+       Queue<Integer> q = new LinkedList<>();
+       boolean[]  vis = new boolean[n];
+       for(int i=0;i<n;i++){
+           if(inDegree[i]==0){
+               q.offer(i);
+           }
+       }
+     List<Integer> list = new ArrayList<>();
+      while(!q.isEmpty()){
             int node = q.poll();
-            vis[node]=true;
-            count++;
-            for(int x:adjList.get(node)){
-                if(!vis[x]){
-                    inDeg[x]--;
-                    if(inDeg[x]==0){
-                        q.offer(x);
-                    }
-                }
+            list.add(node);
+            for(int x:adj.get(node)){
+                inDegree[x]--;
+                if(inDegree[x]==0)
+                    q.offer(x);
             }
-        }
-        
-        return count==n; 
-        
+      }       
+    
         
         
+        return list.size()==n;
     }
 }
