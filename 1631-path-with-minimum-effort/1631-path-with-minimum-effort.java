@@ -7,12 +7,11 @@ class Solution {
             Arrays.fill(row,Integer.MAX_VALUE);
         
         minEff[0][0]=0;
-        
-        Queue<int[]> q = new LinkedList<>();
-        q.offer(new int[]{0,0});
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b)->a[2]-b[2]);
+        pq.offer(new int[]{0,0,0});
         int[][] dirs= {{1,0},{-1,0},{0,1},{0,-1}};
-        while(!q.isEmpty()){
-            int[] data = q.poll();
+        while(!pq.isEmpty()){
+            int[] data = pq.poll();
             int i= data[0];
             int j= data[1];
             for(int[] dir:dirs){
@@ -22,11 +21,11 @@ class Solution {
                 if(x<0||x>=heights.length||y<0||y>=heights[0].length)
                     continue;
                 
-                 int newEff = Math.max(minEff[i][j],Math.abs(heights[i][j]-heights[x][y]));
+                 int newEff = Math.max(data[2],Math.abs(heights[i][j]-heights[x][y]));
                 
                  if(minEff[x][y]>newEff){
                      minEff[x][y]=newEff;
-                     q.offer(new int[]{x,y});
+                     pq.offer(new int[]{x,y,newEff});
                  }
             }
             
