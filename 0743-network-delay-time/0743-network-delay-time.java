@@ -4,7 +4,7 @@ class Solution {
         Arrays.fill(minTime,Integer.MAX_VALUE);
         minTime[k]=0;
         
-        Queue<int[]> q = new LinkedList<>();
+        PriorityQueue<int[]> q = new PriorityQueue<>((a,b)->a[1]-b[1]);
         q.offer(new int[]{k,0});
         
         List<List<int[]>> list = new ArrayList<>();
