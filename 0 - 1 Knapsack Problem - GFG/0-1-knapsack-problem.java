@@ -51,27 +51,27 @@ class Solution
     //Function to return max value that can be put in knapsack of capacity W.
     static int knapSack(int W, int wt[], int val[], int n) 
     { 
-       Integer[][] dp  = new Integer[W+1][n+1];
-       return knapSack(W,wt,val,n,dp);
-         
-    } 
-    
-    static int knapSack(int W,int wt[] ,int val[] ,int n,Integer[][] dp){
-         if(n==0||W==0)
-            return 0;
-
-        if(dp[W][n]!=null)
-            return dp[W][n];
+       int[][] dp  = new int[W+1][n+1];
+      
+      for(int i=0;i<=W;i++)
+        dp[i][0]=0;
         
-        if(wt[n-1]<=W){
-            int include = val[n-1]+ knapSack(W-wt[n-1],wt,val,n-1,dp);
-            int exclude = knapSack(W,wt,val,n-1,dp);
-            
-            return dp[W][n]=Math.max(include,exclude);
-        }else
-            return dp[W][n]=knapSack(W,wt,val,n-1,dp);
+      for(int i=0;i<=n;i++)
+        dp[0][i]=0;
         
         
+      for(int curWeight =1;curWeight<=W;curWeight++){
+          for(int curIndex=1;curIndex<=n;curIndex++){
+                if(curWeight-wt[curIndex-1]>=0){
+                    dp[curWeight][curIndex]=Math.max(dp[curWeight][curIndex-1]
+                    ,val[curIndex-1]+dp[curWeight-wt[curIndex-1]][curIndex-1]);
+                }else{
+                    dp[curWeight][curIndex] = dp[curWeight][curIndex-1];
+                }              
+          }
+      }
+        
+        return dp[W][n];
     }
 }
 
