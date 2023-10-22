@@ -4,15 +4,16 @@ class Solution {
             return 1;
         if(n==2)
             return 2;
-        int oneStepBefore =2;
-        int twoStepBefore = 1;
-        int total=0;
+        int dp1 = 2;
+        int dp2 = 1;
+        int ans = 0;
+        
         for(int i=3;i<=n;i++){
-            total = oneStepBefore+twoStepBefore;
-            twoStepBefore = oneStepBefore;
-            oneStepBefore =total;
+            ans = dp1+dp2;
+            dp2=dp1;
+            dp1=ans;
         }
         
-        return total;
+        return ans;
     }
 }
