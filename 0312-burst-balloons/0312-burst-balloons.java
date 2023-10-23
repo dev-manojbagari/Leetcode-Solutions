@@ -7,7 +7,7 @@ class Solution {
         for(int num:nums)
             arr[index++]=num;
         
-        return maxCoins(1,arr.length-2,arr,new Integer[arr.length+1][arr.length+1]);
+        return maxCoins(1,arr.length-2,arr,new Integer[arr.length][arr.length]);
     }
     
     int maxCoins(int i,int j,int[] arr,Integer[][] dp){
