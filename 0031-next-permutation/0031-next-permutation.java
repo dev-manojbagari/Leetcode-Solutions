@@ -8,10 +8,8 @@ class Solution {
             }
         }
         
-        if(i==-1)
-            reverse(nums,i+1,n-1);
-        else{
-            int  j = n-1;
+        if(i>=0){
+                int  j = n-1;
             while(j>=0){
                 if(nums[j]>nums[i]){
                     break;
@@ -22,10 +20,12 @@ class Solution {
             int temp = nums[i];
             nums[i]=nums[j];
             nums[j]=temp;
+        }
+        
             reverse(nums,i+1,n-1);
             
         }
-    }
+    
     
     void reverse(int[] nums,int i,int j){
         while(i<j){
