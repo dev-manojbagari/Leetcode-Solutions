@@ -1,25 +1,23 @@
 class Solution {
     public int[] findErrorNums(int[] nums) {
-        int repeating=-1,missing=-1;
-        int n = nums.length;
-        
-        for(int i=0;i<n;i++){
+        int[] res = new int[2];
+        for(int i=0;i<nums.length;i++){
             int index = Math.abs(nums[i])-1;
             if(nums[index]>0){
                 nums[index]*=-1;
-            }else
-                repeating = index+1;
+            }else{
+                res[0]=Math.abs(nums[i]);
+            }
         }
         
         
-        for(int i=0;i<n;i++){
+        for(int i=0;i<nums.length;i++){
             if(nums[i]>0){
-                missing=i+1;
+                res[1]=i+1;
                 break;
             }
         }
         
-        return new int[]{repeating,missing};
-        
+        return res;
     }
 }
