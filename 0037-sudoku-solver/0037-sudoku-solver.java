@@ -1,28 +1,26 @@
 class Solution {
     public void solveSudoku(char[][] board) {
-        solve(board,0,0);
+       solve(board,0,0);
     }
     
+    
     boolean solve(char[][] board,int row,int col){
-        for(int i=row;i<board.length;i++,col=0){
-            for(int j=col;j<board[0].length;j++){
+         for(int i=row;i<9;i++,col=0){
+            for(int j=col;j<9;j++){
                 if(board[i][j]=='.'){
                     for(char num='1';num<='9';num++){
                         if(isVaild(board,i,j,num)){
-                            board[i][j]=num;
-                            if(solve(board,i,j+1)){
-                                return true;
-                            }
-                            board[i][j]='.';
+                        board[i][j]=num;
+                        if(solve(board,i,j+1))
+                            return true;
+                        board[i][j]='.';
                         }
-                        
                     }
                     return false;
                 }
             }
         }
-        
-        return true;
+    return true;
     }
     
     boolean isVaild(char[][] board,int row,int col,char num){
@@ -35,4 +33,5 @@ class Solution {
         
         return true;
     }
+    
 }
