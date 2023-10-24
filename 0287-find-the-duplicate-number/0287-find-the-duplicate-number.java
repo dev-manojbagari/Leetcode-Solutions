@@ -8,14 +8,14 @@ class Solution {
             fast = nums[nums[fast]];
         }
         
-        fast = 0;
+        int slow2 = 0;
         
-        while(slow!=fast){
+        while(slow!=slow2){
             slow = nums[slow];
-            fast = nums[fast];
+            slow2 = nums[slow2];
         }
         
-        return slow;
         
+        return slow;
     }
 }
