@@ -6,9 +6,9 @@ class MyHashMap {
     //O(size)
     /** Initialize your data structure here. */
     public MyHashMap() {
-        lists = new ArrayList[size];
+        lists = new LinkedList[size];
         for(int i=0; i<lists.length; i++)
-            lists[i] = new ArrayList<>(); //don't use linkedlist in my version which makes put() O(L^2)
+            lists[i] = new LinkedList<>(); //don't use linkedlist in my version which makes put() O(L^2)
     }
     
     public int getHashcode(int key)
