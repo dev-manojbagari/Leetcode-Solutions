@@ -18,11 +18,11 @@ class Solution {
         }
             
         for(int curCol=0;curCol<n;curCol++){
-            if(isVaild(curRow,curCol,board,n)){
                 board[curRow][curCol]='Q';
-                solveNQueens(curRow+1,board,n,list);
+                if(isVaild(curRow,curCol,board,n))
+                    solveNQueens(curRow+1,board,n,list);
                 board[curRow][curCol]='.';
-            }
+            
         }
     }
     
