@@ -16,19 +16,22 @@
 class Solution {
     public boolean findTarget(TreeNode root, int k) {
         Set<Integer> set = new HashSet<>();
-        return preorder(root,k,set);
+        return findTarget(root,k,set);
     }
     
-    boolean preorder(TreeNode root,int k,Set<Integer> set){
+    boolean findTarget(TreeNode root,int k,Set<Integer> set){
         if(root==null)
             return false;
         
         if(set.contains(k-root.val))
             return true;
         set.add(root.val);
-        boolean l = preorder(root.left,k,set);
-        boolean r = preorder(root.right,k,set);
+        
+        boolean l = findTarget(root.left,k,set);
+        boolean r = findTarget(root.right,k,set);
         
         return l||r;
     }
+    
+    
 }
