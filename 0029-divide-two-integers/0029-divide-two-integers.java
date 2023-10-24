@@ -10,7 +10,7 @@ class Solution {
         int q = 0;
         int res= 0;
         while(dividend-divisor>=0){
-            while(dividend-(divisor<<(q+1))>=0){
+            while(dividend-(divisor<<(q+1))>0){
                 q++;
             }
             res+= 1<<q;
