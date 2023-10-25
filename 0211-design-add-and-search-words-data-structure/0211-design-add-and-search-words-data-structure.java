@@ -1,4 +1,5 @@
 class WordDictionary {
+
     Node head;
     public WordDictionary() {
         head = new Node('\0');
@@ -9,31 +10,32 @@ class WordDictionary {
         for(char c:word.toCharArray()){
             if(curr.next[c-'a']==null)
                 curr.next[c-'a']=new Node(c);
-            curr=curr.next[c-'a'];
+            
+            curr = curr.next[c-'a'];
         }
         curr.isWord=true;
     }
     
     public boolean search(String word) {
-        if(word.length()==0)
-            return false;
-        Node curr = head; 
-        return search(word.toCharArray(),0,curr);           
+        return search(0,word,head);
     }
     
-    boolean search(char word[],int index,Node curr){
-        if(index==word.length)
-            return curr.isWord;
-        else if(word[index]!='.'){
-            return curr.next[word[index]-'a']!=null&&search(word,index+1,curr.next[word[index]-'a']);
+    private boolean search(int index,String word,Node curr){
+        if(index==word.length()){
+            return curr!=null&&curr.isWord;
+        }else if(word.charAt(index)!='.'){
+            return curr.next[word.charAt(index)-'a']!=null&&search(index+1,word,curr.next[word.charAt(index)-'a']);
         }else{
-            for(int i=0;i<26;i++){
-                if( curr.next[i]!=null&&search(word,index+1,curr.next[i]))
+            for(char c='a';c<='z';c++){
+                if(curr.next[c-'a']!=null&&search(index+1,word,curr.next[c-'a']))
                     return true;
             }
             return false;
         }
     }
+    
+    
+    
     class Node{
         char val;
         Node[] next;
