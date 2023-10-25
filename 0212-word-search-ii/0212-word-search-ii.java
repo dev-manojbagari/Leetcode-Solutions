@@ -14,7 +14,7 @@ class Solution {
         return list;
     }
     
-      void dfs(int i,int j,char[][] board,boolean[][] vis,Node curr,List<String> list){
+      void dfs(int i,int j,char[][] board,boolean[][] vis,Trie.Node curr,List<String> list){
         if(i<0||i>=board.length||j<0||j>=board[0].length||vis[i][j])
             return;
         
@@ -42,7 +42,11 @@ class Solution {
         
     }
    
-    class Node{
+ 
+    class Trie{
+        
+        
+           class Node{
             char val;
             Node[] next;
             boolean isWord;
@@ -52,10 +56,6 @@ class Solution {
                 next = new Node[26];
             }
         }
-    class Trie{
-        
-        
-        
         Node head;
         
         Trie(){
