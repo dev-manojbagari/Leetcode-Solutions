@@ -22,7 +22,7 @@ class WordDictionary {
     
     private boolean search(int index,String word,Node curr){
         if(index==word.length()){
-            return curr!=null&&curr.isWord;
+            return curr.isWord;
         }else if(word.charAt(index)!='.'){
             return curr.next[word.charAt(index)-'a']!=null&&search(index+1,word,curr.next[word.charAt(index)-'a']);
         }else{
