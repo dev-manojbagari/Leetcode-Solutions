@@ -4,36 +4,31 @@ class Solution {
         int n = s.length();
         int i=0,j=n-1;
         
-//         while(i<n&&s.charAt(i)==' ')
-//             i++;
+        while(i<n&&s.charAt(i)==' ')
+            i++;
         
-//         while(j>=0&&s.charAt(j)==' ')
-//             j--;
+        while(j>=0&&s.charAt(j)==' ')
+            j--;
         
-        for(int k=n-1;k>=0;k--){
-            while(k>=0&&s.charAt(k)==' ')
+        for(int k=j;k>=i;k--){
+            while(k>=i&&s.charAt(k)==' ')
                 k--;
-            if(k==-1)
+            if(k==i-1)
                 break;
             
-            int lastChar = k;;
-            while(k>=0&&s.charAt(k)!=' ')
+            int lastChar = k;
+            while(k>=i&&s.charAt(k)!=' ')
                 k--;
             int first = k+1;
             
             for(int l=first;l<=lastChar;l++){
                 sb.append(s.charAt(l));
             }
-             
-            while(k>=0&&s.charAt(k)==' ')
-                k--;
-            
-            if(k==-1)
+            if(first-1<i)
                 break;
-            
             sb.append(" ");
             
-            k = first;
+            k = first-1;
             
         }
             
