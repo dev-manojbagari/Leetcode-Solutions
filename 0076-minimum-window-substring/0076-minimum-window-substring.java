@@ -1,6 +1,6 @@
 class Solution {
     public String minWindow(String s, String t) {
-       int[] charCount = new int[256];
+       int[] charCount = new int[128];
         for(char c:t.toCharArray()){
             charCount[c]++;
         }
