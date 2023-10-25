@@ -20,3 +20,19 @@ if(height[1]<0)
 treeMap.put(-height[1],treeMap.getOrDefault(-height[1],0)+1);
 else
 {
+int count = treeMap.get(height[1])-1;
+if(count==0)
+treeMap.remove(height[1]);
+else
+treeMap.put(height[1],count);
+}
+int curHeight = treeMap.isEmpty()?0:treeMap.firstKey();
+if(prevHeight!=curHeight){
+res.add(Arrays.asList(height[0],curHeight));
+prevHeight = curHeight;
+}
+}
+return res;
+}
+}
+```
