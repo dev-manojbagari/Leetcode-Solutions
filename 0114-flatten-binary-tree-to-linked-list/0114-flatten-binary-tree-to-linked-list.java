@@ -18,12 +18,14 @@ class Solution {
         TreeNode[] prev = {null};
         flatten(root,prev);
     }
+    
     void flatten(TreeNode root,TreeNode[] prev){
         if(root==null)
             return;
         
         flatten(root.right,prev);
         flatten(root.left,prev);
+        
         root.right=prev[0];
         root.left=null;
         prev[0]=root;
