@@ -1,49 +1,51 @@
 class Solution {
-    class Data{
-        int oneCount;
-        int zeroCount;
-        Data(int zeroCount,int oneCount){
-            this.zeroCount=zeroCount;
-            this.oneCount=oneCount;
-        }
-    }
-    public int findMaxForm(String[] strs, int m, int n) {
-        List<Data> list = new ArrayList<>();
+    public int findMaxForm(String[] strs, int mZeros, int nOnes) {
+        List<String> list = new ArrayList<>();
         for(String str:strs){
-            int count1=0,count0=0;
-            for(int i=0;i<str.length();i++){
-                if(str.charAt(i)=='0')
-                    count0++;
+            int zeroCount=0,oneCount=0;
+            
+            for(char c:str.toCharArray()){
+                if(c=='0')
+                    zeroCount++;
                 else
-                    count1++;
+                    oneCount++;
             }
-            if(count0<=m&&count1<=n)
-                list.add(new Data(count0,count1));
+            
+            if(zeroCount<=mZeros&&oneCount<=nOnes){
+                list.add(str);
+            }
         }
-        
-        return findMaxForm(0,list,m,n,new Integer[list.size()][m+1][n+1]);
+        return findMaxForms(0,list,mZeros,nOnes,new Integer[list.size()+1][mZeros+1][nOnes+1]);
     }
     
-    int findMaxForm(int index,List<Data> list,int maxZeros,int maxOnes,Integer[][][] dp){
-        if(index==list.size()||(maxZeros==0&&maxOnes==0))
-        {
-            return 0;
-        }
+    int findMaxForms(int index,List<String> list,int mZeros,int nOnes,Integer[][][] cache){
+          if(index==list.size())
+              return 0;
         
-        if(dp[index][maxZeros][maxOnes]!=null)
-            return dp[index][maxZeros][maxOnes];
+            if(cache[index][mZeros][nOnes]!=null)
+                return cache[index][mZeros][nOnes];
         
-        int zeroCount = list.get(index).zeroCount;
-        int oneCount = list.get(index).oneCount;
-        int ans =0;
-        if(zeroCount>maxZeros||oneCount>maxOnes){
-            return dp[index][maxZeros][maxOnes] =findMaxForm(index+1,list,maxZeros,maxOnes,dp);
-        }
+            int exclude = findMaxForms(index+1,list,mZeros,nOnes,cache);
+            int[] count = countZeroOne(list.get(index));
         
-        int exclude = findMaxForm(index+1,list,maxZeros,maxOnes,dp);
-        int include = 1+findMaxForm(index+1,list,maxZeros-zeroCount,maxOnes-oneCount,dp);
+            int include=0;
+            if(count[0]<=mZeros&&count[1]<=nOnes){
+                include  = 1+findMaxForms(index+1,list,mZeros-count[0],nOnes-count[1],cache);     
+            }
         
-        return dp[index][maxZeros][maxOnes]=Math.max(exclude,include);
-        
+        return cache[index][mZeros][nOnes]= Math.max(include,exclude);
     }
+    
+    int[] countZeroOne(String str){
+        int[] res = new int[2];
+        
+        for(char c:str.toCharArray()){
+            if(c=='0')
+                res[0]++;
+            else
+                res[1]++;
+        }
+        return res;
+    }
+    
 }
