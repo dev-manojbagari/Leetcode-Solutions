@@ -20,12 +20,13 @@ class Solution {
                 sign = -1;
                 num=0;
             }else if(c==')'){
-                 result +=sign*num;
-                num=0;
+                result +=sign*num;
                 int prevSign = stack.pop();
                 int prevResult = stack.pop();
                 result = prevSign*result;
                 result += prevResult;;
+                num=0;
+                sign=1;
             }else if('0'<=c&&c<='9'){
                 num=num*10+c-'0';
             }
