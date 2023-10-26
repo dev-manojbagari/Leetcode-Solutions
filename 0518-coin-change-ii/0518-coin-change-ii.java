@@ -1,14 +1,23 @@
 class Solution {
     public int change(int amount, int[] coins) {
-     int[][] dp = new int[coins.length+1][amount+1];   
-        dp[0][0]=1;
-        for(int i=1;i<coins.length+1;i++){
-            dp[i][0]=1;
-            for(int j=1;j<=amount;j++){
-                dp[i][j]= dp[i-1][j]+(j>=coins[i-1]?dp[i][j-coins[i-1]]:0);
-            }
-        }
-        
-        return dp[coins.length][amount];
+        return f(0,coins,amount,new Integer[coins.length+1][amount+1]);
     }
+    
+    int f(int index,int[] coins,int amount,Integer[][] state){
+        if(amount==0)
+            return 1;
+        if(amount<0||index==coins.length)
+            return 0;
+        
+        if(state[index][amount]!=null)
+            return state[index][amount];
+        
+        int exclude = f(index+1,coins,amount,state);
+        int include=0;
+        if(coins[index]<=amount)
+            include = f(index,coins,amount-coins[index],state);
+        
+        return state[index][amount]= include+exclude;
+    }
+    
 }
