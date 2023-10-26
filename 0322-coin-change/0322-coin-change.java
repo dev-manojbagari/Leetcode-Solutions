@@ -16,7 +16,7 @@ class Solution {
             return state[index][amount];
         
         int exclude = f(index+1,coins,amount,state);
-        int include=Integer.MAX_VALUE-1;
+        int include=Integer.MAX_VALUE;
         if(coins[index]<=amount)
             include = 1+f(index,coins,amount-coins[index],state);
         
