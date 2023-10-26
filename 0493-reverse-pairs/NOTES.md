@@ -24,23 +24,3 @@ sortedMerge(nums, left, mid, right);
 return count;
 }
 ​
-void sortedMerge(int[] nums, int left, int mid, int right) {
-int[] L = new int[mid - left + 1];
-int[] R = new int[right - mid];
-​
-for (int i = 0; i < L.length; i++) L[i] = nums[left + i];
-​
-for (int i = 0; i < R.length; i++) R[i] = nums[mid + 1 + i];
-​
-int i = 0, j = 0, k = left;
-​
-while (i < L.length && j < R.length) {
-if (L[i] <= R[j]) nums[k++] = L[i++]; else nums[k++] = R[j++];
-}
-​
-while (i < L.length) nums[k++] = L[i++];
-​
-while (j < R.length) nums[k++] = R[j++];
-}
-}
-​
