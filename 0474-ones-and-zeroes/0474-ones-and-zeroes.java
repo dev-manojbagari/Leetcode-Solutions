@@ -15,7 +15,7 @@ class Solution {
                 list.add(str);
             }
         }
-        return findMaxForms(0,list,mZeros,nOnes,new Integer[list.size()+1][mZeros+1][nOnes+1]);
+        return findMaxForms(0,list,mZeros,nOnes,new Integer[list.size()][mZeros+1][nOnes+1]);
     }
     
     int findMaxForms(int index,List<String> list,int mZeros,int nOnes,Integer[][][] cache){
