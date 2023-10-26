@@ -6,44 +6,40 @@ class Solution {
             return res;
         }
         List<List<Integer>> adjList = new ArrayList<>();
-        
+        int[] id = new int[n];
         for(int i=0;i<n;i++)
             adjList.add(new ArrayList<>());
-        
-        int[] inD = new int[n];
-        
         for(int[] edge:edges){
             adjList.get(edge[0]).add(edge[1]);
             adjList.get(edge[1]).add(edge[0]);
-            inD[edge[0]]++;
-            inD[edge[1]]++;
+            id[edge[0]]++;
+            id[edge[1]]++;
         }
         
         Queue<Integer> q = new LinkedList<>();
         
-        
         for(int i=0;i<n;i++){
-            if(inD[i]==1){
+            if(id[i]==1)
                 q.offer(i);
-            }
         }
         
         while(n>2){
-            int size = q.size();
-            n = n-size;
-            
-            for(int i=0;i<size;i++){
-                int node = q.poll();
+            int levelSize = q.size();
+            n=n-levelSize;    
+            for(int i=0;i<levelSize;i++){
+                int node=q.poll();
                 for(int x:adjList.get(node)){
-                    inD[x]--;
-                    if(inD[x]==1){
-                        q.offer(x);
+                    id[x]--;
+                    if(id[x]==1){
+                     q.offer(x);
                     }
                 }
             }
         }
+                
+        while(!q.isEmpty())
+            res.add(q.poll());
         
-        res.addAll(q);
         return res;
     }
 }
