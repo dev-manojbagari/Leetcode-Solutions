@@ -1,25 +1,26 @@
 class Solution {
     public int coinChange(int[] coins, int amount) {
-        int ans =f(coins,amount,new Integer[amount+1]);
+        int ans =f(0,coins,amount,new Integer[coins.length+1][amount+1]);
         return ans == Integer.MAX_VALUE-1?-1:ans;
     }
     
-    int f(int[] coins,int amount,Integer[]state){
+
+    
+        int f(int index,int[] coins,int amount,Integer[][] state){
         if(amount==0)
             return 0;
+        if(amount<0||index==coins.length)
+            return Integer.MAX_VALUE-1;
         
-        if(state[amount]!=null)
-            return state[amount];
+        if(state[index][amount]!=null)
+            return state[index][amount];
         
-        int ans =Integer.MAX_VALUE-1;
-        for(int i=0;i<coins.length;i++){
-            if(amount-coins[i]>=0){
-               ans = Math.min(ans,1+f(coins,amount-coins[i],state));
-            }
-        }
+        int exclude = f(index+1,coins,amount,state);
+        int include=Integer.MAX_VALUE-1;
+        if(coins[index]<=amount)
+            include = 1+f(index,coins,amount-coins[index],state);
         
-        
-        return state[amount] = ans;
+        return state[index][amount]= Math.min(include,exclude);
     }
     
 }
