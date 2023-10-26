@@ -1,35 +1,38 @@
 class Solution {
     public int calculate(String s) {
-        char sign='+';
-        int num=0;
+        char curSign = '+';
+        int curNum=0;
         Stack<Integer> stack = new Stack<>();
         for(int i=0;i<s.length();i++){
             char c = s.charAt(i);
-            if('0'<=c&&c<='9'){
-                num = num*10+c-'0';                
+            if(isDigit(c)){
+                curNum = curNum*10+c-'0';
             }
             
-            if(!Character.isDigit(c)&&c!=' '||i==s.length()-1){
-                if(sign=='+'){
-                    stack.push(num);
-                }else if(sign=='-'){
-                    stack.push(-num);
-                }else if(sign=='*'){
-                    stack.push(stack.pop()*num);
-                }else if(sign=='/'){
-                    stack.push(stack.pop()/num);
+            if(!isDigit(c)&&c!=' '||i==s.length()-1){
+                if(curSign=='+'){
+                    stack.push(curNum);
+                }else if(curSign=='-'){
+                    stack.push(-curNum);
+                }else if(curSign=='*'){
+                    stack.push(stack.pop()*curNum);
+                }else{
+                    stack.push(stack.pop()/curNum);
                 }
-                    sign=c;
-                    num=0;
-                
+                curSign = c;
+                curNum=0;
             }
-            
         }
-            int total=0;
-            while(!stack.isEmpty()){
-                total += stack.pop();
-            }
-            
-            return total;
+        
+        int total=0;
+        while(!stack.isEmpty()){
+            total += stack.pop();
+        }
+        
+        return total;
+    }
+    
+    boolean isDigit(char c){
+        return '0'<=c&&c<='9';
     }
 }
