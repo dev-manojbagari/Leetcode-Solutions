@@ -38,7 +38,7 @@ class Solution {
         }
     }
     public int removeStones(int[][] stones) {
-              int m=Integer.MIN_VALUE;
+             int m=Integer.MIN_VALUE;
         int n = Integer.MIN_VALUE;
         
         for(int i=0;i<stones.length;i++){
