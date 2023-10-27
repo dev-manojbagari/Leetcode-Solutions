@@ -24,9 +24,3 @@ int curListSize = nums.get(curList).size();
 ​
 if (curIndex + 1 < curListSize) {
 int nextNum = nums.get(curList).get(curIndex + 1);
-minHeap.offer(new int[] { nextNum, curList, curIndex + 1 });
-max = Math.max(max, nextNum);
-}
-}
-​
-return new int[] { start, start + minRange - 1 };
