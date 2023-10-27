@@ -1,30 +1,30 @@
-    class Solution {
-        public boolean checkValidString(String s) {
-             Stack<Integer> openStack = new Stack<>();
-             Stack<Integer> starStack = new Stack<>();
-
-            for(int i=0;i<s.length();i++){
-                char c = s.charAt(i);
-                if(c=='('){
-                    openStack.push(i);
-                }else if(c=='*'){
-                    starStack.push(i);   
-                }else{
-
-                    if(openStack.isEmpty()&&starStack.isEmpty())
-                        return false;
-                    if(!openStack.isEmpty())
-                        openStack.pop();
-                    else if(!starStack.isEmpty())
-                        starStack.pop();
-                }
-            }
-
-            while(!openStack.isEmpty()&&!starStack.isEmpty()){
-                if(openStack.pop()>starStack.pop())
+class Solution {
+    public boolean checkValidString(String s) {
+        Stack<Integer> charIdStack = new Stack<>();
+        Stack<Integer> starIdStack = new Stack<>();
+        
+        for(int i=0;i<s.length();i++){
+            char c = s.charAt(i);
+            if(c=='('){
+                charIdStack.push(i);
+            }else if(c=='*'){
+                starIdStack.push(i);
+            }else{
+                if(charIdStack.isEmpty()&&starIdStack.isEmpty())
                     return false;
+                if(!charIdStack.isEmpty())
+                    charIdStack.pop();
+                else
+                    starIdStack.pop();
             }
-            
-            return openStack.isEmpty();
         }
+        
+        while(!charIdStack.isEmpty()&&!starIdStack.isEmpty()){
+            if(charIdStack.pop()>starIdStack.pop())
+                return false;
+        }
+        
+        
+        return charIdStack.isEmpty();
     }
+}
