@@ -1,14 +1,3 @@
-// base case
-// dp[0] = 0 as we make profit = 0 at time = 0.
-​
-class Solution {
-class Job {
-int start;
-int end;
-int profit;
-​
-public Job(int start, int end, int profit) {
-this.start = start;
 this.end = end;
 this.profit = profit;
 }
