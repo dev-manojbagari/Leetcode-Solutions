@@ -7,9 +7,9 @@ class Solution {
             count++;
         }
         
-        if(isMatch(sb.toString(),b))
+        if(sb.toString().contains(b))
             return count;
-        if(isMatch(sb.append(a).toString(),b))
+        if(sb.append(a).toString().contains(b))
             return count+1;
         
         return -1;
