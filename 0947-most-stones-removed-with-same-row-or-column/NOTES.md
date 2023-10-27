@@ -1,3 +1,4 @@
+int upB = findUP(b);
 if(upA==upB)
 return;
 if(size[upA]>=size[upB]){
