@@ -1,17 +1,9 @@
 class Solution {
-    class Job{
-        int startTime,endTime,profit;
-        Job(int startTime,int endTime,int profit){
-            this.startTime=startTime;
-            this.endTime=endTime;
-            this.profit=profit;
-        }
-    }
+    record Job(int startTime,int endTime,int profit){};
     public int jobScheduling(int[] startTime, int[] endTime, int[] profit) {
-        int n = startTime.length;
         List<Job> jobs = new ArrayList<>();
         
-        for(int i=0;i<n;i++){
+        for(int i=0;i<startTime.length;i++){
             jobs.add(new Job(startTime[i],endTime[i],profit[i]));
         }
         
@@ -23,33 +15,35 @@ class Solution {
         dpProfit.add(0);
         
         for(Job job:jobs){
-            int prevIdx = largestSmaller(dpEndTime,job.startTime+1);
             
-            int case1Profit = dpProfit.get(prevIdx)+job.profit;
-            int case2Profit = dpProfit.get(dpProfit.size()-1);
+            int prevIdx = largestSmaller(job.startTime+1,dpEndTime);
             
-            if(case1Profit>case2Profit){
+            int takeJob = dpProfit.get(prevIdx)+job.profit;
+            int doNotTakeJob = dpProfit.get(dpProfit.size()-1);
+            
+            if(takeJob>doNotTakeJob){
                 dpEndTime.add(job.endTime);
-                dpProfit.add(case1Profit);
+                dpProfit.add(takeJob);
             }
             
         }
-        
         return dpProfit.get(dpProfit.size()-1);
     }
     
-    int largestSmaller(List<Integer> list,int val){
+    int largestSmaller(int val,List<Integer> list){
         int left=0,right=list.size()-1;
-        int ans = right;
-        
+        int ans = -1;
         while(left<=right){
-             int mid = left+(right-left)/2;
-             if(list.get(mid)<val){
-                 ans = mid;
-                 left=mid+1;
-             }else
-                 right=mid-1;
+            int mid=left+(right-left)/2;
+            if(list.get(mid)<val){
+                ans =mid;
+                left=mid+1;
+            }else{
+                right=mid-1;
+            }
         }
-        return ans;
+        
+        return ans;        
     }
+    
 }
