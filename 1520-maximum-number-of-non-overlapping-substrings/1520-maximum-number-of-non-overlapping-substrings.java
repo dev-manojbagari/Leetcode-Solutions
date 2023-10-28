@@ -38,7 +38,7 @@ class Solution {
     }
     
     int getEnd(int start,int end,String s,Map<Character,Pair> map){
-        for(int i=start;i<=end;i++){
+        for(int i=start;i<end;i++){
             if(map.get(s.charAt(i)).start<start)
                 return -1;
             end = Math.max(end,map.get(s.charAt(i)).end);
