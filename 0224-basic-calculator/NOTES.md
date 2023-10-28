@@ -23,15 +23,3 @@ result=0;
 sign=1;
 }else if(c==')'){
 result +=sign*num;
-num=0;
-int prevSign = stack.pop();
-int prevResult = stack.pop();
-result = prevSign*result;
-result += prevResult;
-}
-}
-result += sign*num;
-return result;
-}
-}
-```
