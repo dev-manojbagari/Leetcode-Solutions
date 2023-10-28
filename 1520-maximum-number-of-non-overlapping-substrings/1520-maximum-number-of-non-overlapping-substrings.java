@@ -1,42 +1,49 @@
 class Solution {
+    class Pair{
+        int start,end;
+        Pair(int start,int end){
+            this.start=start;
+            this.end=end;
+        }
+    }
     public List<String> maxNumOfSubstrings(String s) {
-        List<String> res = new ArrayList<>();
-        
-        Map<Character,int[]> map = new HashMap<>();
+        Map<Character,Pair> map = new HashMap<>();
         
         for(int i=0;i<s.length();i++){
             if(!map.containsKey(s.charAt(i)))
-                map.put(s.charAt(i),new int[]{i,i});
+                map.put(s.charAt(i),new Pair(i,i));
             else
-                map.get(s.charAt(i))[1]=i;
+                map.get(s.charAt(i)).end=i;
         }
         
-        int prevEnd= -1;
+        int prevEnd = -1;
+        List<String> list = new ArrayList<>();
         for(int i=0;i<s.length();i++){
-            char c = s.charAt(i);
-            int start = map.get(c)[0];
-            int end = map.get(c)[1];
-            if(start==i){
+            int start = map.get(s.charAt(i)).start;
+            int end = map.get(s.charAt(i)).end;
+            if(i==start){
                 int curEnd = getEnd(start,end,s,map);
-                if(curEnd!=-1){
-                    if(curEnd<=prevEnd){
-                        res.set(res.size()-1,s.substring(start,curEnd+1));
-                    }else
-                        res.add(s.substring(start,curEnd+1));
-                    prevEnd= curEnd;
+                if(curEnd==-1) continue;
+                String subStr =  s.substring(start,curEnd+1);
+                if(curEnd<=prevEnd){
+                    list.set(list.size()-1,subStr);
+                }else{
+                    list.add(subStr);
                 }
+                prevEnd=curEnd;
             }
         }
         
-        return res;
+        return list;
     }
-    int getEnd(int start,int end ,String str,Map<Character,int[]> map){
+    
+    int getEnd(int start,int end,String s,Map<Character,Pair> map){
         for(int i=start;i<=end;i++){
-            if(map.get(str.charAt(i))[0]<start){
+            if(map.get(s.charAt(i)).start<start)
                 return -1;
-            }
-            end = Math.max(end,map.get(str.charAt(i))[1]);
+            end = Math.max(end,map.get(s.charAt(i)).end);
         }
-        return end;
+        
+        return end;        
     }
 }
