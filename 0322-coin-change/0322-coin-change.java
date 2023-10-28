@@ -14,11 +14,10 @@ class Solution {
         if(state[index][amount]!=null)
             return state[index][amount];
         
-        int ans = Integer.MAX_VALUE;
-        ans = change(index+1,amount,coins,state);
-        ans =Math.min(ans,1+change(index,amount-coins[index],coins,state));
+        int exclude = change(index+1,amount,coins,state);
+        int include = 1+change(index,amount-coins[index],coins,state);
         
-        return state[index][amount]=ans;
+        return state[index][amount]=Math.min(include,exclude);
     }
     
    
