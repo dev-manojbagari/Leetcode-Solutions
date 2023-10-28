@@ -23,3 +23,22 @@ res.set(res.size() - 1, s.substring(start, curEnd + 1));
 res.add(s.substring(start, curEnd + 1));
 }
 prevEnd = curEnd;
+}
+}
+}
+​
+return res;
+}
+​
+private int getEnd(String s, int start, int end, Map<Character, int[]> map) {
+for (int i = start; i < end; i++) {
+char c = s.charAt(i);
+if (map.get(c)[0] < start) return -1;
+​
+end = Math.max(end, map.get(c)[1]);
+}
+return end;
+}
+}
+​
+```
