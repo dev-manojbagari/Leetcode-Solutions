@@ -12,9 +12,7 @@ class Solution {
             int k = nums.length-1;
             while(j<k){
                 int sum = nums[i]+nums[j]+nums[k];
-                if(sum==target){
-                    return target;
-                }else if(Math.abs(sum-target)<minDiff){
+               if(Math.abs(sum-target)<minDiff){
                     minDiff = Math.abs(sum-target);
                     closestSum = sum;
                 }
