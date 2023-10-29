@@ -1,9 +1,8 @@
 class Solution {
     public boolean isHappy(int n) {
         Set<Integer> set = new HashSet<>();
-        
+        int next=0;
         while(set.add(n)){
-            int next=0;
             while(n>0){
                 int lastDigit = n%10;
                 next += lastDigit*lastDigit;
@@ -14,6 +13,7 @@ class Solution {
                 return true;
             else{
                 n=next;
+                next=0;
             }
         }
         return false;
