@@ -19,11 +19,11 @@ class Solution {
             curr.next=curr.next.next;
             temp.next=curr;
             prev.next=temp;
+            
             prev=curr;
             curr=curr.next;
         }
         
         return preHead.next;
-        
     }
 }
