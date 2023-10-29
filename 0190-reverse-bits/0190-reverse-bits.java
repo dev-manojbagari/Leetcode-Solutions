@@ -8,7 +8,7 @@ public class Solution {
                 rev++;
             n=n>>1;
         }
-        
+            
         return rev;
     }
 }
