@@ -16,25 +16,22 @@
 class Solution {
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
         List<List<Integer>> list = new ArrayList<>();
-        
         levelOrder(root,list,0);
-       
         return list;
     }
-      
-    void levelOrder(TreeNode root,List<List<Integer>> list,int level){
-        if(root==null)
+    
+       void levelOrder(TreeNode root,List<List<Integer>> list ,int curLevel){
+            if(root==null)
             return;
         
-        if(list.size()==level){
-            list.add(new ArrayList<>());
-        }
-        if(level%2==0)
-            list.get(level).add(root.val);
-        else
-            list.get(level).add(0,root.val);
+            if(list.size()==curLevel)
+                list.add(new ArrayList<>());
         
-        levelOrder(root.left,list,level+1);
-        levelOrder(root.right,list,level+1);
-     }
+            if(curLevel%2==0)
+                list.get(curLevel).add(root.val);
+            else
+                list.get(curLevel).add(0,root.val);
+            levelOrder(root.left,list,curLevel+1);
+            levelOrder(root.right,list,curLevel+1);
+        }
 }
