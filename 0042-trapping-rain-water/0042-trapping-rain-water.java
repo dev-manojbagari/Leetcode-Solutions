@@ -3,7 +3,7 @@ class Solution {
         int left=0,right=h.length-1,leftMax=0,rightMax=0;
         int tw=0;
         while(left<right){
-            if(h[left]<=h[right]){
+            if(h[left]<h[right]){
                 if(h[left]>=leftMax){
                     leftMax=h[left];
                 }else{
