@@ -1,19 +1,19 @@
 class Solution {
     public int lengthOfLongestSubstring(String s) {
-        int[] cmap= new int[256];
-        
-        int start=0,end=0,maxLen=0;
+        int start=0,maxLen=0;
         boolean dupFound = false;
-        for(;end<s.length();end++){
+        int[] charFreq = new int[256];
+        
+        for(int end =0;end<s.length();end++){
             char c = s.charAt(end);
-            cmap[c]++;
-            if(cmap[c]>1)
+            charFreq[c]++;
+            if(charFreq[c]==2)
                 dupFound=true;
-            
+          
             while(dupFound){
                 c = s.charAt(start++);
-                cmap[c]--;
-                if(cmap[c]==1)
+                charFreq[c]--;
+                if(charFreq[c]==1)
                     dupFound=false;
             }
             
