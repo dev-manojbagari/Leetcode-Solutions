@@ -7,7 +7,7 @@ class Solution {
         return maxLen;
     }
     
-    public int f(String s,int distinctCount, int k) {
+    public int f(String s,int targetDistinct, int k) {
        int start=0,maxLen=0;
         int[] charFreq = new int[256];
         int distinctChars = 0;
@@ -20,7 +20,7 @@ class Solution {
             if(charFreq[c]==k)
                 kOrMore++;
           
-            while(distinctChars>distinctCount){
+            while(distinctChars>targetDistinct){
                 c = s.charAt(start++);
                 charFreq[c]--;
                 if(charFreq[c]==0)
@@ -28,7 +28,7 @@ class Solution {
                  if(charFreq[c]==k-1)
                     kOrMore--;
             }   
-            if(distinctChars==distinctCount&&kOrMore==distinctChars)
+            if(distinctChars==targetDistinct&&kOrMore==distinctChars)
                 maxLen = Math.max(maxLen,end-start+1);
         }
         
