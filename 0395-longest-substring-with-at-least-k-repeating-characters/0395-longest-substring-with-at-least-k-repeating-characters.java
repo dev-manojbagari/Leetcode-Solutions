@@ -1,44 +1,37 @@
 class Solution {
     public int longestSubstring(String s, int k) {
-      int max = 0;
-        
-      for(int distinct=1;distinct<=26;distinct++){
-          max = Math.max(max,longestSubstringUtil(s,k,distinct));
-      }
-        return max;
+        int maxLen = 0;
+        for(int distinct=1;distinct<=26;distinct++){
+            maxLen = Math.max(maxLen,f(s,distinct,k));
+        }
+        return maxLen;
     }
     
-    int longestSubstringUtil(String s,int k,int targetDistinct){
-        
-        
-        int[] cmap = new int[128];
-        
-        int start=0,kOrMore=0,distinct=0,max=0;
-        
-        for(int end=0;end<s.length();end++){
+    public int f(String s,int distinctCount, int k) {
+       int start=0,maxLen=0;
+        int[] charFreq = new int[256];
+        int distinctChars = 0;
+        int kOrMore=0;
+        for(int end =0;end<s.length();end++){
             char c = s.charAt(end);
-            cmap[c]++;
-            if(cmap[c]==1)
-                distinct++;
-            if(cmap[c]==k)
+            charFreq[c]++;
+            if(charFreq[c]==1)
+                distinctChars++;
+            if(charFreq[c]==k)
                 kOrMore++;
-            
-            while(distinct>targetDistinct){
-                c= s.charAt(start++);
-                cmap[c]--;
-                if(cmap[c]==0)
-                    distinct--;
-                if(cmap[c]==k-1)
+          
+            while(distinctChars>distinctCount){
+                c = s.charAt(start++);
+                charFreq[c]--;
+                if(charFreq[c]==0)
+                    distinctChars--;
+                 if(charFreq[c]==k-1)
                     kOrMore--;
-            }
-            
-            
-            if(distinct==targetDistinct&&distinct<=kOrMore)
-                max = Math.max(max,end-start+1);
+            }   
+            if(distinctChars==distinctCount&&kOrMore>=distinctChars)
+                maxLen = Math.max(maxLen,end-start+1);
         }
         
-        
-        return max;
-        
+        return maxLen;
     }
 }
