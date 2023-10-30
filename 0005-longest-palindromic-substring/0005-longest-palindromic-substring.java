@@ -1,25 +1,25 @@
 class Solution {
-    int start=0,maxLen=0;
     public String longestPalindrome(String s) {
-        int[] start= {0},maxLen={0};
+        int[] start={0},maxLen={0};
         for(int i=0;i<s.length();i++){
-            palindrome(s,i,i+1,start,maxLen);
-            palindrome(s,i,i,start,maxLen);
-        }    
-        
-        return s.substring(start[0],start[0]+maxLen[0]); 
+            countSubstrings(s,i,i,start,maxLen);
+            countSubstrings(s,i,i+1,start,maxLen);
+            
+        }
+        return s.substring(start[0],start[0]+maxLen[0]);
     }
     
-      void palindrome(String s,int i,int j,int[] start,int[] maxLen){
+    
+    void countSubstrings(String s,int left,int right,int[] start,int[] maxLen){
         
-        while(i>=0&&j<s.length()&&s.charAt(i)==s.charAt(j)){
-            i--;
-            j++;
+        while(left>=0&&right<s.length()&&s.charAt(left)==s.charAt(right)){
+            left--;
+            right++;
         }
         
-        if(j-i-1>maxLen[0]){
-            start[0] = i+1;
-            maxLen[0] = j-i-1;
-        } 
+        if(right-left-1>maxLen[0]){
+            start[0] = left+1;
+            maxLen[0]=right-left-1;
+        }
     }
 }
