@@ -18,22 +18,20 @@ class Solution {
         List<List<Integer>> list = new ArrayList<>();
         
         levelOrder(root,list,0);
+        
         return list;
     }
     
-    void levelOrder(TreeNode root,List<List<Integer>> list,int level){
+    void levelOrder(TreeNode root,List<List<Integer>> list ,int curLevel){
         if(root==null)
             return;
         
-        if(list.size()==level){
+        if(list.size()==curLevel)
             list.add(new ArrayList<>());
-        }
         
-        list.get(level).add(root.val);
+        list.get(curLevel).add(root.val);
         
-        levelOrder(root.left,list,level+1);
-        levelOrder(root.right,list,level+1);
-        
+        levelOrder(root.left,list,curLevel+1);
+        levelOrder(root.right,list,curLevel+1);
     }
-    
 }
