@@ -28,7 +28,7 @@ class Solution {
                  if(charFreq[c]==k-1)
                     kOrMore--;
             }   
-            if(distinctChars==distinctCount&&kOrMore>=distinctChars)
+            if(distinctChars==distinctCount&&kOrMore==distinctChars)
                 maxLen = Math.max(maxLen,end-start+1);
         }
         
